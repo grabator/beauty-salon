@@ -107,7 +107,13 @@ window.SALON = {
     { id: 'rosechrome', g: 'chrome', hex: '#D9A2B0', kind: 'chrome', name: ['Roze chrome', 'Rose chrome', 'Rosé-Chrome'] },
     { id: 'champagne', g: 'glitter', hex: '#E8CFB3', kind: 'glitter', name: ['Šampanjac', 'Champagne', 'Champagner'] },
   ],
-  skins: [['#F7DCCB', '#E9BFA6'], ['#EDC3A3', '#D9A27E'], ['#CC9874', '#B07A57'], ['#8F5C43', '#734531']],
+  // Tenovi kože za ruku, svaki u 5 tonova: [osnova, sjena, crvenilo, svjetlo, nabor]
+  skins: [
+    ['#F4D5C4', '#DDAD97', '#EBAE9F', '#FCEAE0', '#C38E7C'],
+    ['#E8BA98', '#C99271', '#DF977F', '#F5D6BF', '#A9775A'],
+    ['#C68F69', '#A06C4C', '#BE755B', '#DDB08E', '#87573B'],
+    ['#8C5A3F', '#683F2B', '#8F4E3C', '#AE7F65', '#4F2F20']
+  ],
 
   // Galerija dizajna. style: solid | french | ombre | chrome | matte | deco | glitter. tags za filtere.
   designs: [

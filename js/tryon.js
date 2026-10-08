@@ -113,7 +113,9 @@
     var img = new Image();
     img.onload = function () {
       Promise.all([document.fonts.load('96px "Instrument Serif"'), document.fonts.load('italic 96px "Instrument Serif"'), document.fonts.load('700 30px Manrope')]).catch(function () {}).then(function () {
-        x.drawImage(img, 140, 420, 800, 1132);
+        x.drawImage(img, 90, 330, 1050, 1600);
+        var fade = x.createLinearGradient(0, 1480, 0, 1920); fade.addColorStop(0, 'rgba(246,234,241,0)'); fade.addColorStop(0.55, 'rgba(246,234,241,.88)'); fade.addColorStop(1, 'rgba(244,232,242,.96)');
+        x.fillStyle = fade; x.fillRect(0, 1480, W, 440);
         x.textAlign = 'center'; x.fillStyle = '#9C4F66'; x.font = '800 30px Manrope, sans-serif';
         x.fillText(spaced(T.tryon.storyTitle.toUpperCase()), W / 2, 190);
         x.fillStyle = '#4A1F33'; x.font = 'italic 110px "Instrument Serif", serif'; x.fillText(APP.tr(sh.name), W / 2, 310);
@@ -130,7 +132,7 @@
         }, 'image/png');
       });
     };
-    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(hand.toSVGString(800, 1132));
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(N.svgString(state, { pose: 'table', light: hand.light, viewBox: '30 40 420 640', w: 1050, h: 1600 }));
   }
   function spaced(s) { return s.split('').join(String.fromCharCode(8202)); }
 

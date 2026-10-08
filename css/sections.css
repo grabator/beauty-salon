@@ -95,8 +95,8 @@
 .dcard { position: relative; display: grid; gap: 10px; padding: 14px; border-radius: var(--r-m); background: rgba(255, 255, 255, 0.82); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9), var(--sh-1); text-align: left; transition: transform 0.35s var(--ease), box-shadow 0.35s; }
 .dcard:hover { transform: translateY(-4px); box-shadow: inset 0 0 0 1px #fff, var(--sh-2); }
 .dcard .art { display: grid; place-items: center; aspect-ratio: 1; border-radius: 18px; background: radial-gradient(circle at 50% 30%, #fff, #F8E9EC); overflow: hidden; }
-.dcard .art svg { width: 82%; height: auto; transition: transform 0.6s var(--ease); }
-.dcard:hover .art svg { transform: scale(1.06) rotate(-2deg); }
+.dcard .art .na { width: 100%; height: 100%; border-radius: 0; transition: transform 0.6s var(--ease); }
+.dcard:hover .art .na { transform: scale(1.05); }
 .dcard b { font-size: 15px; font-weight: 700; line-height: 1.3; }
 .dcard small { color: var(--plum-soft); font-size: 13px; font-weight: 600; }
 .dcard .fav-mini { position: absolute; top: 20px; right: 20px; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.9); color: var(--plum-soft); box-shadow: var(--sh-1); }
@@ -270,7 +270,7 @@
 .pick-cat { margin: 14px 0 2px; font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--plum-soft); }
 .look-card { display: flex; align-items: center; gap: 14px; padding: 12px; border-radius: 18px; background: var(--pearl); }
 .look-card .mini { width: 72px; height: 72px; flex: none; border-radius: 14px; background: #fff; display: grid; place-items: center; }
-.look-card .mini svg { width: 64px; height: 64px; }
+.look-card .mini .na { width: 64px; height: 64px; }
 .look-card div { flex: 1; font-size: 14px; }
 .look-card b { display: block; font-size: 15px; }
 .days { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity; margin: 0 -20px; padding: 4px 20px 10px; }
@@ -306,7 +306,7 @@
 .fav-list { display: grid; gap: 10px; }
 .fav-item { display: grid; grid-template-columns: 76px 1fr; gap: 14px; align-items: center; padding: 10px; border-radius: 20px; background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
 .fav-item .mini { width: 76px; height: 76px; border-radius: 16px; background: var(--pearl); display: grid; place-items: center; }
-.fav-item .mini svg { width: 68px; height: 68px; }
+.fav-item .mini .na { width: 68px; height: 68px; }
 .fav-item b { display: block; font-size: 15px; }
 .fav-item small { color: var(--plum-soft); font-size: 13px; }
 .fav-item .row-btns { margin-top: 8px; gap: 6px; }
@@ -317,6 +317,13 @@
 /* galerija u sheetu */
 .d-detail { display: grid; gap: 14px; }
 .d-detail .art { display: grid; place-items: center; aspect-ratio: 1.3; border-radius: 24px; background: radial-gradient(circle at 50% 30%, #fff, #F8E9EC); }
-.d-detail .art svg { width: 70%; height: auto; }
+.d-detail .art .na { width: min(100%, 340px); height: auto; aspect-ratio: 1; }
 .d-detail .meta { display: flex; flex-wrap: wrap; gap: 8px; }
 .d-detail .meta span { padding: 6px 12px; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px var(--line); font-size: 13px; font-weight: 700; }
+
+/* male slike noktiju iz renderera: kostur dok se slika ne napravi */
+.na { position: relative; display: block; width: var(--s); height: var(--s); max-width: 100%; aspect-ratio: 1; overflow: hidden; border-radius: 14px; background: linear-gradient(110deg, var(--porcelain-2) 30%, #fff 50%, var(--porcelain-2) 70%) 0 0 / 220% 100%; animation: skel 1.4s linear infinite; }
+.na img { display: block; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity var(--t-3, 0.42s) var(--ease); }
+.na.ok { animation: none; background: transparent; }
+.na.ok img { opacity: 1; }
+@keyframes skel { to { background-position: -220% 0; } }
