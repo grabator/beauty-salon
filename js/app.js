@@ -431,6 +431,13 @@
   };
   APP.openBooking = function (o) { APP.load('booking').then(function () { window.Booking.open(o || {}); }); };
 
+  // boja uz outfit: modul se učitava tek kad se izabere slika
+  document.addEventListener('change', function (e) {
+    if (!e.target.classList || !e.target.classList.contains('of-file') || !e.target.files || !e.target.files[0]) return;
+    var f = e.target.files[0]; e.target.value = '';
+    APP.load('outfit').then(function () { window.Outfit.run(f); }).catch(function () { APP.toast(APP.T().outfit.error); });
+  });
+
   /* ---------- događaji ---------- */
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-lang]');
