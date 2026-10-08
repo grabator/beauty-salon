@@ -2,9 +2,17 @@
 
 Web stranica za salon za nokte: manikura, gel lak, nadogradnja, pedikura i njega.
 
+**Uživo:** https://beauty-salon.grabafaceit.workers.dev
+
+**Autor:** Ahmed Grabus (Graba) · [portfolio](https://graba-portofolio.grabafaceit.workers.dev) · [GitHub](https://github.com/grabator)
+
+<a href="https://beauty-salon.grabafaceit.workers.dev"><img src="assets/readme/desktop.jpg" alt="Glaze Nail Studio, početna stranica na desktopu" width="100%"></a>
+
+<a href="https://beauty-salon.grabafaceit.workers.dev"><img src="assets/readme/mobile.jpg" alt="Glaze Nail Studio na mobitelu: početna, studio, galerija po godišnjim dobima i upit za termin" width="100%"></a>
+
 Posjetiteljka može pregledati galeriju dizajna (i po godišnjem dobu), vidjeti lokaciju na Google mapi, isprobati boju, oblik, dužinu i stil noktiju na realistično nacrtanoj ruci, dobiti prijedlog nijanse uz svoj outfit, sačuvati omiljene kombinacije i jednim dodirom poslati upit za termin preko Vibera, WhatsAppa ili Instagrama. Stranica radi na bosanskom, engleskom i njemačkom, a na mobitelu se ponaša kao aplikacija (može se dodati na početni ekran i radi bez interneta).
 
-Čisti HTML, CSS i JavaScript, bez frameworka i bez build koraka. Sva grafika je nacrtana u SVG-u.
+Čisti HTML, CSS i JavaScript, bez frameworka i bez build koraka. Ruka, nokti i ilustracije su nacrtani u SVG-u, a fotografije u sekciji Studio su primjer.
 
 ## Pokretanje
 
@@ -23,7 +31,7 @@ Svi podaci salona su u `js/salon.js`. Tekstovi interfejsa su u `js/i18n-bs.js`, 
 Sve označeno sa "PRIMJER" je izmišljeno za demo:
 
 - `name`, `short`, `slogan`: naziv i slogan salona
-- `url`: prava adresa stranice (ista adresa i u `index.html`, `robots.txt` i `sitemap.xml`, umjesto `beauty-salon.example`)
+- `url`: adresa stranice (sada https://beauty-salon.grabafaceit.workers.dev; ista adresa je i u `index.html`, `robots.txt` i `sitemap.xml`)
 - `contact`: telefon, Viber, WhatsApp, Instagram, email i link za Google recenzije
 - `address`: ulica, grad, poštanski broj, koordinate, link za mapu i opis parkinga
 - `hours` i `holidays`: radno vrijeme po danima i neradni dani

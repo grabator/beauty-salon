@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://beauty-salon.example/sitemap.xml
+Sitemap: https://beauty-salon.grabafaceit.workers.dev/sitemap.xml

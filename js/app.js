@@ -22,7 +22,7 @@
   $$('[data-feature]').forEach(function (el) { if (F[el.getAttribute('data-feature')]) el.classList.add('feat-on'); else el.remove(); });
 
   var APP = window.APP = {
-    $: $, $$: $$, esc: esc, store: store, reduced: reduced, v: '9', features: F,
+    $: $, $$: $$, esc: esc, store: store, reduced: reduced, v: '10', features: F,
     lang: (function () {
       var q = (location.search.match(/[?&]lang=(bs|en|de)/) || [])[1], saved = store('lang');
       var nav = (navigator.language || '').slice(0, 2);

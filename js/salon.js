@@ -5,7 +5,7 @@ window.SALON = {
   name: 'Glaze Nail Studio',                       // PRIMJER: naziv salona
   short: 'Glaze',
   slogan: ['Nokti koji sijaju kao prvog dana.', 'Nails that shine like day one.', 'Nägel, die strahlen wie am ersten Tag.'],
-  url: 'https://beauty-salon.example',             // PRIMJER: prava adresa stranice kad se objavi
+  url: 'https://beauty-salon.grabafaceit.workers.dev',             // PRIMJER: prava adresa stranice kad se objavi
   currency: 'KM',                                  // 'KM' ili 'EUR'
   timeZone: 'Europe/Sarajevo',
 
