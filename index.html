@@ -6,7 +6,7 @@
 <title>Glaze Nail Studio · Manikura, gel i njega noktiju</title>
 <meta name="description" content="Studio za nokte: manikura, gel lak, nadogradnja, pedikura i njega. Isprobaj boju na ruci i zakaži termin preko Vibera ili WhatsAppa.">
 <meta name="theme-color" content="#FBF6F3">
-<script>try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(localStorage.getItem('glaze-lang')||'null')||(navigator.language||'').slice(0,2);var k=document.createElement('link');k.rel='preload';k.as='script';k.href='js/i18n-'+(g==='en'||g==='de'?g:'bs')+'.js?v=6';document.head.appendChild(k)}catch(e){}</script>
+<script>try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(localStorage.getItem('glaze-lang')||'null')||(navigator.language||'').slice(0,2);var k=document.createElement('link');k.rel='preload';k.as='script';k.href='js/i18n-'+(g==='en'||g==='de'?g:'bs')+'.js?v=7';document.head.appendChild(k)}catch(e){}</script>
 <link rel="canonical" href="https://beauty-salon.example/">
 <link rel="alternate" hreflang="bs" href="https://beauty-salon.example/?lang=bs">
 <link rel="alternate" hreflang="en" href="https://beauty-salon.example/?lang=en">
@@ -23,12 +23,12 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/style.css?v=6">
-<link rel="stylesheet" href="css/components.css?v=6">
-<link rel="stylesheet" href="css/sections.css?v=6">
-<script src="js/salon.js?v=6" defer></script>
-<script src="js/hand.js?v=6" defer></script>
-<script src="js/app.js?v=6" defer></script>
+<link rel="stylesheet" href="css/style.css?v=7">
+<link rel="stylesheet" href="css/components.css?v=7">
+<link rel="stylesheet" href="css/sections.css?v=7">
+<script src="js/salon.js?v=7" defer></script>
+<script src="js/hand.js?v=7" defer></script>
+<script src="js/app.js?v=7" defer></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -86,13 +86,13 @@
 <header class="top" id="top-nav">
   <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span class="brand-name" data-salon="short">Glaze</span></a>
   <nav class="top-links" data-ta="menu">
+    <a href="#studio" data-goto="studio" data-t="nav.studio">Studio</a>
     <a href="#galerija" data-goto="galerija" data-t="nav.gallery">Galerija</a>
-    <a href="#lokacija" data-goto="lokacija" data-t="nav.location">Lokacija</a>
     <a href="#tim" data-goto="tim" data-t="nav.team">Tim</a>
     <a href="#isprobaj" data-goto="isprobaj" data-t="nav.tryon">Isprobaj</a>
     <a href="#usluge" data-goto="usluge" data-t="nav.services">Usluge</a>
-    <a href="#njega" data-goto="njega" data-t="nav.care">Njega</a>
     <a href="#poklon" data-goto="poklon" data-t="nav.gift" data-feature="gift">Poklon bon</a>
+    <a href="#lokacija" data-goto="lokacija" data-t="nav.location">Lokacija</a>
   </nav>
   <div class="top-right">
     <button type="button" class="menu-btn" data-menu aria-haspopup="dialog" data-ta="menu"><span></span><span></span><span></span></button>
@@ -124,7 +124,15 @@
   </section>
 
 
-  <!-- 2. Galerija dizajna -->
+  <!-- 2. Studio: fotografije salona -->
+  <section class="sec studio band" id="studio" aria-labelledby="stu-h">
+    <div class="wrap">
+      <header class="sec-head center"><p class="kicker" data-t="studio.kicker"></p><h2 id="stu-h" class="h2 split" data-t="studio.title"></h2><p class="sub" data-t="studio.sub"></p></header>
+      <div class="studio-grid"></div>
+    </div>
+  </section>
+
+  <!-- 3. Galerija dizajna -->
   <section class="sec gallery" id="galerija" aria-labelledby="gal-h">
     <div class="wrap">
       <header class="sec-head"><p class="kicker" data-t="gallery.kicker"></p><h2 id="gal-h" class="h2 split" data-t="gallery.title"></h2></header>
@@ -143,20 +151,8 @@
     </div>
   </section>
 
-  <!-- 3. Lokacija -->
-  <section class="sec contact band" id="lokacija" aria-labelledby="ct-h">
-    <div class="wrap contact-grid">
-      <div class="ct-text">
-        <header class="sec-head"><p class="kicker" data-t="contact.kicker"></p><h2 id="ct-h" class="h2 split" data-t="contact.title"></h2></header>
-        <dl class="ct-info"></dl>
-        <div class="ct-btns"></div>
-      </div>
-      <div class="map card"><div class="map-ph" aria-hidden="true"></div><p class="map-addr"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span class="map-addr-t"></span><small class="map-load" data-t="contact.mapLoading"></small></p></div>
-    </div>
-  </section>
-
   <!-- 4. Tim -->
-  <section class="sec team" id="tim" aria-labelledby="team-h">
+  <section class="sec team band" id="tim" aria-labelledby="team-h">
     <div class="wrap">
       <header class="sec-head center"><p class="kicker" data-t="team.kicker"></p><h2 id="team-h" class="h2 split" data-t="team.title"></h2></header>
       <ul class="team-row hscroll" tabindex="0" aria-labelledby="team-h"></ul>
@@ -263,14 +259,6 @@
     </div>
   </section>
 
-  <!-- 11. Studio -->
-  <section class="sec studio" id="studio" aria-labelledby="stu-h">
-    <div class="wrap">
-      <header class="sec-head center"><p class="kicker" data-t="studio.kicker"></p><h2 id="stu-h" class="h2 split" data-t="studio.title"></h2><p class="sub" data-t="studio.sub"></p></header>
-      <div class="studio-grid"></div>
-    </div>
-  </section>
-
   <!-- Poklon bon (features.gift) -->
   <section class="sec perks" id="poklon" data-feature="gift" aria-labelledby="gift-h">
     <div class="wrap">
@@ -288,11 +276,23 @@
     </div>
   </section>
 
-  <!-- 12. FAQ -->
-  <section class="sec faq band" id="faq" aria-labelledby="faq-h">
+  <!-- 11. FAQ -->
+  <section class="sec faq" id="faq" aria-labelledby="faq-h">
     <div class="wrap faq-grid">
       <header class="sec-head"><p class="kicker" data-t="faq.kicker"></p><h2 id="faq-h" class="h2 split" data-t="faq.title"></h2></header>
       <div class="faq-list"></div>
+    </div>
+  </section>
+
+  <!-- 12. Lokacija -->
+  <section class="sec contact band" id="lokacija" aria-labelledby="ct-h">
+    <div class="wrap contact-grid">
+      <div class="ct-text">
+        <header class="sec-head"><p class="kicker" data-t="contact.kicker"></p><h2 id="ct-h" class="h2 split" data-t="contact.title"></h2></header>
+        <dl class="ct-info"></dl>
+        <div class="ct-btns"></div>
+      </div>
+      <div class="map card"><div class="map-ph" aria-hidden="true"></div><p class="map-addr"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span class="map-addr-t"></span><small class="map-load" data-t="contact.mapLoading"></small></p></div>
     </div>
   </section>
 </main>

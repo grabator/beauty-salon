@@ -22,7 +22,7 @@
   $$('[data-feature]').forEach(function (el) { if (F[el.getAttribute('data-feature')]) el.classList.add('feat-on'); else el.remove(); });
 
   var APP = window.APP = {
-    $: $, $$: $$, esc: esc, store: store, reduced: reduced, v: '6', features: F,
+    $: $, $$: $$, esc: esc, store: store, reduced: reduced, v: '7', features: F,
     lang: (function () {
       var q = (location.search.match(/[?&]lang=(bs|en|de)/) || [])[1], saved = store('lang');
       var nav = (navigator.language || '').slice(0, 2);
@@ -475,7 +475,7 @@
     window.location.href = url;
   };
   // meni (mobitel)
-  var MENU = [['galerija', 'i-sparkle'], ['lokacija', 'i-pin'], ['tim', 'i-team'], ['isprobaj', 'i-brush'], ['usluge', 'i-list'], ['njega', 'i-drop'], ['faq', 'i-help'], ['poklon', 'i-gift', 'gift']].filter(function (m) { return !m[2] || F[m[2]]; });
+  var MENU = [['studio', 'i-home'], ['galerija', 'i-sparkle'], ['tim', 'i-team'], ['isprobaj', 'i-brush'], ['usluge', 'i-list'], ['njega', 'i-drop'], ['poklon', 'i-gift', 'gift'], ['faq', 'i-help'], ['lokacija', 'i-pin']].filter(function (m) { return !m[2] || F[m[2]]; });
   function openMenu() {
     var T = APP.T();
     APP.sheet.open({
