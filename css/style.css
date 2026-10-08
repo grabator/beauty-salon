@@ -162,9 +162,9 @@ em { font-style: italic; font-family: var(--serif); color: var(--accent); }
 .tabbar .badge { position: absolute; top: 4px; right: calc(50% - 22px); }
 @media (min-width: 980px) { .tabbar { display: none; } }
 
-.fab { position: fixed; z-index: 69; right: 18px; bottom: calc(var(--tabbar-h) + 22px + var(--safe-b)); display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 20px 0 16px; border-radius: 999px; background: var(--btn); color: var(--on-ink); font-weight: 700; font-size: 15px; box-shadow: 0 16px 34px -12px rgb(var(--shd) / 0.6); transform: translateY(0) scale(1); transition: transform var(--t-3) var(--pop), opacity var(--t-2); }
+.fab { overflow: hidden; isolation: isolate; position: fixed; z-index: 69; right: 18px; bottom: calc(var(--tabbar-h) + 22px + var(--safe-b)); display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 20px 0 16px; border-radius: 999px; background: var(--btn); color: var(--on-ink); font-weight: 700; font-size: 15px; box-shadow: 0 16px 34px -12px rgb(var(--shd) / 0.6); transform: translateY(0) scale(1); transition: transform var(--t-3) var(--pop), opacity var(--t-2); }
 .fab .ic { width: 20px; height: 20px; }
-.fab .badge { position: absolute; top: -4px; right: -4px; }
+.fab .badge { position: absolute; top: 4px; right: 4px; }
 .fab.away { transform: translateY(16px) scale(0.85); opacity: 0; pointer-events: none; }
 @media (max-width: 979px) { .fab { width: 56px; min-height: 56px; padding: 0; justify-content: center; } .fab-t { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } .fab .ic { width: 23px; height: 23px; } }
 @media (min-width: 980px) { .fab { bottom: 28px; right: 28px; } }
@@ -198,3 +198,6 @@ footer.foot { padding: 56px 0 calc(var(--tabbar-h) + 40px + var(--safe-b)); back
 
 /* stanje pritiska za sve izbore */
 :where(.chips button, .tabs button, .lm-slots button, .slot, .day, .pick-item, .via button, .quiz .answers button, .shelf-groups button, .acc > button, .tabbar a, .tabbar button):active { transform: scale(0.97); transition-duration: var(--t-1); }
+
+/* mobitel: donja traka je uvijek tu i ima "Termin", pa plutajuće dugme nije potrebno */
+@media (max-width: 979px) { .fab { display: none; } }

@@ -1,6 +1,14 @@
 /* Glaze Nail Studio: pokretanje, jezik, navigacija, radno vrijeme, usluge, galerija i sheet. */
 (function () {
   'use strict';
+  if (/[?&]debug=1/.test(location.search)) (function () {
+    var box = document.createElement('pre'); box.style.cssText = 'position:fixed;left:8px;right:8px;top:8px;z-index:9999;max-height:40vh;overflow:auto;margin:0;padding:10px;border-radius:12px;background:#2a0f18;color:#ffd3de;font:12px/1.4 monospace;white-space:pre-wrap;pointer-events:none';
+    var add = function (t) { if (!box.parentNode) document.body.appendChild(box); box.textContent += t + '\n'; };
+    window.addEventListener('error', function (e) { add('Greška: ' + e.message + ' (' + (e.filename || '').split('/').pop() + ':' + e.lineno + ')'); });
+    window.addEventListener('unhandledrejection', function (e) { add('Greška: ' + (e.reason && (e.reason.message || e.reason.type) || e.reason)); });
+    document.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('button, a'); add('klik: ' + (t ? (t.getAttribute('data-t') || t.className || t.tagName) + ' ' + (t.textContent || '').trim().slice(0, 24) : e.target.tagName)); }, true);
+    add('debug uključen · ' + navigator.userAgent);
+  })();
   var S = window.SALON, I = window.I18N = window.I18N || {}, root = document.documentElement;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -11,7 +19,7 @@
   var LANGS = ['bs', 'en', 'de'];
 
   var APP = window.APP = {
-    $: $, $$: $$, esc: esc, store: store, reduced: reduced,
+    $: $, $$: $$, esc: esc, store: store, reduced: reduced, v: '4',
     lang: (function () {
       var q = (location.search.match(/[?&]lang=(bs|en|de)/) || [])[1], saved = store('lang');
       var nav = (navigator.language || '').slice(0, 2);
@@ -164,8 +172,8 @@
     });
   };
   function updateCartUI() {
-    var n = APP.cart.length, b = $('.cart-count');
-    b.hidden = !n; b.textContent = n;
+    var n = APP.cart.length;
+    $$('.cart-count').forEach(function (b) { b.hidden = !n; b.textContent = n; });
     if (n) { var fab = $('.fab'); fab.classList.remove('bump'); void fab.offsetWidth; }
   }
 
@@ -375,7 +383,7 @@
       el.hidden = false; scrim.hidden = false;
       requestAnimationFrame(function () { el.classList.add('on'); scrim.classList.add('on'); });
       document.body.style.overflow = 'hidden';
-      $('.tabbar').classList.add('hide'); $('.fab').classList.add('away');
+      $('.fab').classList.add('away');
       setTimeout(function () { var f = $('.sheet-close'); if (f) f.focus({ preventScroll: true }); }, 60);
       markTab(o.kind === 'favs' ? 'favs' : o.kind === 'booking' ? 'book' : null);
     }
@@ -392,7 +400,7 @@
       el.classList.remove('on'); scrim.classList.remove('on');
       document.body.style.overflow = '';
       setTimeout(function () { el.hidden = true; scrim.hidden = true; el.style.transform = ''; }, 420);
-      $('.tabbar').classList.remove('hide'); syncFab(); markTab(null);
+      syncFab(); markTab(null);
       if (c.onClose) c.onClose();
       if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
     }
@@ -425,7 +433,7 @@
   /* ---------- učitavanje modula po potrebi ---------- */
   var loaded = {};
   APP.load = function (name) {
-    if (!loaded[name]) loaded[name] = new Promise(function (res, rej) { var s = document.createElement('script'); s.src = 'js/' + name + '.js'; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+    if (!loaded[name]) loaded[name] = new Promise(function (res, rej) { var s = document.createElement('script'); s.src = 'js/' + name + '.js?v=' + APP.v; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
     return loaded[name];
   };
   APP.openBooking = function (o) { APP.load('booking').then(function () { window.Booking.open(o || {}); }); };
@@ -518,7 +526,7 @@
     ticking = false;
     var y = window.scrollY, tb = $('.tabbar');
     $('.top').classList.toggle('solid', y > 20);
-    if (!APP.sheet.isOpen()) { if (y > lastY + 6 && y > 300) tb.classList.add('hide'); else if (y < lastY - 6) tb.classList.remove('hide'); }
+    // donja traka ostaje uvijek vidljiva
     lastY = y; syncFab();
     var vh = window.innerHeight, sec = 'home', topLink = '';
     var tryTop = $('#isprobaj').getBoundingClientRect(), srvTop = $('#usluge').getBoundingClientRect();

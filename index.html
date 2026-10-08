@@ -7,7 +7,7 @@
 <meta name="description" content="Studio za nokte: manikura, gel lak, nadogradnja, pedikura i njega. Isprobaj boju na ruci i zakaži termin preko Vibera ili WhatsAppa.">
 <meta name="theme-color" content="#FBF6F3">
 <script>try{var l=JSON.parse(localStorage.getItem('glaze-light'));if(l==='day'||l==='evening')document.documentElement.setAttribute('data-light',l)}catch(e){}
-try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(localStorage.getItem('glaze-lang')||'null')||(navigator.language||'').slice(0,2);var k=document.createElement('link');k.rel='preload';k.as='script';k.href='js/i18n-'+(g==='en'||g==='de'?g:'bs')+'.js';document.head.appendChild(k)}catch(e){}</script>
+try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(localStorage.getItem('glaze-lang')||'null')||(navigator.language||'').slice(0,2);var k=document.createElement('link');k.rel='preload';k.as='script';k.href='js/i18n-'+(g==='en'||g==='de'?g:'bs')+'.js?v=4';document.head.appendChild(k)}catch(e){}</script>
 <link rel="canonical" href="https://beauty-salon.example/">
 <link rel="alternate" hreflang="bs" href="https://beauty-salon.example/?lang=bs">
 <link rel="alternate" hreflang="en" href="https://beauty-salon.example/?lang=en">
@@ -24,12 +24,12 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/components.css">
-<link rel="stylesheet" href="css/sections.css">
-<script src="js/salon.js" defer></script>
-<script src="js/hand.js" defer></script>
-<script src="js/app.js" defer></script>
+<link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/components.css?v=4">
+<link rel="stylesheet" href="css/sections.css?v=4">
+<script src="js/salon.js?v=4" defer></script>
+<script src="js/hand.js?v=4" defer></script>
+<script src="js/app.js?v=4" defer></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -310,7 +310,7 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
   <a href="#usluge" data-tab="services"><svg class="ic"><use href="#i-list"/></svg><span data-t="nav.services"></span></a>
   <a href="#isprobaj" data-tab="tryon"><svg class="ic"><use href="#i-brush"/></svg><span data-t="nav.tryon"></span></a>
   <button type="button" data-tab="favs" data-open-favs><svg class="ic"><use href="#i-heart"/></svg><span data-t="nav.favs"></span><b class="badge fav-count" hidden></b></button>
-  <button type="button" data-tab="book" data-open-booking><svg class="ic"><use href="#i-cal"/></svg><span data-t="nav.book"></span></button>
+  <button type="button" data-tab="book" data-open-booking><svg class="ic"><use href="#i-cal"/></svg><span data-t="nav.book"></span><b class="badge cart-count" hidden></b></button>
   <span class="tab-ind" aria-hidden="true"></span>
 </nav>
 <button type="button" class="fab gloss" data-open-booking><svg class="ic"><use href="#i-cal"/></svg><span class="fab-t"></span><b class="badge cart-count" hidden></b></button>
