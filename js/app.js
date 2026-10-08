@@ -444,6 +444,7 @@
     if (b) { APP.lang = b.getAttribute('data-lang'); store('lang', APP.lang); renderAll(); return; }
     if ((b = e.target.closest('[data-light]'))) { APP.setLight(b.getAttribute('data-light')); return; }
     if (e.target.closest('[data-tilt]')) { askTilt(); return; }
+    if (e.target.closest('[data-mirror]')) { APP.load('mirror').then(function () { window.Mirror.open(); }).catch(function () { APP.toast(APP.T().mirror.noModel); }); return; }
     if (e.target.closest('[data-open-booking]')) { e.preventDefault(); APP.openBooking({}); return; }
     if (e.target.closest('[data-open-favs]')) { openFavs(); return; }
     if (e.target.closest('[data-close-sheet]')) { APP.sheet.close(); return; }

@@ -493,6 +493,24 @@
     return '<svg xmlns="' + NS + '" viewBox="' + (o.viewBox || '0 0 400 566') + '"' + (o.w ? ' width="' + o.w + '" height="' + o.h + '"' : '') + '>' + inner + '</svg>';
   }
 
+  // jedan nokat kao samostalan SVG (Ogledalo): ishodište je baza nokta, vrh prema gore
+  var nailN = 0;
+  function nailSVG(look, o) {
+    o = o || {};
+    var st = Object.assign({ shade: 'ballet', shape: 'almond', len: 1, style: 'solid', skin: 1 }, look), sh = shadeOf(st.shade), Lg = LIGHTS[o.light || lightMode] || LIGHTS.salon;
+    var W = 40, L = W / 0.74 * LEN[st.len || 0], id = 'nv' + (++nailN), d = nailPath(st.shape, W, L), T = tones(st.skin, o.light || lightMode);
+    var vb = [-W * 0.8, -L - W * 0.4, W * 1.6, L + W * 0.75];
+    var s = '<svg xmlns="' + NS + '" viewBox="' + vb.map(f2).join(' ') + '" width="' + Math.round(vb[2] * 4) + '" height="' + Math.round(vb[3] * 4) + '"><defs><clipPath id="' + id + 'c"><path d="' + d + '"/></clipPath>' +
+      '<linearGradient id="' + id + 'fm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1E0A12" stop-opacity=".3"/><stop offset=".2" stop-color="#1E0A12" stop-opacity=".08"/><stop offset=".5" stop-color="#1E0A12" stop-opacity="0"/><stop offset=".8" stop-color="#1E0A12" stop-opacity=".06"/><stop offset="1" stop-color="#1E0A12" stop-opacity=".26"/></linearGradient>' +
+      '<radialGradient id="' + id + 'soft"><stop offset="0" stop-color="' + Lg.hl + '" stop-opacity=".3"/><stop offset="1" stop-color="' + Lg.hl + '" stop-opacity="0"/></radialGradient></defs>';
+    s += '<path d="' + d + '" transform="translate(.6 1.6)" fill="#2A0F18" opacity=".22"/>';
+    s += '<g clip-path="url(#' + id + 'c)">' + layers({ hex: sh.hex, kind: sh.kind, style: st.style, W: W, L: L, finger: 3, tones: T, light: o.light || lightMode, tip: W * 1.08 }, id) +
+      '<rect x="' + f2(-W / 2) + '" y="-300" width="' + W + '" height="320" fill="url(#' + id + 'fm)"/>' +
+      '<rect x="-80" y="-300" width="160" height="320" fill="' + Lg.tint + '" opacity="' + Lg.tOp + '"/>' + highlights(st.style, sh.kind, W, L, Lg.hl).replace(/url\(#__soft\)/g, 'url(#' + id + 'soft)') + '</g>';
+    s += '<path d="' + d + '" fill="none" stroke="#1E0A12" stroke-opacity=".18" stroke-width=".8"/></svg>';
+    return { svg: s, W: W, L: L, vb: vb };
+  }
+
   /* ---------- male slike noktiju (galerija, omiljeni, zakazivanje) ----------
    * Renderuju se u slobodnom vremenu preglednika i čuvaju u memoriji kao slike. */
   var cache = {}, queue = [], busy = false;
@@ -533,7 +551,7 @@
   }
 
   window.Nails = {
-    Hand: Hand, nailPath: nailPath, nailArt: nailArt, svgString: svgString, shadeOf: shadeOf, SHAPES: SHAPES, FINGERS: FINGERS, LIGHTS: LIGHTS,
+    Hand: Hand, nailPath: nailPath, nailArt: nailArt, svgString: svgString, nailSVG: nailSVG, shadeOf: shadeOf, SHAPES: SHAPES, FINGERS: FINGERS, LIGHTS: LIGHTS,
     mix: mix, adj: adj, light: light, oklab: oklab, rgbLab: rgbLab, fromLab: fromLab, dE: dE,
     setLightMode: setLightMode, getLightMode: function () { return lightMode; }
   };
