@@ -22,7 +22,7 @@
   $$('[data-feature]').forEach(function (el) { if (F[el.getAttribute('data-feature')]) el.classList.add('feat-on'); else el.remove(); });
 
   var APP = window.APP = {
-    $: $, $$: $$, esc: esc, store: store, reduced: reduced, v: '7', features: F,
+    $: $, $$: $$, esc: esc, store: store, reduced: reduced, v: '8', features: F,
     lang: (function () {
       var q = (location.search.match(/[?&]lang=(bs|en|de)/) || [])[1], saved = store('lang');
       var nav = (navigator.language || '').slice(0, 2);
@@ -57,8 +57,9 @@
   function toMin(t) { var p = t.split(':'); return +p[0] * 60 + +p[1]; }
   function fromMin(m) { return pad(Math.floor(m / 60)) + ':' + pad(m % 60); }
   APP.toMin = toMin; APP.fromMin = fromMin;
+  var nowFmt = null;
   APP.now = function () {
-    var f = new Intl.DateTimeFormat('en-GB', { timeZone: S.timeZone, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
+    var f = nowFmt || (nowFmt = new Intl.DateTimeFormat('en-GB', { timeZone: S.timeZone, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }));
     var p = {}; f.formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
     var h = +p.hour % 24, key = p.year + '-' + p.month + '-' + p.day;
     return { key: key, min: h * 60 + +p.minute, dow: new Date(Date.UTC(+p.year, +p.month - 1, +p.day)).getUTCDay() };
@@ -209,7 +210,8 @@
   // galerija: filteri, godišnja doba ispod "Sezona" i "Prikaži još" (4 na desktopu, 2 na mobitelu)
   var galFilter = 'all', galSeason = null, galShown = 0;
   var GAL_F = ['all', 'minimal', 'french', 'chrome', 'ombre', 'glitter', 'season'], SEASONS = ['winter', 'spring', 'summer', 'autumn'];
-  function galStep() { return window.innerWidth < 760 ? 2 : 4; }
+  var narrow = window.matchMedia('(max-width: 759px)');
+  function galStep() { return narrow.matches ? 2 : 4; }
   function galList() {
     var ss = S.seasons[galSeason || season()];
     return S.designs.filter(function (d) { return galFilter === 'all' || (galFilter === 'season' ? ss.indexOf(d.id) > -1 : d.tags.indexOf(galFilter) > -1); });
@@ -306,7 +308,7 @@
       '<path d="M52 70C52 48 64 38 80 38S108 48 108 70C96 58 90 52 76 54C68 55 60 60 52 70Z" fill="' + hair + '"/>',
     ];
     return '<svg class="av" viewBox="0 0 160 160" aria-hidden="true"><rect width="160" height="160" fill="#F3E6EC"/><circle cx="80" cy="80" r="62" fill="#fff" opacity=".5"/>' +
-      back[i % 3] + '<path d="M28 160C32 128 54 114 80 114S128 128 132 160Z" fill="' + ['#E8B4C0', '#4A1F33', '#C8879A'][i % 3] + '"/><rect x="71" y="92" width="18" height="26" rx="8" fill="' + sk[1] + '"/>' +
+      back[i % 3] + '<path d="M28 160C32 128 54 114 80 114S128 128 132 160Z" fill="' + ['#E8B4C0', '#5E1A36', '#C8879A'][i % 3] + '"/><rect x="71" y="92" width="18" height="26" rx="8" fill="' + sk[1] + '"/>' +
       '<ellipse cx="80" cy="72" rx="26" ry="30" fill="' + sk[0] + '"/>' + front[i % 3] +
       '<ellipse cx="68" cy="82" rx="5" ry="3" fill="#E8A1AE" opacity=".45"/><ellipse cx="92" cy="82" rx="5" ry="3" fill="#E8A1AE" opacity=".45"/>' +
       '<circle cx="54" cy="80" r="2.6" fill="#E9C9A6"/><circle cx="106" cy="80" r="2.6" fill="#E9C9A6"/></svg>';
@@ -382,9 +384,9 @@
       '<ellipse cx="400" cy="110" rx="80" ry="54" fill="#E3EFE6"/><circle cx="380" cy="100" r="9" fill="#CFE3D4"/><circle cx="420" cy="122" r="11" fill="#CFE3D4"/><circle cx="398" cy="128" r="7" fill="#CFE3D4"/>' +
       '<g stroke="#fff" stroke-linecap="round" fill="none"><path d="M-10 190H530" stroke-width="26"/><path d="M200 -10V300" stroke-width="22"/><path d="M60 -10L120 270" stroke-width="14"/><path d="M330 -10C320 80 360 150 340 290" stroke-width="16"/><path d="M-10 90H530" stroke-width="10"/></g>' +
       '<g fill="#EAD9DF"><rect x="232" y="110" width="80" height="60" rx="8"/><rect x="232" y="210" width="74" height="60" rx="8"/><rect x="90" y="110" width="88" height="62" rx="8"/><rect x="20" y="210" width="80" height="54" rx="8"/><rect x="370" y="210" width="110" height="54" rx="8"/></g>' +
-      '<g class="pin"><path d="M272 172s-26-28-26-46a26 26 0 0 1 52 0c0 18-26 46-26 46z" fill="#4A1F33"/><circle cx="272" cy="126" r="10" fill="#E8B4C0"/></g>' +
-      '<ellipse cx="272" cy="178" rx="14" ry="4" fill="#4A1F33" opacity=".18"/>' +
-      '<g transform="translate(300 62)"><rect width="150" height="40" rx="20" fill="#fff"/><text x="75" y="26" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="15" fill="#4A1F33">' + esc(S.name) + '</text></g></svg>';
+      '<g class="pin"><path d="M272 172s-26-28-26-46a26 26 0 0 1 52 0c0 18-26 46-26 46z" fill="#5E1A36"/><circle cx="272" cy="126" r="10" fill="#E8B4C0"/></g>' +
+      '<ellipse cx="272" cy="178" rx="14" ry="4" fill="#5E1A36" opacity=".18"/>' +
+      '<g transform="translate(300 62)"><rect width="150" height="40" rx="20" fill="#fff"/><text x="75" y="26" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="15" fill="#5E1A36">' + esc(S.name) + '</text></g></svg>';
   }
   function renderFooter() {
     var L = APP.links(), T = APP.T();
@@ -486,7 +488,12 @@
   }
   function goTo(id) {
     var el = document.getElementById(id); if (!el) return;
-    var go = function () { el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); if (history.replaceState) history.replaceState(null, '', '#' + id); };
+    var go = function () {
+      root.classList.add('cv-off'); clearTimeout(goTo.t);
+      el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+      if (history.replaceState) history.replaceState(null, '', '#' + id);
+      goTo.t = setTimeout(function () { root.classList.remove('cv-off'); }, 1600);
+    };
     if (APP.sheet.isOpen && APP.sheet.isOpen()) { APP.sheet.close(); setTimeout(go, 380); } else go();
   }
   document.addEventListener('click', function (e) {
@@ -585,14 +592,6 @@
     revT = setTimeout(function () { $$('.split:not(.in), .reveal:not(.in)').forEach(function (e) { if (e.getBoundingClientRect().top < innerHeight) e.classList.add('in'); }); }, 160);
   }, { passive: true });
 
-  /* ---------- kursor kapljica ---------- */
-  if (fine && !reduced) (function () {
-    var c = $('.cursor-drop'), x = -100, y = -100, tx = -100, ty = -100, raf = 0;
-    function loop() { x += (tx - x) * 0.22; y += (ty - y) * 0.22; c.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)'; raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.3 ? requestAnimationFrame(loop) : 0; }
-    document.addEventListener('pointermove', function (e) { if (e.pointerType !== 'mouse') return; tx = e.clientX; ty = e.clientY; c.classList.add('on'); c.classList.toggle('big', !!(e.target.closest && e.target.closest('a, button, input, [role="tab"]'))); if (!raf) raf = requestAnimationFrame(loop); }, { passive: true });
-    document.addEventListener('mouseleave', function () { c.classList.remove('on'); });
-  })();
-
   /* ---------- veliki nokat koji se lakira dok se skrola do "Isprobaj boju" ---------- */
   (function () {
     var el = $('.scroll-nail'); if (!el) return;
@@ -606,7 +605,7 @@
   })();
 
   /* ---------- svjetlo salona: Dan, Salon, Večer ---------- */
-  var THEME = { day: '#FFFDFC', salon: '#FBF6F3', evening: '#1E0C16' };
+  var THEME = { day: '#FFFDFC', salon: '#FCF8F5', evening: '#1E0C16' };
   // bez features.lights stranica je uvijek u svjetlu "Salon"
   APP.light = F.lights && store('light') || 'salon'; if (!THEME[APP.light]) APP.light = 'salon';
   if (APP.light !== 'salon') { root.setAttribute('data-light', APP.light); var mc0 = $('meta[name="theme-color"]'); if (mc0) mc0.content = THEME[APP.light]; }
@@ -694,9 +693,10 @@
   ensureLang(APP.lang).catch(function () { APP.lang = 'bs'; }).then(start);
   function start() {
   renderAll();
-  heroH = $('.hero').offsetHeight;
   intro(function () { startHero(); });
-  onScroll(); markTab('home');
+  markTab('home');
+  // mjerenja rasporeda tek poslije prvog crtanja, da ne usporavaju učitavanje
+  requestAnimationFrame(function () { setTimeout(function () { heroH = $('.hero').offsetHeight; onScroll(); }, 0); });
   lazy('#isprobaj', 'tryon');
   lazy('#njega', 'extras');
   if (F.gift) lazy('#poklon', 'gift');
