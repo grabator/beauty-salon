@@ -135,6 +135,8 @@
   function spaced(s) { return s.split('').join(String.fromCharCode(8202)); }
 
   render();
+  // polica se otvara na odabranoj boji, a ne uvijek na prvoj grupi
+  (function () { var sel = $('.bottle[aria-selected="true"]'), shelf = $('.shelf'); if (sel) shelf.scrollLeft = Math.max(0, sel.offsetLeft - shelf.offsetLeft - 20); })();
   // prvo lakiranje kad se sekcija pojavi
   var started = false;
   function start() { if (started) return; started = true; hand.set({ shade: state.shade, style: state.style }); }

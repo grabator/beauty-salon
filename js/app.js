@@ -308,7 +308,7 @@
     var T = APP.T();
     $('.rev-row').innerHTML = S.reviews.map(function (r, i) {
       var st = ''; for (var k = 0; k < 5; k++) st += '<svg class="ic' + (k < r.stars ? '' : ' off') + '"><use href="#i-star"/></svg>';
-      return '<li class="reveal" style="--d:' + i + '"><figure class="card review"><div class="stars" aria-label="' + r.stars + '/5">' + st + '</div><blockquote>' + esc(APP.tr(r.text)) + '</blockquote><footer><span>' + esc(r.name) + '</span><span class="ex-badge">' + esc(T.example) + '</span></footer></figure></li>';
+      return '<li class="reveal" style="--d:' + i + '"><figure class="card review"><div class="stars" role="img" aria-label="' + r.stars + '/5">' + st + '</div><blockquote>' + esc(APP.tr(r.text)) + '</blockquote><footer><span>' + esc(r.name) + '</span><span class="ex-badge">' + esc(T.example) + '</span></footer></figure></li>';
     }).join('');
   }
   function renderTips() {
@@ -485,9 +485,20 @@
   function observeReveal() {
     var els = $$('.split, .reveal');
     if (reduced || !('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
-    if (!io) io = new IntersectionObserver(function (en) { en.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }); }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
-    els.forEach(function (e) { if (!e.classList.contains('in')) io.observe(e); });
+    if (!io) io = new IntersectionObserver(function (en) { en.forEach(function (x) { if (x.isIntersecting) { var t = x.target; if (t.classList.contains('hscroll')) { $$('.reveal, .split', t).forEach(function (r) { r.classList.add('in'); }); delete t.dataset.rv; } else t.classList.add('in'); io.unobserve(t); } }); }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+    els.forEach(function (e) {
+      if (e.classList.contains('in')) return;
+      var row = e.closest('.hscroll');
+      if (row) { if (!row.dataset.rv) { row.dataset.rv = '1'; io.observe(row); } } else io.observe(e);
+    });
   }
+
+  /* brzi skrol ili skok na sidro može preskočiti posmatrač, pa sve što je iznad dna ekrana otkrij kad skrol stane */
+  var revT = 0;
+  window.addEventListener('scroll', function () {
+    clearTimeout(revT);
+    revT = setTimeout(function () { $$('.split:not(.in), .reveal:not(.in)').forEach(function (e) { if (e.getBoundingClientRect().top < innerHeight) e.classList.add('in'); }); }, 160);
+  }, { passive: true });
 
   /* ---------- kursor kapljica ---------- */
   if (fine && !reduced) (function () {
