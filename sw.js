@@ -1,6 +1,6 @@
 /* Offline keš: stranica se otvara i bez interneta sa zadnjim podacima. */
-var CACHE = 'glaze-v5';
-var CORE = ['./', 'index.html', 'css/style.css', 'css/components.css', 'css/sections.css', 'js/salon.js', 'js/i18n-bs.js', 'js/i18n-en.js', 'js/i18n-de.js', 'js/hand.js', 'js/app.js', 'js/tryon.js', 'js/booking.js', 'js/extras.js', 'js/outfit.js', 'js/mirror.js',
+var CACHE = 'glaze-v6';
+var CORE = ['./', 'index.html', 'css/style.css', 'css/components.css', 'css/sections.css', 'js/salon.js', 'js/i18n-bs.js', 'js/i18n-en.js', 'js/i18n-de.js', 'js/hand.js', 'js/app.js', 'js/tryon.js', 'js/booking.js', 'js/extras.js', 'js/outfit.js',
   'assets/fonts/instrument-serif.woff2', 'assets/fonts/instrument-serif-italic.woff2', 'assets/fonts/manrope.woff2', 'assets/icons/favicon.svg', 'assets/icons/icon-192.png', 'manifest.webmanifest'];
 self.addEventListener('install', function (e) { e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(CORE); }).then(function () { return self.skipWaiting(); })); });
 self.addEventListener('activate', function (e) { e.waitUntil(caches.keys().then(function (k) { return Promise.all(k.filter(function (x) { return x !== CACHE; }).map(function (x) { return caches.delete(x); })); }).then(function () { return self.clients.claim(); })); });

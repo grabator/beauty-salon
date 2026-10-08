@@ -9,6 +9,15 @@ window.SALON = {
   currency: 'KM',                                  // 'KM' ili 'EUR'
   timeZone: 'Europe/Sarajevo',
 
+  // Dodatni dijelovi stranice. false = dio se ne prikazuje i njegov kod se ne učitava. true = vraća se kao prije.
+  features: {
+    mirror: false,        // "Isprobaj na svojoj ruci" (kamera i ogledalo)
+    lights: false,        // prekidač svjetla Dan / Salon / Večer i "Pomjeri telefon"
+    season: false,        // sekcija "Kolekcija sezone"
+    beforeAfter: false,   // sekcija "Razlika se vidi" (prije i poslije)
+    gift: false,          // sekcija "Poklon bon" i link u meniju
+  },
+
   contact: {
     phone: '+387 61 000 000',                      // PRIMJER
     tel: '+38761000000',                           // PRIMJER: broj bez razmaka
