@@ -6,8 +6,7 @@
 <title>Glaze Nail Studio · Manikura, gel i njega noktiju</title>
 <meta name="description" content="Studio za nokte: manikura, gel lak, nadogradnja, pedikura i njega. Isprobaj boju na ruci i zakaži termin preko Vibera ili WhatsAppa.">
 <meta name="theme-color" content="#FBF6F3">
-<script>try{var l=JSON.parse(localStorage.getItem('glaze-light'));if(l==='day'||l==='evening')document.documentElement.setAttribute('data-light',l)}catch(e){}
-try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(localStorage.getItem('glaze-lang')||'null')||(navigator.language||'').slice(0,2);var k=document.createElement('link');k.rel='preload';k.as='script';k.href='js/i18n-'+(g==='en'||g==='de'?g:'bs')+'.js?v=5';document.head.appendChild(k)}catch(e){}</script>
+<script>try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(localStorage.getItem('glaze-lang')||'null')||(navigator.language||'').slice(0,2);var k=document.createElement('link');k.rel='preload';k.as='script';k.href='js/i18n-'+(g==='en'||g==='de'?g:'bs')+'.js?v=6';document.head.appendChild(k)}catch(e){}</script>
 <link rel="canonical" href="https://beauty-salon.example/">
 <link rel="alternate" hreflang="bs" href="https://beauty-salon.example/?lang=bs">
 <link rel="alternate" hreflang="en" href="https://beauty-salon.example/?lang=en">
@@ -24,12 +23,12 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/style.css?v=5">
-<link rel="stylesheet" href="css/components.css?v=5">
-<link rel="stylesheet" href="css/sections.css?v=5">
-<script src="js/salon.js?v=5" defer></script>
-<script src="js/hand.js?v=5" defer></script>
-<script src="js/app.js?v=5" defer></script>
+<link rel="stylesheet" href="css/style.css?v=6">
+<link rel="stylesheet" href="css/components.css?v=6">
+<link rel="stylesheet" href="css/sections.css?v=6">
+<script src="js/salon.js?v=6" defer></script>
+<script src="js/hand.js?v=6" defer></script>
+<script src="js/app.js?v=6" defer></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -73,6 +72,9 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
     <symbol id="i-lamp" viewBox="0 0 24 24"><path d="M8 3.5h8l3 7H5zM12 10.5v8M8 20.5h8"/><path d="M9.5 13.5c.8 1 1.6 1.4 2.5 1.4s1.7-.4 2.5-1.4" opacity=".6"/></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.8A8 8 0 0 1 9.2 4.5a8 8 0 1 0 10.3 10.3z"/></symbol>
     <symbol id="i-tilt" viewBox="0 0 24 24"><rect x="7.5" y="3" width="9" height="18" rx="2.2" transform="rotate(-14 12 12)"/><path d="M3 9.5c-.8 1.6-.8 3.4 0 5M21 9.5c.8 1.6.8 3.4 0 5"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6.5 9.5 12 15l5.5-5.5"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.4a2.5 2.5 0 0 1 4.9.7c0 1.8-2.5 2.2-2.5 3.8"/><path d="M12 17.2v.1"/></symbol>
+    <symbol id="i-team" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19.5c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="16.8" cy="9.6" r="2.3"/><path d="M16 14.6c2.4-.2 4.2 1.4 4.6 4.4"/></symbol>
     <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3.5s-6 6.8-6 11a6 6 0 0 0 12 0c0-4.2-6-11-6-11z"/></symbol>
   </defs>
 </svg>
@@ -84,17 +86,18 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
 <header class="top" id="top-nav">
   <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span class="brand-name" data-salon="short">Glaze</span></a>
   <nav class="top-links" data-ta="menu">
+    <a href="#galerija" data-goto="galerija" data-t="nav.gallery">Galerija</a>
+    <a href="#lokacija" data-goto="lokacija" data-t="nav.location">Lokacija</a>
+    <a href="#tim" data-goto="tim" data-t="nav.team">Tim</a>
     <a href="#isprobaj" data-goto="isprobaj" data-t="nav.tryon">Isprobaj</a>
     <a href="#usluge" data-goto="usluge" data-t="nav.services">Usluge</a>
-    <a href="#galerija" data-goto="galerija" data-t="nav.gallery">Galerija</a>
     <a href="#njega" data-goto="njega" data-t="nav.care">Njega</a>
-    <a href="#poklon" data-goto="poklon" data-t="nav.gift">Poklon bon</a>
-    <a href="#kontakt" data-goto="kontakt" data-t="nav.contact">Kontakt</a>
+    <a href="#poklon" data-goto="poklon" data-t="nav.gift" data-feature="gift">Poklon bon</a>
   </nav>
   <div class="top-right">
     <button type="button" class="menu-btn" data-menu aria-haspopup="dialog" data-ta="menu"><span></span><span></span><span></span></button>
     <div class="lang" role="group" data-ta="lang"><button type="button" data-lang="bs">BS</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="de">DE</button></div>
-    <button type="button" class="btn btn-plum top-book" data-open-booking><span data-t="hero.book">Zakaži termin</span></button>
+    <button type="button" class="btn btn-plum top-book" data-open-booking><svg class="ic"><use href="#i-cal"/></svg><span data-t="hero.book">Zakaži termin</span></button>
   </div>
 </header>
 
@@ -116,20 +119,59 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
       <div class="hero-halo" aria-hidden="true"></div>
       <svg class="hand hero-hand" viewBox="0 0 400 566" role="img" data-ta="a11y.heroHand"></svg>
       <span class="shade-chip" aria-hidden="true"><i></i><b></b></span>
-      <div class="light-sw hero-light" role="radiogroup" data-ta="light.label"><button type="button" role="radio" data-light="day" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-sun"/></svg><span data-t="light.day"></span></button><button type="button" role="radio" data-light="salon" aria-checked="true" tabindex="0"><svg class="ic"><use href="#i-lamp"/></svg><span data-t="light.salon"></span></button><button type="button" role="radio" data-light="evening" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-moon"/></svg><span data-t="light.evening"></span></button></div>
+      <div data-feature="lights" class="light-sw hero-light" role="radiogroup" data-ta="light.label"><button type="button" role="radio" data-light="day" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-sun"/></svg><span data-t="light.day"></span></button><button type="button" role="radio" data-light="salon" aria-checked="true" tabindex="0"><svg class="ic"><use href="#i-lamp"/></svg><span data-t="light.salon"></span></button><button type="button" role="radio" data-light="evening" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-moon"/></svg><span data-t="light.evening"></span></button></div>
     </div>
   </section>
 
 
-  <!-- 3. Isprobaj boju -->
+  <!-- 2. Galerija dizajna -->
+  <section class="sec gallery" id="galerija" aria-labelledby="gal-h">
+    <div class="wrap">
+      <header class="sec-head"><p class="kicker" data-t="gallery.kicker"></p><h2 id="gal-h" class="h2 split" data-t="gallery.title"></h2></header>
+      <div class="chips gal-filters" role="group" data-ta="a11y.filters"></div>
+      <div class="gal-sub" id="gal-seasons"><div><div class="chips chips-sub gal-seasons" role="group"></div></div></div>
+      <div class="gal-grid"></div>
+      <p class="gal-more" hidden><button type="button" class="btn btn-line" data-gal-more><svg class="ic"><use href="#i-plus"/></svg><span class="gal-more-t"></span></button><small class="gal-count" aria-live="polite"></small></p>
+    </div>
+  </section>
+
+  <!-- Kolekcija sezone (features.season) -->
+  <section class="sec season" id="sezona" data-feature="season" aria-labelledby="sea-h">
+    <div class="wrap">
+      <header class="sec-head"><p class="kicker" data-t="season.kicker"></p><h2 id="sea-h" class="h2 split season-title"></h2></header>
+      <div class="season-row hscroll" tabindex="0" aria-labelledby="sea-h"></div>
+    </div>
+  </section>
+
+  <!-- 3. Lokacija -->
+  <section class="sec contact band" id="lokacija" aria-labelledby="ct-h">
+    <div class="wrap contact-grid">
+      <div class="ct-text">
+        <header class="sec-head"><p class="kicker" data-t="contact.kicker"></p><h2 id="ct-h" class="h2 split" data-t="contact.title"></h2></header>
+        <dl class="ct-info"></dl>
+        <div class="ct-btns"></div>
+      </div>
+      <div class="map card"><div class="map-ph" aria-hidden="true"></div><p class="map-addr"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span class="map-addr-t"></span><small class="map-load" data-t="contact.mapLoading"></small></p></div>
+    </div>
+  </section>
+
+  <!-- 4. Tim -->
+  <section class="sec team" id="tim" aria-labelledby="team-h">
+    <div class="wrap">
+      <header class="sec-head center"><p class="kicker" data-t="team.kicker"></p><h2 id="team-h" class="h2 split" data-t="team.title"></h2></header>
+      <ul class="team-row hscroll" tabindex="0" aria-labelledby="team-h"></ul>
+    </div>
+  </section>
+
+  <!-- 5. Isprobaj boju i boja uz outfit -->
   <section class="sec tryon" id="isprobaj" aria-labelledby="try-h">
     <div class="scroll-nail" aria-hidden="true"></div>
     <div class="wrap">
       <header class="sec-head center"><p class="kicker" data-t="tryon.kicker"></p><h2 id="try-h" class="h2 split" data-t="tryon.title"></h2><p class="sub" data-t="tryon.sub"></p></header>
       <div class="try-grid">
         <div class="try-stage">
-          <div class="light-sw try-light" role="radiogroup" data-ta="light.label"><button type="button" role="radio" data-light="day" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-sun"/></svg><span data-t="light.day"></span></button><button type="button" role="radio" data-light="salon" aria-checked="true" tabindex="0"><svg class="ic"><use href="#i-lamp"/></svg><span data-t="light.salon"></span></button><button type="button" role="radio" data-light="evening" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-moon"/></svg><span data-t="light.evening"></span></button></div>
-          <button type="button" class="tilt-btn" data-tilt hidden><svg class="ic"><use href="#i-tilt"/></svg><span data-t="light.tilt"></span></button>
+          <div data-feature="lights" class="light-sw try-light" role="radiogroup" data-ta="light.label"><button type="button" role="radio" data-light="day" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-sun"/></svg><span data-t="light.day"></span></button><button type="button" role="radio" data-light="salon" aria-checked="true" tabindex="0"><svg class="ic"><use href="#i-lamp"/></svg><span data-t="light.salon"></span></button><button type="button" role="radio" data-light="evening" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-moon"/></svg><span data-t="light.evening"></span></button></div>
+          <button type="button" class="tilt-btn" data-feature="lights" data-tilt hidden><svg class="ic"><use href="#i-tilt"/></svg><span data-t="light.tilt"></span></button>
           <svg class="hand try-hand" viewBox="0 0 400 566" role="img" data-ta="a11y.tryHand"></svg>
           <p class="try-name" aria-live="polite"><i></i><span></span></p>
           <div class="try-actions">
@@ -137,7 +179,7 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
             <button type="button" class="icon-btn" data-try="fav" aria-pressed="false"><svg class="ic"><use href="#i-heart"/></svg><span data-t="tryon.fav"></span></button>
             <button type="button" class="icon-btn" data-try="share"><svg class="ic"><use href="#i-share"/></svg><span data-t="tryon.share"></span></button>
           </div>
-          <button type="button" class="btn btn-ghost mirror-btn" data-mirror><svg class="ic"><use href="#i-hand"/></svg><span data-t="mirror.open"></span></button>
+          <button type="button" class="btn btn-ghost mirror-btn" data-feature="mirror" data-mirror><svg class="ic"><use href="#i-hand"/></svg><span data-t="mirror.open"></span></button>
         </div>
         <div class="try-panel">
           <div class="shelf-wrap"><p class="ctl-label" data-t="tryon.shade"></p><div class="shelf-groups" role="tablist"></div><div class="shelf" role="listbox" aria-label="Nijanse"></div></div>
@@ -156,7 +198,7 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
     </div>
   </section>
 
-  <!-- 4. Usluge -->
+  <!-- 6. Usluge i cijene -->
   <section class="sec services" id="usluge" aria-labelledby="srv-h">
     <div class="wrap">
       <header class="sec-head"><p class="kicker" data-t="services.kicker"></p><h2 id="srv-h" class="h2 split" data-t="services.title"></h2><p class="sub" data-t="services.sub"></p></header>
@@ -165,25 +207,8 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
     </div>
   </section>
 
-  <!-- 5. Kolekcija sezone -->
-  <section class="sec season" id="sezona" aria-labelledby="sea-h">
-    <div class="wrap">
-      <header class="sec-head"><p class="kicker" data-t="season.kicker"></p><h2 id="sea-h" class="h2 split season-title"></h2></header>
-      <div class="season-row hscroll" tabindex="0" aria-labelledby="sea-h"></div>
-    </div>
-  </section>
-
-  <!-- 6. Galerija -->
-  <section class="sec gallery" id="galerija" aria-labelledby="gal-h">
-    <div class="wrap">
-      <header class="sec-head"><p class="kicker" data-t="gallery.kicker"></p><h2 id="gal-h" class="h2 split" data-t="gallery.title"></h2></header>
-      <div class="chips gal-filters" role="group" data-ta="a11y.filters"></div>
-      <div class="gal-grid"></div>
-    </div>
-  </section>
-
-  <!-- 7. Prije i poslije -->
-  <section class="sec ba" id="prije-poslije" aria-labelledby="ba-h">
+  <!-- Prije i poslije (features.beforeAfter) -->
+  <section class="sec ba" id="prije-poslije" data-feature="beforeAfter" aria-labelledby="ba-h">
     <div class="wrap ba-grid">
       <header class="sec-head"><p class="kicker" data-t="ba.kicker"></p><h2 id="ba-h" class="h2 split" data-t="ba.title"></h2><p class="sub" data-t="ba.label"></p></header>
       <div class="ba-box">
@@ -196,15 +221,15 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
     </div>
   </section>
 
-  <!-- 8. Tok termina -->
-  <section class="sec flow" id="tok" aria-labelledby="flow-h">
+  <!-- 7. Kako izgleda termin -->
+  <section class="sec flow band" id="tok" aria-labelledby="flow-h">
     <div class="wrap">
       <header class="sec-head center"><p class="kicker" data-t="flow.kicker"></p><h2 id="flow-h" class="h2 split" data-t="flow.title"></h2></header>
       <ol class="flow-steps"></ol>
     </div>
   </section>
 
-  <!-- 9. Higijena -->
+  <!-- 8. Higijena -->
   <section class="sec hygiene" id="higijena" aria-labelledby="hyg-h">
     <div class="wrap hyg-grid">
       <header class="sec-head"><p class="kicker" data-t="hygiene.kicker"></p><h2 id="hyg-h" class="h2 split" data-t="hygiene.title"></h2><p class="sub" data-t="hygiene.sub"></p></header>
@@ -212,23 +237,7 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
     </div>
   </section>
 
-  <!-- Studio: mjesta za prave fotografije -->
-  <section class="sec studio" id="studio" aria-labelledby="stu-h">
-    <div class="wrap">
-      <header class="sec-head center"><p class="kicker" data-t="studio.kicker"></p><h2 id="stu-h" class="h2 split" data-t="studio.title"></h2><p class="sub" data-t="studio.sub"></p></header>
-      <div class="studio-grid"></div>
-    </div>
-  </section>
-
-  <!-- 10. Tim -->
-  <section class="sec team" id="tim" aria-labelledby="team-h">
-    <div class="wrap">
-      <header class="sec-head center"><p class="kicker" data-t="team.kicker"></p><h2 id="team-h" class="h2 split" data-t="team.title"></h2></header>
-      <ul class="team-row hscroll" tabindex="0" aria-labelledby="team-h"></ul>
-    </div>
-  </section>
-
-  <!-- 11. Recenzije -->
+  <!-- 9. Recenzije -->
   <section class="sec reviews" id="recenzije" aria-labelledby="rev-h">
     <div class="wrap">
       <header class="sec-head"><p class="kicker" data-t="reviews.kicker"></p><h2 id="rev-h" class="h2 split" data-t="reviews.title"></h2><p class="sub note" data-t="reviews.note"></p></header>
@@ -238,8 +247,8 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
     </div>
   </section>
 
-  <!-- 12. Njega -->
-  <section class="sec care" id="njega" aria-labelledby="care-h">
+  <!-- 10. Njega: savjeti, kviz, korekcija -->
+  <section class="sec care band" id="njega" aria-labelledby="care-h">
     <div class="wrap">
       <header class="sec-head"><p class="kicker" data-t="care.kicker"></p><h2 id="care-h" class="h2 split" data-t="care.title"></h2></header>
       <ul class="tips hscroll" tabindex="0" aria-labelledby="care-h"></ul>
@@ -254,8 +263,16 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
     </div>
   </section>
 
-  <!-- 13. Vjernost i poklon bon -->
-  <section class="sec perks" id="poklon" aria-labelledby="gift-h">
+  <!-- 11. Studio -->
+  <section class="sec studio" id="studio" aria-labelledby="stu-h">
+    <div class="wrap">
+      <header class="sec-head center"><p class="kicker" data-t="studio.kicker"></p><h2 id="stu-h" class="h2 split" data-t="studio.title"></h2><p class="sub" data-t="studio.sub"></p></header>
+      <div class="studio-grid"></div>
+    </div>
+  </section>
+
+  <!-- Poklon bon (features.gift) -->
+  <section class="sec perks" id="poklon" data-feature="gift" aria-labelledby="gift-h">
     <div class="wrap">
       <div class="card gift">
         <div class="gift-head"><p class="kicker" data-t="gift.kicker"></p><h2 id="gift-h" class="h2 split" data-t="gift.title"></h2><p class="sub" data-t="gift.sub"></p></div>
@@ -271,30 +288,18 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
     </div>
   </section>
 
-  <!-- 14. FAQ -->
-  <section class="sec faq" id="faq" aria-labelledby="faq-h">
+  <!-- 12. FAQ -->
+  <section class="sec faq band" id="faq" aria-labelledby="faq-h">
     <div class="wrap faq-grid">
       <header class="sec-head"><p class="kicker" data-t="faq.kicker"></p><h2 id="faq-h" class="h2 split" data-t="faq.title"></h2></header>
       <div class="faq-list"></div>
-    </div>
-  </section>
-
-  <!-- 15. Kontakt -->
-  <section class="sec contact" id="kontakt" aria-labelledby="ct-h">
-    <div class="wrap contact-grid">
-      <div>
-        <header class="sec-head"><p class="kicker" data-t="contact.kicker"></p><h2 id="ct-h" class="h2 split" data-t="contact.title"></h2></header>
-        <dl class="ct-info"></dl>
-        <div class="row-btns ct-btns"></div>
-      </div>
-      <div class="map card" aria-hidden="true"></div>
     </div>
   </section>
 </main>
 
 <footer class="foot">
   <div class="wrap foot-grid">
-    <div><p class="foot-brand"><span class="brand-mark" aria-hidden="true"></span><span data-salon="name"></span></p><p class="foot-slogan"></p></div>
+    <div><p class="foot-brand"><span class="brand-mark" aria-hidden="true"></span><span data-salon="name"></span></p><p class="foot-slogan"></p><button type="button" class="btn btn-plum foot-book" data-open-booking><svg class="ic"><use href="#i-cal"/></svg><span data-t="hero.book"></span></button></div>
     <div class="foot-links"></div>
     <div class="foot-meta"><p class="small" data-t="footer.privacy"></p><p class="small" data-t="footer.demo"></p><p class="small foot-copy"></p></div>
   </div>
@@ -303,8 +308,8 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
 <!-- donja navigacija (mobitel) -->
 <nav class="tabbar" data-ta="a11y.nav">
   <a href="#top" data-tab="home"><svg class="ic"><use href="#i-home"/></svg><span data-t="nav.home"></span></a>
-  <a href="#usluge" data-tab="services"><svg class="ic"><use href="#i-list"/></svg><span data-t="nav.services"></span></a>
   <a href="#isprobaj" data-tab="tryon"><svg class="ic"><use href="#i-brush"/></svg><span data-t="nav.tryon"></span></a>
+  <a href="#usluge" data-tab="services"><svg class="ic"><use href="#i-list"/></svg><span data-t="nav.services"></span></a>
   <button type="button" data-tab="favs" data-open-favs><svg class="ic"><use href="#i-heart"/></svg><span data-t="nav.favs"></span><b class="badge fav-count" hidden></b></button>
   <button type="button" data-tab="book" data-open-booking><svg class="ic"><use href="#i-cal"/></svg><span data-t="nav.book"></span><b class="badge cart-count" hidden></b></button>
   <span class="tab-ind" aria-hidden="true"></span>

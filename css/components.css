@@ -1,29 +1,37 @@
 /* Komponente: dugmad, segmenti, kartice, tabovi, sheet, polja, toast, harmonika. */
 .ic { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 
-/* dugmad */
-.btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 999px; font-weight: 700; font-size: 15px; text-decoration: none; white-space: nowrap; overflow: hidden; isolation: isolate; transition: transform var(--t-1) var(--ease), background-color var(--t-2), color var(--t-2), box-shadow var(--t-2); }
-.btn:active { transform: scale(0.97); }
-.btn-lg { min-height: 56px; padding: 0 26px; font-size: 16px; }
+/* dugmad: mekano zaobljena, puna boja, efekti ostaju unutar dugmeta */
+.btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 14px; font-weight: 700; font-size: 15px; text-decoration: none; white-space: nowrap; overflow: hidden; isolation: isolate; transition: transform var(--t-2) var(--ease), background-color var(--t-2), color var(--t-2), box-shadow var(--t-2) var(--ease); }
+.btn:active { transform: scale(0.98); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.btn-lg { min-height: 56px; padding: 0 26px; font-size: 16px; border-radius: 16px; }
 .btn-block { width: 100%; }
-.btn-plum { background: linear-gradient(140deg, var(--btn-hi), var(--btn) 55%, var(--btn-lo)); color: var(--on-ink); letter-spacing: 0.01em; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 0 -2px 0 rgba(0, 0, 0, 0.16), 0 2px 6px -2px rgb(var(--shd) / 0.35), 0 14px 28px -14px rgb(var(--shd) / 0.75); transition: transform var(--t-2) var(--ease), box-shadow var(--t-2) var(--ease), filter var(--t-2); }
-.btn-plum:hover { transform: translateY(-2px); filter: brightness(1.06); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.26), inset 0 -2px 0 rgba(0, 0, 0, 0.16), 0 4px 10px -2px rgb(var(--shd) / 0.35), 0 20px 34px -14px rgb(var(--shd) / 0.8); }
-.btn-plum:active { transform: translateY(0) scale(0.98); }
-/* ikonica u mekom krugu, strelica na kraju */
-.btn-plum .ic:first-child:not(.ic-end) { width: 30px; height: 30px; padding: 6px; margin-left: -10px; border-radius: 50%; background: rgba(255, 255, 255, 0.16); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18); }
-.btn-lg.btn-plum .ic:first-child:not(.ic-end) { width: 34px; height: 34px; padding: 7px; margin-left: -12px; }
+/* glavno dugme (Zakaži termin): puna plum boja, ikonica bez kruga, tiha sjena */
+.btn-plum { background: var(--btn); color: var(--on-ink); letter-spacing: 0.01em; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 1px 2px rgb(var(--shd) / 0.2), 0 8px 18px -10px rgb(var(--shd) / 0.55); }
+.btn-plum:hover { background: var(--btn-hover); transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 2px 4px rgb(var(--shd) / 0.18), 0 12px 24px -12px rgb(var(--shd) / 0.6); }
+.btn-plum:active { transform: translateY(0) scale(0.98); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 2px rgb(var(--shd) / 0.2); }
+/* blagi odsjaj pređe preko dugmeta na hover, unutar njegovih ivica */
+.btn-plum::after { content: ''; position: absolute; z-index: -1; inset: 0; background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.13) 50%, transparent 62%); transform: translateX(-100%); pointer-events: none; }
+.btn-plum:hover::after, .btn-plum.shine::after { transform: translateX(100%); transition: transform var(--t-4) var(--ease); }
 .btn-plum .ic-end { transition: transform var(--t-2) var(--ease); }
 .btn-plum:hover .ic-end { transform: translateX(3px); }
-:root[data-light='evening'] .btn-plum .ic:first-child:not(.ic-end) { background: rgba(58, 20, 38, 0.1); box-shadow: inset 0 0 0 1px rgba(58, 20, 38, 0.12); }
-.btn-ghost { background: rgb(var(--sf) / 0.72); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line), var(--sh-1); }
-.btn-ghost:hover { background: var(--surface); }
+/* sporedno dugme (Pozovi, Google Maps): svijetla pozadina i tanka ivica */
+.btn-ghost, .btn-line { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1px rgb(var(--tint) / 0.2), 0 1px 2px rgb(var(--shd) / 0.06); }
+.btn-ghost:hover, .btn-line:hover { background: var(--sel); transform: translateY(-1px); box-shadow: inset 0 0 0 1px rgb(var(--tint) / 0.34), 0 6px 14px -10px rgb(var(--shd) / 0.4); }
+.btn-ghost .ic, .btn-line .ic { color: var(--accent); }
+/* poruke (Viber, WhatsApp, Instagram): jednake, mekana podloga */
+.btn-soft { background: rgb(var(--chipc) / 0.5); color: var(--ink); }
+.btn-soft:hover { background: var(--chip); transform: translateY(-1px); }
+.btn-soft .ic { color: var(--accent); }
+/* na tamnoj podlozi (footer) */
+.btn-dark { background: rgba(255, 255, 255, 0.07); color: #F6E9EE; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14); }
+.btn-dark:hover { background: rgba(255, 255, 255, 0.13); transform: translateY(-1px); }
+.btn-dark:focus-visible, .foot .btn:focus-visible { outline-color: #F4D6DC; }
 .btn-text { min-height: 44px; padding: 0 12px; color: var(--ink-soft); text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+.btn-text:hover { color: var(--ink); }
 .btn[disabled] { opacity: 0.45; pointer-events: none; }
-/* sjaj koji pređe preko dugmeta */
-.gloss::after { content: ''; position: absolute; z-index: -1; inset: -20% auto -20% -40%; width: 30%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent); transform: skewX(-20deg) translateX(-120%); }
-.gloss:hover::after, .gloss:active::after, .gloss.shine::after { animation: sweep var(--t-4) var(--ease); }
-@keyframes sweep { to { transform: skewX(-20deg) translateX(560%); } }
-.gloss::before { content: ''; position: absolute; z-index: -1; left: 14px; right: 14px; top: 2px; height: 45%; border-radius: 999px 999px 40% 40%; background: linear-gradient(rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0)); pointer-events: none; }
+@media (hover: none) { .btn:hover { transform: none; } }
 
 .icon-btn { display: inline-flex; flex-direction: column; align-items: center; gap: 4px; min-width: 64px; min-height: 56px; padding: 6px 8px; border-radius: 18px; font-size: 12.5px; font-weight: 700; color: var(--ink-soft); transition: background-color var(--t-2), color var(--t-2), transform var(--t-1); }
 .icon-btn .ic { width: 22px; height: 22px; }

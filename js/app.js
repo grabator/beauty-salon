@@ -17,9 +17,12 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem('glaze-' + k)); localStorage.setItem('glaze-' + k, JSON.stringify(v)); } catch (e) { return null; } }
   var LANGS = ['bs', 'en', 'de'];
+  // dodatni dijelovi (salon.js, features): isključeni se uklanjaju iz stranice, a njihov kod se ne učitava
+  var F = Object.assign({ mirror: false, lights: false, season: false, beforeAfter: false, gift: false }, S.features);
+  $$('[data-feature]').forEach(function (el) { if (F[el.getAttribute('data-feature')]) el.classList.add('feat-on'); else el.remove(); });
 
   var APP = window.APP = {
-    $: $, $$: $$, esc: esc, store: store, reduced: reduced, v: '5',
+    $: $, $$: $$, esc: esc, store: store, reduced: reduced, v: '6', features: F,
     lang: (function () {
       var q = (location.search.match(/[?&]lang=(bs|en|de)/) || [])[1], saved = store('lang');
       var nav = (navigator.language || '').slice(0, 2);
@@ -198,23 +201,46 @@
       '<button type="button" class="fav-mini" data-fav="' + d.id + '" aria-pressed="' + APP.isFav(l) + '" aria-label="' + esc(T.tryon.fav) + '"><svg class="ic"><use href="#i-heart"/></svg></button></article>';
   }
   function renderSeason() {
+    if (!F.season) return;
     var s = season(), T = APP.T();
     $('.season-title').innerHTML = APP.rich(APP.t('season.title', { s: T.season.names[s] }));
     $('.season-row').innerHTML = S.seasons[s].map(function (id, i) { return dcard(designById(id), i); }).join('');
   }
-  var galFilter = 'all';
+  // galerija: filteri, godišnja doba ispod "Sezona" i "Prikaži još" (4 na desktopu, 2 na mobitelu)
+  var galFilter = 'all', galSeason = null, galShown = 0;
+  var GAL_F = ['all', 'minimal', 'french', 'chrome', 'ombre', 'glitter', 'season'], SEASONS = ['winter', 'spring', 'summer', 'autumn'];
+  function galStep() { return window.innerWidth < 760 ? 2 : 4; }
+  function galList() {
+    var ss = S.seasons[galSeason || season()];
+    return S.designs.filter(function (d) { return galFilter === 'all' || (galFilter === 'season' ? ss.indexOf(d.id) > -1 : d.tags.indexOf(galFilter) > -1); });
+  }
   function renderGallery() {
-    var T = APP.T();
-    $('.gal-filters').innerHTML = ['all', 'minimal', 'french', 'chrome', 'ombre', 'glitter', 'season'].map(function (f) { return '<button type="button" data-gf="' + f + '" aria-pressed="' + (f === galFilter) + '">' + esc(T.gallery.filters[f]) + '</button>'; }).join('');
-    drawGallery();
+    var T = APP.T(), G = T.gallery, sel = galSeason || season();
+    $('.gal-filters').innerHTML = GAL_F.map(function (f) { return '<button type="button" data-gf="' + f + '" aria-pressed="' + (f === galFilter) + '"' + (f === 'season' ? ' aria-controls="gal-seasons" aria-expanded="' + (galFilter === 'season') + '"' : '') + '>' + esc(G.filters[f]) + (f === 'season' ? '<svg class="ic chev" aria-hidden="true"><use href="#i-chev"/></svg>' : '') + '</button>'; }).join('');
+    var gs = $('.gal-seasons'); gs.setAttribute('aria-label', G.seasonsLabel);
+    gs.innerHTML = SEASONS.map(function (k) { return '<button type="button" data-gs="' + k + '" aria-pressed="' + (k === sel) + '">' + esc(G.seasons[k]) + '</button>'; }).join('');
+    $('.gal-sub').classList.toggle('open', galFilter === 'season');
+    drawGallery(!galShown);
   }
-  function drawGallery() {
-    var ss = S.seasons[season()];
-    var list = S.designs.filter(function (d) { return galFilter === 'all' || (galFilter === 'season' ? ss.indexOf(d.id) > -1 : d.tags.indexOf(galFilter) > -1); });
-    var limit = galAll || window.innerWidth >= 980 ? list.length : 8;
-    $('.gal-grid').innerHTML = list.slice(0, limit).map(dcard).join('') + (list.length > limit ? '<p class="gal-more"><button type="button" class="btn btn-ghost" data-gal-more>' + esc(APP.T().gallery.showAll) + ' (' + list.length + ')</button></p>' : '');
+  function galMoreUI(total) {
+    var T = APP.T().gallery, p = $('.gal-more');
+    p.hidden = galShown >= total;
+    $('.gal-more-t').textContent = T.showMore;
+    $('.gal-count').textContent = APP.t('gallery.shown', { n: Math.min(galShown, total), t: total });
   }
-  var galAll = false;
+  function drawGallery(reset) {
+    var list = galList();
+    if (reset) galShown = galStep();
+    $('.gal-grid').innerHTML = list.slice(0, galShown).map(dcard).join('');
+    galMoreUI(list.length);
+  }
+  function galMore() {
+    var list = galList(), from = galShown, grid = $('.gal-grid');
+    galShown = Math.min(list.length, galShown + galStep());
+    grid.insertAdjacentHTML('beforeend', list.slice(from, galShown).map(function (d, i) { return dcard(d, i); }).join(''));
+    galMoreUI(list.length);
+    if (galShown >= list.length) { var f = grid.children[from] && grid.children[from].querySelector('.art'); if (f) f.focus({ preventScroll: true }); }
+  }
   function openDesign(id) {
     var d = designById(id), T = APP.T(), l = designLook(d), fav = APP.isFav(l);
     APP.sheet.open({
@@ -254,6 +280,7 @@
     return s + '</svg>';
   }
   function renderBA() {
+    if (!F.beforeAfter) return;
     if (!$('.ba-before').innerHTML) { $('.ba-before').innerHTML = baSVG(0); $('.ba-after').innerHTML = baSVG(1); }
     var r = $('.ba-range'); r.setAttribute('aria-label', APP.T().ba.label);
   }
@@ -322,17 +349,32 @@
     return { tel: 'tel:' + c.tel, viber: 'viber://chat?number=%2B' + c.viber, wa: 'https://wa.me/' + c.whatsapp, ig: 'https://ig.me/m/' + c.instagram, igProfile: 'https://instagram.com/' + c.instagram, maps: S.address.maps };
   };
   function renderContact() {
-    var T = APP.T(), L = APP.links(), n = APP.now(), order = [1, 2, 3, 4, 5, 6, 0];
+    var T = APP.T(), L = APP.links(), n = APP.now(), order = [1, 2, 3, 4, 5, 6, 0], adr = S.address.street + ', ' + S.address.zip + ' ' + S.address.city;
     var hrs = order.map(function (d) { var h = S.hours[d]; return '<span' + (d === n.dow ? ' class="today"' : '') + '>' + esc(T.days[d].charAt(0).toUpperCase() + T.days[d].slice(1)) + '</span><span' + (d === n.dow ? ' class="today"' : '') + '>' + (h ? h[0] + ' – ' + h[1] : esc(T.status.closedLong)) + '</span>'; }).join('');
-    $('.ct-info').innerHTML = '<div><dt>' + esc(T.contact.address) + '</dt><dd>' + esc(S.address.street + ', ' + S.address.zip + ' ' + S.address.city) + '</dd></div>' +
+    $('.ct-info').innerHTML = '<div><dt>' + esc(T.contact.address) + '</dt><dd>' + esc(adr) + '</dd></div>' +
       '<div><dt>' + esc(T.contact.hours) + '</dt><dd class="hours">' + hrs + '</dd></div>' +
       '<div><dt>' + esc(T.contact.parking) + '</dt><dd>' + esc(APP.tr(S.address.parking)) + '</dd></div>';
-    $('.ct-btns').innerHTML = '<a class="btn btn-plum gloss" href="' + L.tel + '"><svg class="ic"><use href="#i-phone"/></svg>' + esc(T.contact.call) + '</a>' +
-      '<a class="btn btn-ghost" href="' + L.maps + '" target="_blank" rel="noopener"><svg class="ic"><use href="#i-pin"/></svg>' + esc(T.contact.maps) + '</a>' +
-      '<a class="btn btn-ghost" href="' + L.viber + '"><svg class="ic"><use href="#i-viber"/></svg>Viber</a>' +
-      '<a class="btn btn-ghost" href="' + L.wa + '" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg>WhatsApp</a>' +
-      '<a class="btn btn-ghost" href="' + L.igProfile + '" target="_blank" rel="noopener"><svg class="ic"><use href="#i-insta"/></svg>Instagram</a>';
-    if (!$('.map').innerHTML) $('.map').innerHTML = mapSVG();
+    $('.ct-btns').innerHTML = '<div class="ct-main"><a class="btn btn-line" href="' + L.tel + '"><svg class="ic"><use href="#i-phone"/></svg><span>' + esc(T.contact.call) + '</span></a>' +
+      '<a class="btn btn-line" href="' + L.maps + '" target="_blank" rel="noopener"><svg class="ic"><use href="#i-pin"/></svg><span>' + esc(T.contact.maps) + '</span></a></div>' +
+      '<div class="msg-btns"><a class="btn btn-soft" href="' + L.viber + '"><svg class="ic"><use href="#i-viber"/></svg><span>Viber</span></a>' +
+      '<a class="btn btn-soft" href="' + L.wa + '" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg><span>WhatsApp</span></a>' +
+      '<a class="btn btn-soft" href="' + L.igProfile + '" target="_blank" rel="noopener"><svg class="ic"><use href="#i-insta"/></svg><span>Instagram</span></a></div>';
+    $('.map-addr-t').textContent = S.name + ' · ' + adr;
+    if (!$('.map-ph').innerHTML) $('.map-ph').innerHTML = mapSVG();
+    var fr = $('.map iframe'); if (fr) fr.title = APP.t('contact.mapTitle', { n: S.name });
+  }
+  // prava Google mapa (bez API ključa) se ubacuje tek kad se sekcija približi ekranu
+  APP.mapSrc = function () {
+    var a = S.address, q = a.lat != null && a.lng != null ? a.lat + ',' + a.lng : a.street + ', ' + a.zip + ' ' + a.city;
+    return 'https://maps.google.com/maps?q=' + encodeURIComponent(q) + '&z=16&hl=' + APP.lang + '&output=embed';
+  };
+  function loadMap() {
+    var box = $('.map'); if (!box || $('iframe', box)) return;
+    var f = document.createElement('iframe');
+    f.title = APP.t('contact.mapTitle', { n: S.name }); f.loading = 'lazy'; f.referrerPolicy = 'no-referrer-when-downgrade'; f.allowFullscreen = true;
+    f.addEventListener('load', function () { box.classList.add('live'); });
+    f.src = APP.mapSrc();
+    box.appendChild(f);
   }
   function mapSVG() {
     return '<svg viewBox="0 0 520 420" preserveAspectRatio="xMidYMid slice"><rect width="520" height="420" fill="#F6ECEF"/>' +
@@ -347,7 +389,7 @@
   function renderFooter() {
     var L = APP.links(), T = APP.T();
     $('.foot-slogan').textContent = APP.tr(S.slogan);
-    $('.foot-links').innerHTML = '<a href="' + L.igProfile + '" target="_blank" rel="noopener"><svg class="ic"><use href="#i-insta"/></svg>Instagram</a><a href="' + L.viber + '"><svg class="ic"><use href="#i-viber"/></svg>Viber</a><a href="' + L.wa + '" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg>WhatsApp</a><a href="' + L.tel + '"><svg class="ic"><use href="#i-phone"/></svg>' + esc(S.contact.phone) + '</a>';
+    $('.foot-links').innerHTML = '<a class="btn btn-dark" href="' + L.tel + '"><svg class="ic"><use href="#i-phone"/></svg><span>' + esc(S.contact.phone) + '</span></a><a class="btn btn-dark" href="' + L.viber + '"><svg class="ic"><use href="#i-viber"/></svg><span>Viber</span></a><a class="btn btn-dark" href="' + L.wa + '" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg><span>WhatsApp</span></a><a class="btn btn-dark" href="' + L.igProfile + '" target="_blank" rel="noopener"><svg class="ic"><use href="#i-insta"/></svg><span>Instagram</span></a>';
     $('.foot-copy').textContent = '© ' + APP.now().key.slice(0, 4) + ' ' + S.name + '. ' + T.footer.rights;
   }
 
@@ -433,12 +475,12 @@
     window.location.href = url;
   };
   // meni (mobitel)
-  var MENU = [['isprobaj', 'i-brush'], ['usluge', 'i-list'], ['galerija', 'i-sparkle'], ['njega', 'i-drop'], ['poklon', 'i-gift'], ['kontakt', 'i-pin']];
+  var MENU = [['galerija', 'i-sparkle'], ['lokacija', 'i-pin'], ['tim', 'i-team'], ['isprobaj', 'i-brush'], ['usluge', 'i-list'], ['njega', 'i-drop'], ['faq', 'i-help'], ['poklon', 'i-gift', 'gift']].filter(function (m) { return !m[2] || F[m[2]]; });
   function openMenu() {
     var T = APP.T();
     APP.sheet.open({
       title: T.menu, kind: 'menu',
-      body: '<nav class="menu-list">' + MENU.map(function (m, i) { return '<a href="#' + m[0] + '" data-goto="' + m[0] + '"><span class="mi"><svg class="ic"><use href="#' + m[1] + '"/></svg></span><span>' + esc(T.nav.ma[i]) + '</span><svg class="ic go"><use href="#i-arrow"/></svg></a>'; }).join('') + '</nav>',
+      body: '<nav class="menu-list">' + MENU.map(function (m, i) { return '<a href="#' + m[0] + '" data-goto="' + m[0] + '"><span class="mi"><svg class="ic"><use href="#' + m[1] + '"/></svg></span><span>' + esc(T.nav.m[m[0]]) + '</span><svg class="ic go"><use href="#i-arrow"/></svg></a>'; }).join('') + '</nav>',
       foot: '<button type="button" class="btn btn-plum btn-lg btn-block gloss" data-menu-book><svg class="ic"><use href="#i-cal"/></svg><span>' + esc(T.hero.book) + '</span></button>'
     });
   }
@@ -461,14 +503,20 @@
     if (b) { var nl = b.getAttribute('data-lang'); ensureLang(nl).then(function () { APP.lang = nl; store('lang', nl); renderAll(); }); return; }
     if ((b = e.target.closest('[data-light]'))) { APP.setLight(b.getAttribute('data-light')); return; }
     if (e.target.closest('[data-tilt]')) { askTilt(); return; }
-    if (e.target.closest('[data-mirror]')) { APP.load('mirror').then(function () { window.Mirror.open(); }).catch(function () { APP.toast(APP.T().mirror.noModel); }); return; }
+    if (F.mirror && e.target.closest('[data-mirror]')) { APP.load('mirror').then(function () { window.Mirror.open(); }).catch(function () { APP.toast(APP.T().mirror.noModel); }); return; }
     if (e.target.closest('[data-open-booking]')) { e.preventDefault(); APP.openBooking({}); return; }
     if (e.target.closest('[data-open-favs]')) { openFavs(); return; }
     if (e.target.closest('[data-close-sheet]')) { APP.sheet.close(); return; }
     if ((b = e.target.closest('[data-cat]'))) { curCat = b.getAttribute('data-cat'); $$('[data-cat]').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); }); b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced ? 'auto' : 'smooth' }); drawServices(true); return; }
     if ((b = e.target.closest('[data-add]'))) { var id = b.getAttribute('data-add'), on = APP.cart.indexOf(id) < 0; APP.toggleCart(id, on); if (on) { var f = $('.fab'); f.classList.add('shine'); setTimeout(function () { f.classList.remove('shine'); }, 900); } return; }
-    if (e.target.closest('[data-gal-more]')) { galAll = true; drawGallery(); return; }
-    if ((b = e.target.closest('[data-gf]'))) { galFilter = b.getAttribute('data-gf'); $$('[data-gf]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); drawGallery(); return; }
+    if (e.target.closest('[data-gal-more]')) { galMore(); return; }
+    if ((b = e.target.closest('[data-gf]'))) {
+      galFilter = b.getAttribute('data-gf'); if (galFilter === 'season' && !galSeason) galSeason = season();
+      $$('[data-gf]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); if (x.hasAttribute('aria-expanded')) x.setAttribute('aria-expanded', String(galFilter === 'season')); });
+      $('.gal-sub').classList.toggle('open', galFilter === 'season');
+      drawGallery(true); return;
+    }
+    if ((b = e.target.closest('[data-gs]'))) { galSeason = b.getAttribute('data-gs'); $$('[data-gs]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); drawGallery(true); return; }
     if ((b = e.target.closest('[data-fav]'))) {
       var d = designById(b.getAttribute('data-fav')), now = APP.toggleFav(designLook(d));
       APP.toast(now ? APP.T().tryon.saved : APP.T().favs.removed);
@@ -485,12 +533,12 @@
 
   // prije i poslije: klizač
   (function () {
-    var box = $('.ba-box'), r = $('.ba-range');
+    var box = $('.ba-box'), r = $('.ba-range'); if (!box) return;
     r.addEventListener('input', function () { box.style.setProperty('--p', r.value + '%'); });
   })();
 
   /* ---------- navigacija: tabovi, sakrivanje, fab, aktivni link ---------- */
-  var tabs = ['home', 'services', 'tryon', 'favs', 'book'];
+  var tabs = ['home', 'tryon', 'services', 'favs', 'book'];
   function markTab(name) {
     if (!name) name = curSection;
     var i = Math.max(0, tabs.indexOf(name));
@@ -511,7 +559,7 @@
     else if (srvTop.top < vh * 0.5 && srvTop.bottom > vh * 0.3) sec = 'services';
     if (sec !== curSection) { curSection = sec; if (!APP.sheet.isOpen()) markTab(sec); }
     syncFab();
-    ['isprobaj', 'usluge', 'galerija', 'njega', 'poklon', 'kontakt'].forEach(function (id) { var el = document.getElementById(id); if (!el) return; var r = el.getBoundingClientRect(); if (r.top < vh * 0.45 && r.bottom > vh * 0.45) topLink = id; });
+    $$('.top-links a').map(function (a) { return a.getAttribute('data-goto'); }).forEach(function (id) { var el = document.getElementById(id); if (!el) return; var r = el.getBoundingClientRect(); if (r.top < vh * 0.45 && r.bottom > vh * 0.45) topLink = id; });
     $$('.top-links a').forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + topLink); });
   }
   window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
@@ -559,13 +607,15 @@
 
   /* ---------- svjetlo salona: Dan, Salon, Večer ---------- */
   var THEME = { day: '#FFFDFC', salon: '#FBF6F3', evening: '#1E0C16' };
-  APP.light = store('light') || 'salon'; if (!THEME[APP.light]) APP.light = 'salon';
+  // bez features.lights stranica je uvijek u svjetlu "Salon"
+  APP.light = F.lights && store('light') || 'salon'; if (!THEME[APP.light]) APP.light = 'salon';
+  if (APP.light !== 'salon') { root.setAttribute('data-light', APP.light); var mc0 = $('meta[name="theme-color"]'); if (mc0) mc0.content = THEME[APP.light]; }
   window.Nails.setLightMode(APP.light);
   function markLight() {
     $$('.light-sw [data-light]').forEach(function (b) { var on = b.getAttribute('data-light') === APP.light; b.setAttribute('aria-checked', String(on)); b.tabIndex = on ? 0 : -1; });
   }
   APP.setLight = function (m) {
-    if (!THEME[m] || m === APP.light) return;
+    if (!F.lights || !THEME[m] || m === APP.light) return;
     APP.light = m; store('light', m);
     if (!reduced) { root.classList.add('light-anim'); clearTimeout(APP.setLight.t); APP.setLight.t = setTimeout(function () { root.classList.remove('light-anim'); }, 700); }
     if (m === 'salon') root.removeAttribute('data-light'); else root.setAttribute('data-light', m);
@@ -649,6 +699,8 @@
   onScroll(); markTab('home');
   lazy('#isprobaj', 'tryon');
   lazy('#njega', 'extras');
+  if (F.gift) lazy('#poklon', 'gift');
+  (function () { var m = $('.map'); if (!m) return; if (!('IntersectionObserver' in window)) { loadMap(); return; } var o = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { loadMap(); o.disconnect(); } }, { rootMargin: '400px 0px' }); o.observe(m); })();
   if ('requestIdleCallback' in window) requestIdleCallback(function () { APP.load('booking'); }, { timeout: 4000 }); else setTimeout(function () { APP.load('booking'); }, 3000);
   setInterval(function () { safe(renderStatus); }, 60000);
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(function () {});

@@ -94,13 +94,29 @@
 .dcard .fav-mini { position: absolute; top: 20px; right: 20px; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgb(var(--sf) / 0.9); color: var(--ink-soft); box-shadow: var(--sh-1); }
 .dcard .fav-mini[aria-pressed='true'] { color: var(--accent); }
 .dcard .fav-mini[aria-pressed='true'] .ic { fill: var(--rose); }
-.gal-more { grid-column: 1 / -1; display: flex; justify-content: center; margin-top: 8px; }
 .season-row > .dcard { flex: 0 0 min(62vw, 240px); }
+@media (min-width: 1100px) { .season-row { flex-wrap: wrap; overflow: visible; } .season-row > .dcard { flex: 1 1 160px; } }
+/* filteri galerije i godišnja doba ispod "Sezona" */
+.gal-filters { margin-bottom: 14px; }
+.chips button { display: inline-flex; align-items: center; gap: 6px; }
+.chips button:hover { color: var(--ink); }
+.chips .chev { width: 16px; height: 16px; margin-right: -4px; transition: transform var(--t-3) var(--ease); }
+.chips [aria-expanded='true'] .chev { transform: rotate(180deg); }
+.gal-sub { display: grid; grid-template-rows: 0fr; opacity: 0; visibility: hidden; transition: grid-template-rows var(--t-3) var(--ease), opacity var(--t-2), visibility 0s linear var(--t-3); }
+.gal-sub.open { grid-template-rows: 1fr; opacity: 1; visibility: visible; transition-delay: 0s; }
+.gal-sub > div { min-height: 0; overflow: hidden; }
+.chips-sub { margin: 0 -2px 18px; padding: 4px 2px; }
+.chips-sub button { min-height: 40px; padding: 0 16px; background: transparent; box-shadow: inset 0 0 0 1px var(--line); font-size: 13.5px; }
+.chips-sub button[aria-pressed='true'] { background: var(--chip); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.gal-sub.open .chips-sub button { animation: rise var(--t-3) var(--ease) both; }
+.gal-sub.open .chips-sub button:nth-child(2) { animation-delay: 40ms; }
+.gal-sub.open .chips-sub button:nth-child(3) { animation-delay: 80ms; }
+.gal-sub.open .chips-sub button:nth-child(4) { animation-delay: 120ms; }
 .gal-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.gal-grid .dcard { animation: rise var(--t-3) var(--ease) both; animation-delay: calc(var(--d) * 40ms); }
-@media (min-width: 760px) { .gal-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; } }
-@media (min-width: 1100px) { .gal-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .season-row { flex-wrap: wrap; overflow: visible; } .gal-more { grid-column: 1 / -1; display: flex; justify-content: center; margin-top: 8px; }
-.season-row > .dcard { flex: 1 1 160px; } }
+.gal-grid .dcard { animation: rise var(--t-3) var(--ease) both; animation-delay: calc(var(--d) * 50ms); }
+@media (min-width: 760px) { .gal-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; } }
+.gal-more { display: grid; justify-items: center; gap: 8px; margin-top: 26px; }
+.gal-count { color: var(--ink-soft); font-size: 13px; font-weight: 600; }
 .season { background: var(--pearl); }
 
 /* ---------- prije i poslije ---------- */
@@ -213,19 +229,35 @@
 .ct-info dd { font-size: 16px; }
 .hours { display: grid; grid-template-columns: auto 1fr; gap: 2px 18px; }
 .hours .today { font-weight: 800; }
-.map { min-height: 300px; padding: 0; background: var(--wash); }
-.map svg { width: 100%; height: 100%; }
+.ct-btns { display: grid; gap: 10px; }
+.ct-main { display: flex; flex-wrap: wrap; gap: 10px; }
+.ct-main .btn { flex: 1 1 auto; }
+.msg-btns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.msg-btns .btn { min-width: 0; padding: 0 10px; gap: 8px; }
+@media (max-width: 459px) { .msg-btns .btn { flex-direction: column; gap: 2px; min-height: 64px; font-size: 13px; } }
+/* mapa: crtež sa adresom dok se prava Google mapa ne učita */
+.map { position: relative; min-height: 320px; padding: 0; background: var(--wash); }
+.map::before { display: none; }
+.map-ph { position: absolute; inset: 0; }
+.map-ph svg { width: 100%; height: 100%; }
 .map .pin { animation: pinb 2.4s var(--ease) infinite; transform-origin: 50% 100%; transform-box: fill-box; }
 @keyframes pinb { 0%, 60%, 100% { transform: none; } 30% { transform: translateY(-10px); } }
-@media (min-width: 900px) { .contact-grid { grid-template-columns: 1fr 1.1fr; gap: 50px; align-items: center; } .map { min-height: 420px; } }
+.map iframe { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity var(--t-4) var(--ease); }
+.map.live iframe { opacity: 1; }
+.map-addr { position: absolute; z-index: 2; left: 12px; right: 12px; bottom: 12px; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 2px 10px; padding: 12px 16px; border-radius: 16px; background: rgb(var(--sf) / 0.94); box-shadow: var(--sh-2); font-size: 14px; font-weight: 700; transition: opacity var(--t-2), visibility 0s linear var(--t-2); }
+.map-addr .ic { grid-row: 1 / 3; color: var(--accent); }
+.map-load { color: var(--ink-soft); font-size: 12.5px; font-weight: 600; }
+.map.live .map-addr { opacity: 0; visibility: hidden; }
+@media (min-width: 900px) { .contact-grid { grid-template-columns: 1fr 1.1fr; gap: 50px; align-items: stretch; } .ct-text { align-self: center; } .map { min-height: 460px; } }
 
 /* ---------- footer ---------- */
 .foot-grid { display: grid; gap: 26px; }
 .foot-brand { display: flex; align-items: center; gap: 10px; font-family: var(--serif); font-size: 30px; }
 .foot-slogan { margin-top: 8px; color: rgba(246, 233, 238, 0.75); font-family: var(--serif); font-style: italic; font-size: 20px; }
-.foot-links { display: flex; flex-wrap: wrap; gap: 10px; }
-.foot-links a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px; background: rgb(var(--sf) / 0.08); text-decoration: none; font-weight: 650; font-size: 14px; }
-.foot-links a:hover { background: rgb(var(--sf) / 0.16); }
+.foot-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; align-content: start; }
+.foot-links .btn { padding: 0 14px; min-width: 0; }
+.foot-book { margin-top: 18px; background: #F4D6DC; color: #3A1426; box-shadow: 0 8px 18px -10px rgba(0, 0, 0, 0.5); }
+.foot-book:hover { background: #FBE6EA; }
 .foot-meta { display: grid; gap: 8px; color: rgba(246, 233, 238, 0.7); }
 @media (min-width: 900px) { .foot-grid { grid-template-columns: 1fr 1fr 1.2fr; align-items: start; } }
 
