@@ -432,3 +432,9 @@
 .mr-act { display: grid; justify-items: center; gap: 2px; min-width: 64px; min-height: 52px; padding: 6px; border-radius: 16px; color: #F8E9EF; font-size: 11.5px; font-weight: 700; cursor: pointer; }
 .mr-act .ic { width: 22px; height: 22px; }
 .mr-want { margin-left: auto; }
+/* mobitel: prekidač svjetla u heroju je uspravan i bez natpisa, da ne prekriva nokte */
+@media (max-width: 979px) {
+  .hero-light { left: 4px; top: 12%; transform: none; flex-direction: column; }
+  .hero-light button { min-width: 42px; min-height: 42px; padding: 0; }
+  .hero-light button span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+}

@@ -156,7 +156,7 @@
     var T = APP.T().mirror;
     el = document.createElement('div'); el.className = 'mirror'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-labelledby', 'mr-h');
     el.innerHTML = '<video playsinline muted aria-hidden="true"></video><canvas class="mr-canvas" aria-hidden="true"></canvas>' +
-      '<header class="mr-top"><h2 id="mr-h">' + esc(T.title) + '</h2><button type="button" class="mr-x" data-mr="close" aria-label="' + esc(T.close) + '"><svg class="ic"><use href="#i-x"/></svg></button></header>' +
+      '<div class="mr-top"><h2 id="mr-h">' + esc(T.title) + '</h2><button type="button" class="mr-x" data-mr="close" aria-label="' + esc(T.close) + '"><svg class="ic"><use href="#i-x"/></svg></button></div>' +
       '<p class="mr-hint" aria-live="polite" hidden></p>' +
       '<div class="mr-intro"><span class="mr-ic"><svg class="ic"><use href="#i-hand"/></svg></span><p class="mr-lead">' + esc(T.intro) + '</p><p class="mr-priv">' + esc(T.privacy) + '</p>' +
       '<div class="mr-btns"><button type="button" class="btn btn-plum btn-lg" data-mr="start"><svg class="ic"><use href="#i-sparkle"/></svg><span>' + esc(T.start) + '</span></button>' +

@@ -2,7 +2,7 @@
 
 Web stranica za salon za nokte: manikura, gel lak, nadogradnja, pedikura i njega.
 
-Posjetiteljka može isprobati boju, oblik, dužinu i stil noktiju na ilustrovanoj ruci, sačuvati omiljene kombinacije i jednim dodirom poslati upit za termin preko Vibera, WhatsAppa ili Instagrama. Stranica radi na bosanskom, engleskom i njemačkom, a na mobitelu se ponaša kao aplikacija (može se dodati na početni ekran i radi bez interneta).
+Posjetiteljka može isprobati boju, oblik, dužinu i stil noktiju na realistično nacrtanoj ruci, pogledati lak u dnevnom, salonskom ili večernjem svjetlu, isprobati boju na svojoj ruci kroz kameru (Ogledalo), dobiti prijedlog nijanse uz svoj outfit, sačuvati omiljene kombinacije i jednim dodirom poslati upit za termin preko Vibera, WhatsAppa ili Instagrama. Stranica radi na bosanskom, engleskom i njemačkom, a na mobitelu se ponaša kao aplikacija (može se dodati na početni ekran i radi bez interneta).
 
 Čisti HTML, CSS i JavaScript, bez frameworka i bez build koraka. Sva grafika je nacrtana u SVG-u.
 
@@ -16,7 +16,7 @@ Zatim otvori http://localhost:8080.
 
 ## Gdje se mijenjaju podaci
 
-Svi podaci salona su u `js/salon.js`. Tekstovi interfejsa (dugmad, naslovi) su u `js/i18n.js`.
+Svi podaci salona su u `js/salon.js`. Tekstovi interfejsa su u `js/i18n-bs.js`, `js/i18n-en.js` i `js/i18n-de.js` (učitava se samo izabrani jezik).
 
 ## Šta vlasnica treba popuniti u `js/salon.js`
 
@@ -34,6 +34,17 @@ Sve označeno sa "PRIMJER" je izmišljeno za demo:
 - `reviews`: prave recenzije (sada su primjer i tako su označene)
 - `loyalty`, `giftAmounts`, `correctionWeeks`: pravila kartice vjernosti, iznosi poklon bona i preporuka za korekciju
 - `faq`: odgovori na pitanja (plaćanje karticom, djeca, otkazivanje)
+- `photos`: putanje do pravih fotografija (enterijer, tim, radovi). Dok su prazne, prikazuju se okviri sa natpisom "Ovdje ide fotografija salona".
+- `skins`: tenovi kože za ruku, svaki u 5 tonova (osnova, sjena, crvenilo, svjetlo, nabor). Mogu se mijenjati po želji.
+
+## Ogledalo (kamera)
+
+Dugme "Isprobaj na svojoj ruci" učitava prepoznavanje ruke tek kad se dodirne:
+
+- biblioteka MediaPipe Tasks Vision 0.10.21 sa `cdn.jsdelivr.net` (Apache License 2.0)
+- model `hand_landmarker.task` sa `storage.googleapis.com` (Apache License 2.0)
+
+Slika sa kamere i učitane fotografije obrađuju se samo u pregledniku i nigdje se ne šalju. U `_headers` je dozvoljena kamera samo za ovu stranicu (`camera=(self)`). Ako biblioteka ili model nisu dostupni, prikazuje se poruka i povratak na ilustrovanu ruku.
 
 ## Licence
 
