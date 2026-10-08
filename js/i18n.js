@@ -44,7 +44,7 @@ window.I18N = {
     reviews: { kicker: 'Utisci', title: 'Šta kažu *klijentice*', note: 'Primjer recenzija dok salon ne doda prave.', google: 'Ostavi recenziju na Googleu' },
     care: {
       kicker: 'Njega noktiju', title: 'Da nokti *duže* traju', tips: 'Savjeti',
-      quiz: { title: 'Koji tretman ti treba?', start: 'Pokreni kviz', q: 'Pitanje {n} od 4', result: 'Preporučujemo', again: 'Ponovi kviz', book: 'Zakaži ovo',
+      quiz: { title: 'Koji tretman ti treba?', intro: 'Četiri kratka pitanja i dobiješ preporuku tretmana.', start: 'Pokreni kviz', q: 'Pitanje {n} od 4', result: 'Preporučujemo', again: 'Ponovi kviz', book: 'Zakaži ovo',
         qs: [
           ['Šta ti je najvažnije?', ['Da nokti dugo traju', 'Prirodan, uredan izgled', 'Duži nokti', 'Opuštanje i njega']],
           ['Kakvi su ti nokti sada?', ['Kratki i lomljivi', 'Zdravi i uredni', 'Imam gel ili nadogradnju', 'Ne znam, treba mi savjet']],
@@ -105,7 +105,7 @@ window.I18N = {
     reviews: { kicker: 'Reviews', title: 'What *clients* say', note: 'Example reviews until the salon adds real ones.', google: 'Leave a Google review' },
     care: {
       kicker: 'Nail care', title: 'Make it *last* longer', tips: 'Tips',
-      quiz: { title: 'Which treatment do you need?', start: 'Start the quiz', q: 'Question {n} of 4', result: 'We recommend', again: 'Retake', book: 'Book this',
+      quiz: { title: 'Which treatment do you need?', intro: 'Four quick questions and you get a treatment suggestion.', start: 'Start the quiz', q: 'Question {n} of 4', result: 'We recommend', again: 'Retake', book: 'Book this',
         qs: [
           ['What matters most to you?', ['Long-lasting nails', 'A natural, neat look', 'Longer nails', 'Relaxing care']],
           ['How are your nails now?', ['Short and brittle', 'Healthy and neat', 'I have gel or extensions', 'Not sure, I need advice']],
@@ -166,7 +166,7 @@ window.I18N = {
     reviews: { kicker: 'Stimmen', title: 'Was *Kundinnen* sagen', note: 'Beispielbewertungen, bis das Studio echte hinzufügt.', google: 'Google-Bewertung schreiben' },
     care: {
       kicker: 'Nagelpflege', title: 'Damit es *länger* hält', tips: 'Tipps',
-      quiz: { title: 'Welche Behandlung brauchst du?', start: 'Quiz starten', q: 'Frage {n} von 4', result: 'Wir empfehlen', again: 'Wiederholen', book: 'Das buchen',
+      quiz: { title: 'Welche Behandlung brauchst du?', intro: 'Vier kurze Fragen und du bekommst eine Empfehlung.', start: 'Quiz starten', q: 'Frage {n} von 4', result: 'Wir empfehlen', again: 'Wiederholen', book: 'Das buchen',
         qs: [
           ['Was ist dir am wichtigsten?', ['Lange Haltbarkeit', 'Natürlich und gepflegt', 'Längere Nägel', 'Entspannung und Pflege']],
           ['Wie sind deine Nägel gerade?', ['Kurz und brüchig', 'Gesund und gepflegt', 'Ich habe Gel oder Modellage', 'Weiß nicht, brauche Rat']],

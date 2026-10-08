@@ -125,6 +125,7 @@ em { font-style: italic; font-family: var(--serif); color: var(--mauve-ink); }
 .fab .ic { width: 20px; height: 20px; }
 .fab .badge { position: absolute; top: -4px; right: -4px; }
 .fab.away { transform: translateY(16px) scale(0.85); opacity: 0; pointer-events: none; }
+@media (max-width: 979px) { .fab { width: 56px; min-height: 56px; padding: 0; justify-content: center; } .fab-t { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } .fab .ic { width: 23px; height: 23px; } }
 @media (min-width: 980px) { .fab { bottom: 28px; right: 28px; } }
 
 .badge { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--mauve-ink); color: #fff; font-size: 11px; font-weight: 800; box-shadow: 0 0 0 2px #fff; }
