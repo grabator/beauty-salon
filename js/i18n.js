@@ -3,6 +3,7 @@
 window.I18N = {
   bs: {
     lang: 'Jezik', menu: 'Meni', close: 'Zatvori', skip: 'Preskoči', example: 'Primjer',
+    light: { label: 'Svjetlo', day: 'Dan', salon: 'Salon', evening: 'Večer', tilt: 'Pomjeri telefon', tiltOn: 'Nagni telefon i gledaj odsjaj' },
     nav: { home: 'Početna', services: 'Usluge', tryon: 'Isprobaj', favs: 'Omiljeni', book: 'Termin', gallery: 'Galerija', care: 'Njega', contact: 'Kontakt' },
     days: ['nedjelja', 'ponedjeljak', 'utorak', 'srijeda', 'četvrtak', 'petak', 'subota'],
     daysShort: ['Ned', 'Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub'],
@@ -64,6 +65,7 @@ window.I18N = {
 
   en: {
     lang: 'Language', menu: 'Menu', close: 'Close', skip: 'Skip', example: 'Example',
+    light: { label: 'Light', day: 'Day', salon: 'Salon', evening: 'Evening', tilt: 'Tilt your phone', tiltOn: 'Tilt your phone and watch the shine' },
     nav: { home: 'Home', services: 'Services', tryon: 'Try on', favs: 'Saved', book: 'Book', gallery: 'Gallery', care: 'Care', contact: 'Contact' },
     days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -125,6 +127,7 @@ window.I18N = {
 
   de: {
     lang: 'Sprache', menu: 'Menü', close: 'Schließen', skip: 'Überspringen', example: 'Beispiel',
+    light: { label: 'Licht', day: 'Tag', salon: 'Salon', evening: 'Abend', tilt: 'Handy neigen', tiltOn: 'Neige dein Handy und sieh den Glanz' },
     nav: { home: 'Start', services: 'Leistungen', tryon: 'Probieren', favs: 'Favoriten', book: 'Termin', gallery: 'Galerie', care: 'Pflege', contact: 'Kontakt' },
     days: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
     daysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],

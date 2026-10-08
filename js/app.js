@@ -87,6 +87,7 @@
       if (el.classList.contains('split')) { el.innerHTML = APP.rich(v); el.classList.remove('in'); }
       else el.textContent = v;
     });
+    $$('[data-ta]').forEach(function (el) { el.setAttribute('aria-label', APP.t(el.getAttribute('data-ta'))); });
     $$('[data-salon]').forEach(function (el) { el.textContent = S[el.getAttribute('data-salon')]; });
     $$('[data-lang]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === APP.lang)); });
     $$('[data-href]').forEach(function (a) { a.href = S.contact[a.getAttribute('data-href')]; });
@@ -424,6 +425,8 @@
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-lang]');
     if (b) { APP.lang = b.getAttribute('data-lang'); store('lang', APP.lang); renderAll(); return; }
+    if ((b = e.target.closest('[data-light]'))) { APP.setLight(b.getAttribute('data-light')); return; }
+    if (e.target.closest('[data-tilt]')) { askTilt(); return; }
     if (e.target.closest('[data-open-booking]')) { e.preventDefault(); APP.openBooking({}); return; }
     if (e.target.closest('[data-open-favs]')) { openFavs(); return; }
     if (e.target.closest('[data-close-sheet]')) { APP.sheet.close(); return; }
@@ -507,6 +510,50 @@
     document.addEventListener('pointermove', function (e) { if (e.pointerType !== 'mouse') return; tx = e.clientX; ty = e.clientY; c.classList.add('on'); c.classList.toggle('big', !!(e.target.closest && e.target.closest('a, button, input, [role="tab"]'))); if (!raf) raf = requestAnimationFrame(loop); }, { passive: true });
     document.addEventListener('mouseleave', function () { c.classList.remove('on'); });
   })();
+
+  /* ---------- svjetlo salona: Dan, Salon, Večer ---------- */
+  var THEME = { day: '#FFFDFC', salon: '#FBF6F3', evening: '#1E0C16' };
+  APP.light = store('light') || 'salon'; if (!THEME[APP.light]) APP.light = 'salon';
+  window.Nails.setLightMode(APP.light);
+  function markLight() {
+    $$('.light-sw [data-light]').forEach(function (b) { var on = b.getAttribute('data-light') === APP.light; b.setAttribute('aria-checked', String(on)); b.tabIndex = on ? 0 : -1; });
+  }
+  APP.setLight = function (m) {
+    if (!THEME[m] || m === APP.light) return;
+    APP.light = m; store('light', m);
+    if (!reduced) { root.classList.add('light-anim'); clearTimeout(APP.setLight.t); APP.setLight.t = setTimeout(function () { root.classList.remove('light-anim'); }, 700); }
+    if (m === 'salon') root.removeAttribute('data-light'); else root.setAttribute('data-light', m);
+    var mc = $('meta[name="theme-color"]'); if (mc) mc.content = THEME[m];
+    window.Nails.setLightMode(m);
+    if (hero) hero.setLight(m);
+    if (APP.tryon) APP.tryon.hand.setLight(m);
+    markLight();
+    if (navigator.vibrate) try { navigator.vibrate(8); } catch (x) {}
+  };
+  // strelice unutar grupe radio dugmadi
+  document.addEventListener('keydown', function (e) {
+    var b = e.target.closest && e.target.closest('.light-sw [data-light]'); if (!b) return;
+    var k = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key]; if (!k) return;
+    e.preventDefault(); var all = $$('[data-light]', b.parentNode), i = (all.indexOf(b) + k + all.length) % all.length;
+    APP.setLight(all[i].getAttribute('data-light')); all[i].focus();
+  });
+  markLight();
+
+  /* odsjaj prati nagib telefona ili miš (suptilno) */
+  function tiltHands(x, y) { if (hero && heroVisible) hero.setTilt(x, y); if (APP.tryon) APP.tryon.hand.setTilt(x, y); }
+  var tiltOn = false;
+  function onOrient(e) { if (e.gamma == null) return; tiltHands(Math.max(-1, Math.min(1, e.gamma / 30)), Math.max(-1, Math.min(1, ((e.beta || 45) - 45) / 30))); }
+  function startTilt() { if (tiltOn) return; tiltOn = true; window.addEventListener('deviceorientation', onOrient, { passive: true }); }
+  function askTilt() {
+    var D = window.DeviceOrientationEvent;
+    if (D && typeof D.requestPermission === 'function') D.requestPermission().then(function (r) { if (r === 'granted') { startTilt(); $$('[data-tilt]').forEach(function (t) { t.hidden = true; }); APP.toast(APP.T().light.tiltOn); } }).catch(function () {});
+    else startTilt();
+  }
+  if (!reduced) {
+    if (fine) document.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse') tiltHands(e.clientX / innerWidth * 2 - 1, e.clientY / innerHeight * 2 - 1); }, { passive: true });
+    else if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function') $$('[data-tilt]').forEach(function (t) { t.hidden = false; });
+    else if ('ondeviceorientation' in window) startTilt();
+  }
 
   /* ---------- hero ruka ---------- */
   var hero = null, heroShades = ['peony', 'latte', 'cherry', 'pearl', 'lilac', 'wine'], heroIdx = 0, heroTimer = 0, heroVisible = true;

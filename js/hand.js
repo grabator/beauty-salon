@@ -109,12 +109,13 @@
       s += box + ' fill="' + (st === 'matte' ? adj(c, 0.035, 0.8) : c) + '"/>';
     }
     if (kind === 'glitter' || st === 'glitter') {
-      var r = rng(31 + o.finger * 97), n = Math.min(34, Math.round(W * L / 30)), g = '<g class="glt">';
+      // četiri grupe čestica, da se pri lakiranju pojavljuju postepeno
+      var r = rng(31 + o.finger * 97), n = Math.min(34, Math.round(W * L / 30)), gq = ['', '', '', ''], soft = mix(c, '#fff', 0.5);
       for (var i = 0; i < n; i++) {
-        var big = i % 3 === 0, x = (r() - 0.5) * W, y = -r() * L, col = big ? (r() > 0.5 ? '#FFF6E6' : '#E9C9A6') : (r() > 0.5 ? '#FFFFFF' : mix(c, '#fff', 0.5));
-        g += '<circle class="gp" data-a="' + f2(r() * 6.283) + '" cx="' + f2(x) + '" cy="' + f2(y) + '" r="' + f2(big ? 0.9 + r() * 0.6 : 0.45 + r() * 0.35) + '" fill="' + col + '"/>';
+        var big = i % 3 === 0, x = (r() - 0.5) * W, y = -r() * L, col = big ? (r() > 0.5 ? '#FFF6E6' : '#E9C9A6') : (r() > 0.5 ? '#FFFFFF' : soft);
+        gq[i % 4] += '<circle class="gp" data-a="' + f2(r() * 6.283) + '" cx="' + f2(x) + '" cy="' + f2(y) + '" r="' + f2(big ? 0.9 + r() * 0.6 : 0.45 + r() * 0.35) + '" fill="' + col + '"/>';
       }
-      s += g + '</g>';
+      s += '<g class="glt">' + gq.map(function (q) { return '<g class="gq">' + q + '</g>'; }).join('') + '</g>';
     }
     if (st === 'deco' && o.finger === 3) { // prstenjak: brušeni kamenčić i tačkice
       var gy = -k - W * 0.34, gs = W * 0.15;
@@ -437,7 +438,7 @@
       }
       ms.style.strokeDashoffset = '1';
       if (chrome) { var ch = ln.querySelector('.chr'); if (ch) ch.setAttribute('opacity', '0'); }
-      ln.querySelectorAll('.gp').forEach(function (e) { e.animate([{ opacity: 0 }, { opacity: 0 }, { opacity: 1 }], { duration: k * stagger + 60 + Math.random() * dur, fill: 'backwards' }); });
+      ln.querySelectorAll('.gq').forEach(function (e, q) { e.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 90, delay: k * stagger + (q + Math.random()) * dur / 4, fill: 'backwards' }); });
       var a = ms.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: dur, delay: k * stagger, easing: 'cubic-bezier(.45,.05,.3,1)', fill: 'forwards' });
       a.onfinish = function () { done(); a.cancel(); };
     });

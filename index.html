@@ -6,6 +6,7 @@
 <title>Glaze Nail Studio · Manikura, gel i njega noktiju</title>
 <meta name="description" content="Studio za nokte: manikura, gel lak, nadogradnja, pedikura i njega. Isprobaj boju na ruci i zakaži termin preko Vibera ili WhatsAppa.">
 <meta name="theme-color" content="#FBF6F3">
+<script>try{var l=JSON.parse(localStorage.getItem('glaze-light'));if(l==='day'||l==='evening')document.documentElement.setAttribute('data-light',l)}catch(e){}</script>
 <link rel="canonical" href="https://beauty-salon.example/">
 <link rel="alternate" hreflang="bs" href="https://beauty-salon.example/?lang=bs">
 <link rel="alternate" hreflang="en" href="https://beauty-salon.example/?lang=en">
@@ -68,6 +69,10 @@
     <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13.5 14.5-14.5C19.5 14 14 19 6.5 19"/><path d="M5 19l8-8"/></symbol>
     <symbol id="i-lang" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.3 3.5 5.2 3.5 8.5s-1 6.2-3.5 8.5c-2.5-2.3-3.5-5.2-3.5-8.5s1-6.2 3.5-8.5z"/></symbol>
     <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3.5l1.6 5 4.9 1.6-4.9 1.6L12 16.6l-1.6-4.9-4.9-1.6 4.9-1.6zM18.5 15.5l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></symbol>
+    <symbol id="i-lamp" viewBox="0 0 24 24"><path d="M8 3.5h8l3 7H5zM12 10.5v8M8 20.5h8"/><path d="M9.5 13.5c.8 1 1.6 1.4 2.5 1.4s1.7-.4 2.5-1.4" opacity=".6"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.8A8 8 0 0 1 9.2 4.5a8 8 0 1 0 10.3 10.3z"/></symbol>
+    <symbol id="i-tilt" viewBox="0 0 24 24"><rect x="7.5" y="3" width="9" height="18" rx="2.2" transform="rotate(-14 12 12)"/><path d="M3 9.5c-.8 1.6-.8 3.4 0 5M21 9.5c.8 1.6.8 3.4 0 5"/></symbol>
     <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3.5s-6 6.8-6 11a6 6 0 0 0 12 0c0-4.2-6-11-6-11z"/></symbol>
   </defs>
 </svg>
@@ -109,6 +114,7 @@
       <div class="hero-halo" aria-hidden="true"></div>
       <svg class="hand hero-hand" viewBox="0 0 400 566" role="img" aria-label="Ilustrovana ruka sa nalakiranim noktima"></svg>
       <span class="shade-chip" aria-hidden="true"><i></i><b></b></span>
+      <div class="light-sw hero-light" role="radiogroup" data-ta="light.label"><button type="button" role="radio" data-light="day" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-sun"/></svg><span data-t="light.day"></span></button><button type="button" role="radio" data-light="salon" aria-checked="true" tabindex="0"><svg class="ic"><use href="#i-lamp"/></svg><span data-t="light.salon"></span></button><button type="button" role="radio" data-light="evening" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-moon"/></svg><span data-t="light.evening"></span></button></div>
     </div>
   </section>
 
@@ -123,6 +129,8 @@
       <header class="sec-head center"><p class="kicker" data-t="tryon.kicker"></p><h2 id="try-h" class="h2 split" data-t="tryon.title"></h2><p class="sub" data-t="tryon.sub"></p></header>
       <div class="try-grid">
         <div class="try-stage">
+          <div class="light-sw try-light" role="radiogroup" data-ta="light.label"><button type="button" role="radio" data-light="day" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-sun"/></svg><span data-t="light.day"></span></button><button type="button" role="radio" data-light="salon" aria-checked="true" tabindex="0"><svg class="ic"><use href="#i-lamp"/></svg><span data-t="light.salon"></span></button><button type="button" role="radio" data-light="evening" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-moon"/></svg><span data-t="light.evening"></span></button></div>
+          <button type="button" class="tilt-btn" data-tilt hidden><svg class="ic"><use href="#i-tilt"/></svg><span data-t="light.tilt"></span></button>
           <svg class="hand try-hand" viewBox="0 0 400 566" role="img" aria-label="Ruka za isprobavanje boje"></svg>
           <p class="try-name" aria-live="polite"><i></i><span></span></p>
           <div class="try-actions">
