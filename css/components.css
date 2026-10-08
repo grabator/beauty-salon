@@ -6,8 +6,15 @@
 .btn:active { transform: scale(0.97); }
 .btn-lg { min-height: 56px; padding: 0 26px; font-size: 16px; }
 .btn-block { width: 100%; }
-.btn-plum { background: var(--btn); color: var(--on-ink); box-shadow: 0 14px 30px -14px rgb(var(--shd) / 0.7); }
-.btn-plum:hover { background: var(--btn-hover); }
+.btn-plum { background: linear-gradient(140deg, var(--btn-hi), var(--btn) 55%, var(--btn-lo)); color: var(--on-ink); letter-spacing: 0.01em; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 0 -2px 0 rgba(0, 0, 0, 0.16), 0 2px 6px -2px rgb(var(--shd) / 0.35), 0 14px 28px -14px rgb(var(--shd) / 0.75); transition: transform var(--t-2) var(--ease), box-shadow var(--t-2) var(--ease), filter var(--t-2); }
+.btn-plum:hover { transform: translateY(-2px); filter: brightness(1.06); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.26), inset 0 -2px 0 rgba(0, 0, 0, 0.16), 0 4px 10px -2px rgb(var(--shd) / 0.35), 0 20px 34px -14px rgb(var(--shd) / 0.8); }
+.btn-plum:active { transform: translateY(0) scale(0.98); }
+/* ikonica u mekom krugu, strelica na kraju */
+.btn-plum .ic:first-child:not(.ic-end) { width: 30px; height: 30px; padding: 6px; margin-left: -10px; border-radius: 50%; background: rgba(255, 255, 255, 0.16); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18); }
+.btn-lg.btn-plum .ic:first-child:not(.ic-end) { width: 34px; height: 34px; padding: 7px; margin-left: -12px; }
+.btn-plum .ic-end { transition: transform var(--t-2) var(--ease); }
+.btn-plum:hover .ic-end { transform: translateX(3px); }
+:root[data-light='evening'] .btn-plum .ic:first-child:not(.ic-end) { background: rgba(58, 20, 38, 0.1); box-shadow: inset 0 0 0 1px rgba(58, 20, 38, 0.12); }
 .btn-ghost { background: rgb(var(--sf) / 0.72); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line), var(--sh-1); }
 .btn-ghost:hover { background: var(--surface); }
 .btn-text { min-height: 44px; padding: 0 12px; color: var(--ink-soft); text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }

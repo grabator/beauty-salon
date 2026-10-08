@@ -19,7 +19,7 @@
   var LANGS = ['bs', 'en', 'de'];
 
   var APP = window.APP = {
-    $: $, $$: $$, esc: esc, store: store, reduced: reduced, v: '4',
+    $: $, $$: $$, esc: esc, store: store, reduced: reduced, v: '5',
     lang: (function () {
       var q = (location.search.match(/[?&]lang=(bs|en|de)/) || [])[1], saved = store('lang');
       var nav = (navigator.language || '').slice(0, 2);
@@ -71,19 +71,6 @@
     return T.days[APP.dow(key)] + ', ' + (+p[2]) + '. ' + T.months[+p[1] - 1];
   };
   // slobodni termini za dan i trajanje (u minutama)
-  APP.slots = function (key, duration) {
-    var h = APP.hoursOn(key); if (!h) return null;
-    var open = toMin(h[0]), close = toMin(h[1]), step = S.slotStep, n = APP.now(), out = [];
-    var busy = (S.busy[APP.dow(key)] || []).map(function (b) { return [toMin(b[0]), toMin(b[0]) + b[1]]; });
-    for (var m = open; m + step <= close; m += step) {
-      var end = m + duration, free = end <= close;
-      if (key === n.key && m < n.min + S.minNotice) free = false;
-      busy.forEach(function (b) { if (m < b[1] && end > b[0]) free = false; });
-      var past = key === n.key && m < n.min;
-      if (!past) out.push({ t: fromMin(m), free: free });
-    }
-    return out;
-  };
 
   /* ---------- jezik i tekstovi ---------- */
   function applyText() {
@@ -107,7 +94,7 @@
   }
   function safe(fn) { try { fn(); } catch (e) { if (window.console) console.warn(e); } }
   function renderAll() {
-    [applyText, renderStatus, renderLastMinute, renderServices, renderSeason, renderGallery, renderBA, renderFlow, renderHygiene, renderStudio, renderTeam, renderReviews, renderTips, renderFaq, renderContact, renderFooter, updateCartUI, updateFavUI, observeReveal].forEach(safe);
+    [applyText, renderStatus, renderServices, renderSeason, renderGallery, renderBA, renderFlow, renderHygiene, renderStudio, renderTeam, renderReviews, renderTips, renderFaq, renderContact, renderFooter, updateCartUI, updateFavUI, observeReveal].forEach(safe);
     document.dispatchEvent(new CustomEvent('langchange'));
   }
 
@@ -128,15 +115,6 @@
       }
     }
     $('.status-t').textContent = T.status.closedLong;
-  }
-
-  /* ---------- last-minute ---------- */
-  function renderLastMinute() {
-    var n = APP.now(), sl = APP.slots(n.key, 60), box = $('.lastminute');
-    var free = (sl || []).filter(function (s) { return s.free; }).slice(0, 3);
-    if (!free.length) { box.hidden = true; return; }
-    box.hidden = false;
-    $('.lm-slots').innerHTML = free.map(function (s) { return '<button type="button" data-lm="' + s.t + '" aria-label="' + esc(APP.t('lastMinute.cta') + ' ' + s.t) + '">' + s.t + '</button>'; }).join('');
   }
 
   /* ---------- usluge i korpa ---------- */
@@ -487,7 +465,6 @@
     if (e.target.closest('[data-open-booking]')) { e.preventDefault(); APP.openBooking({}); return; }
     if (e.target.closest('[data-open-favs]')) { openFavs(); return; }
     if (e.target.closest('[data-close-sheet]')) { APP.sheet.close(); return; }
-    if ((b = e.target.closest('[data-lm]'))) { APP.openBooking({ date: APP.now().key, time: b.getAttribute('data-lm') }); return; }
     if ((b = e.target.closest('[data-cat]'))) { curCat = b.getAttribute('data-cat'); $$('[data-cat]').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); }); b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced ? 'auto' : 'smooth' }); drawServices(true); return; }
     if ((b = e.target.closest('[data-add]'))) { var id = b.getAttribute('data-add'), on = APP.cart.indexOf(id) < 0; APP.toggleCart(id, on); if (on) { var f = $('.fab'); f.classList.add('shine'); setTimeout(function () { f.classList.remove('shine'); }, 900); } return; }
     if (e.target.closest('[data-gal-more]')) { galAll = true; drawGallery(); return; }
@@ -673,7 +650,7 @@
   lazy('#isprobaj', 'tryon');
   lazy('#njega', 'extras');
   if ('requestIdleCallback' in window) requestIdleCallback(function () { APP.load('booking'); }, { timeout: 4000 }); else setTimeout(function () { APP.load('booking'); }, 3000);
-  setInterval(function () { renderStatus(); renderLastMinute(); }, 60000);
+  setInterval(function () { safe(renderStatus); }, 60000);
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(function () {});
   }
   // JSON-LD iz salon.js (jedan izvor podataka)

@@ -24,7 +24,7 @@
   --ink: #4A1F33; --ink-soft: #7A4A5E; --accent: #9C4F66; --tag-ink: #7E3550; --err: #A11F42;
   --surface: #FFFFFF; --sf: 255 255 255; --glow: #FFFFFF; --sel: #FFF8FA; --rim: rgba(255, 255, 255, 0.85); --gloss-a: 1;
   --chip: #F4D6DC; --chipc: 244 214 220; --wash: #F8E9EC; --wash-2: #FBEFF1; --wash-3: #F6E2E7;
-  --btn: #4A1F33; --btn-hover: #5C2840; --on-ink: #FFFFFF; --deep: #4A1F33;
+  --btn: #4A1F33; --btn-hi: #6E3150; --btn-lo: #351325; --btn-hover: #5C2840; --on-ink: #FFFFFF; --deep: #4A1F33;
   --tint: 74 31 51; --shd: 74 31 51; --line: rgba(74, 31, 51, 0.12);
   --blob1: #F7D9DF; --blob2: #EEDDF3; --blob3: #FBE3D6;
   --pearl: linear-gradient(120deg, #F7F1F6 0%, #EAD7E6 34%, #D9D3EE 66%, #F3E6EC 100%);
@@ -60,7 +60,7 @@
   --ink: #F8E9EF; --ink-soft: #D5B4C3; --accent: #F2AFC2; --tag-ink: #FFD3DE; --err: #FF9BB2;
   --surface: #331827; --sf: 51 24 39; --glow: #4A2234; --sel: #45203A; --rim: rgba(255, 255, 255, 0.07); --gloss-a: 0.14;
   --chip: #57283E; --chipc: 120 52 82; --wash: #2C1321; --wash-2: #3A1A2C; --wash-3: #2A1220;
-  --btn: #F4D6DC; --btn-hover: #FBE6EA; --on-ink: #3A1426; --deep: #12060C;
+  --btn: #F4D6DC; --btn-hi: #FFF1F4; --btn-lo: #E5AFBF; --btn-hover: #FBE6EA; --on-ink: #3A1426; --deep: #12060C;
   --tint: 248 233 239; --shd: 0 0 0; --line: rgba(248, 233, 239, 0.13);
   --blob1: #5A2238; --blob2: #3A2350; --blob3: #5B2E22;
   --pearl: linear-gradient(120deg, #3A1C2C 0%, #4C2539 34%, #3A2A4C 66%, #3E1D2E 100%);
@@ -162,7 +162,7 @@ em { font-style: italic; font-family: var(--serif); color: var(--accent); }
 .tabbar .badge { position: absolute; top: 4px; right: calc(50% - 22px); }
 @media (min-width: 980px) { .tabbar { display: none; } }
 
-.fab { overflow: hidden; isolation: isolate; position: fixed; z-index: 69; right: 18px; bottom: calc(var(--tabbar-h) + 22px + var(--safe-b)); display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 20px 0 16px; border-radius: 999px; background: var(--btn); color: var(--on-ink); font-weight: 700; font-size: 15px; box-shadow: 0 16px 34px -12px rgb(var(--shd) / 0.6); transform: translateY(0) scale(1); transition: transform var(--t-3) var(--pop), opacity var(--t-2); }
+.fab { overflow: hidden; isolation: isolate; background: linear-gradient(140deg, var(--btn-hi), var(--btn) 55%, var(--btn-lo)) !important; position: fixed; z-index: 69; right: 18px; bottom: calc(var(--tabbar-h) + 22px + var(--safe-b)); display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 20px 0 16px; border-radius: 999px; background: var(--btn); color: var(--on-ink); font-weight: 700; font-size: 15px; box-shadow: 0 16px 34px -12px rgb(var(--shd) / 0.6); transform: translateY(0) scale(1); transition: transform var(--t-3) var(--pop), opacity var(--t-2); }
 .fab .ic { width: 20px; height: 20px; }
 .fab .badge { position: absolute; top: 4px; right: 4px; }
 .fab.away { transform: translateY(16px) scale(0.85); opacity: 0; pointer-events: none; }
@@ -197,7 +197,7 @@ footer.foot { padding: 56px 0 calc(var(--tabbar-h) + 40px + var(--safe-b)); back
 }
 
 /* stanje pritiska za sve izbore */
-:where(.chips button, .tabs button, .lm-slots button, .slot, .day, .pick-item, .via button, .quiz .answers button, .shelf-groups button, .acc > button, .tabbar a, .tabbar button):active { transform: scale(0.97); transition-duration: var(--t-1); }
+:where(.chips button, .tabs button, .choice button, .pick-item, .via button, .quiz .answers button, .shelf-groups button, .acc > button, .tabbar a, .tabbar button):active { transform: scale(0.97); transition-duration: var(--t-1); }
 
 /* mobitel: donja traka je uvijek tu i ima "Termin", pa plutajuće dugme nije potrebno */
 @media (max-width: 979px) { .fab { display: none; } }

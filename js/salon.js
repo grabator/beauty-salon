@@ -31,18 +31,6 @@ window.SALON = {
   // Radno vrijeme: [otvara, zatvara] u satima i minutama, null = zatvoreno. 0 = nedjelja.
   hours: { 1: ['09:00', '20:00'], 2: ['09:00', '20:00'], 3: ['09:00', '20:00'], 4: ['09:00', '20:00'], 5: ['09:00', '20:00'], 6: ['09:00', '15:00'], 0: null },
   holidays: ['2026-01-01', '2026-01-02', '2026-03-01', '2026-05-01', '2026-05-02', '2026-11-25', '2026-12-25', '2027-01-01', '2027-01-02'], // datumi kad je zatvoreno
-  slotStep: 30,           // korak termina u minutama
-  daysAhead: 14,          // koliko dana unaprijed se može birati termin
-  minNotice: 60,          // najmanje minuta od sada do termina
-  // PRIMJER zauzetih termina: ponavljaju se svake sedmice po danu. [početak, trajanje u minutama]
-  busy: {
-    1: [['10:00', 90], ['15:00', 60]],
-    2: [['09:00', 60], ['12:30', 90], ['17:00', 60]],
-    3: [['11:00', 60], ['16:00', 120]],
-    4: [['09:30', 90], ['14:00', 60], ['18:00', 60]],
-    5: [['10:00', 60], ['13:00', 120], ['17:30', 90]],
-    6: [['09:00', 120], ['12:00', 60]],
-  },
 
   // Brze činjenice u heroju (PRIMJER, promijeniti po stvarnom stanju salona)
   facts: [

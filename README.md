@@ -27,7 +27,6 @@ Sve označeno sa "PRIMJER" je izmišljeno za demo:
 - `contact`: telefon, Viber, WhatsApp, Instagram, email i link za Google recenzije
 - `address`: ulica, grad, poštanski broj, koordinate, link za mapu i opis parkinga
 - `hours` i `holidays`: radno vrijeme po danima i neradni dani
-- `busy`: zauzeti termini (sada je primjer koji se ponavlja svake sedmice)
 - `facts`: tri kratke činjenice u heroju
 - `services`: usluge, cijene, trajanja i opisi
 - `team`: imena i specijalnosti tima

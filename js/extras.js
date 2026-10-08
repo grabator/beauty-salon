@@ -15,7 +15,7 @@
   function quiz() {
     var T = APP.T(), Q = T.care.quiz, el = $('#kviz'), h;
     if (q.i < 0) {
-      h = '<p class="kicker">' + esc(T.care.kicker) + '</p><h3 class="qtitle">' + esc(Q.title) + '</h3><p class="note">' + esc(Q.intro) + '</p><button type="button" class="btn btn-plum gloss" data-q="start">' + esc(Q.start) + '<svg class="ic"><use href="#i-arrow"/></svg></button>';
+      h = '<p class="kicker">' + esc(T.care.kicker) + '</p><h3 class="qtitle">' + esc(Q.title) + '</h3><p class="note">' + esc(Q.intro) + '</p><button type="button" class="btn btn-plum gloss" data-q="start">' + esc(Q.start) + '<svg class="ic ic-end"><use href="#i-arrow"/></svg></button>';
     } else if (q.i < 4) {
       var qq = Q.qs[q.i];
       h = '<div class="step-in"><p class="qn">' + esc(APP.t('care.quiz.q', { n: q.i + 1 })) + '</p><div class="qbar" aria-hidden="true"><i style="transform:scaleX(' + ((q.i) / 4) + ')"></i></div><h3 class="qtitle" style="margin:14px 0">' + esc(qq[0]) + '</h3><div class="answers">' +
