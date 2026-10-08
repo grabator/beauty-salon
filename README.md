@@ -33,7 +33,7 @@ Sve označeno sa "PRIMJER" je izmišljeno za demo:
 - `reviews`: prave recenzije (sada su primjer i tako su označene)
 - `giftAmounts`: iznosi poklon bona
 - `faq`: odgovori na pitanja (plaćanje karticom, djeca, otkazivanje)
-- `photos`: putanje do pravih fotografija (enterijer, tim, radovi). Dok su prazne, prikazuju se okviri sa natpisom "Ovdje ide fotografija salona".
+- `photos`: fotografije u sekciji Studio (putanja, širina, visina, natpis i opis na tri jezika). Sada su tu 4 fotografije kao PRIMJER (`assets/photos/studio-1.webp` do `studio-4.webp`). To nisu fotografije ovog salona i prije objave ih treba zamijeniti pravim. Ako je lista prazna, prikazuju se okviri sa natpisom "Ovdje ide fotografija salona".
 - `skins`: tenovi kože za ruku, svaki u 5 tonova (osnova, sjena, crvenilo, svjetlo, nabor). Mogu se mijenjati po želji.
 
 ## Dodatni dijelovi stranice (`features` u `js/salon.js`)

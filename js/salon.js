@@ -143,8 +143,14 @@ window.SALON = {
     summer: ['d16', 'd4', 'd20', 'd10', 'd8', 'd13'],
   },
 
-  // Prave fotografije salona: upiši putanju (npr. 'assets/photos/enterijer.jpg'). Prazno = okvir sa natpisom.
-  photos: { interior: '', team: '', work: '' },
+  // Fotografije salona u sekciji Studio (prva je velika). PRIMJER: ovo nisu fotografije ovog salona, zamijeniti pravim.
+  // Prazna lista = okviri sa natpisom "Ovdje ide fotografija salona".
+  photos: [
+    { src: 'assets/photos/studio-1.webp', w: 736, h: 1104, cap: ['Prostor', 'Space', 'Räume'], alt: ['Roze salon sa policama punim lakova i stolom za manikuru', 'Pink salon with shelves of polish and a manicure table', 'Rosa Studio mit Lackregalen und Maniküre-Tisch'] },
+    { src: 'assets/photos/studio-2.webp', w: 626, h: 417, cap: ['Radno mjesto', 'Workstation', 'Arbeitsplatz'], alt: ['Dvije fotelje za manikuru uz roze zid', 'Two manicure chairs by a pink wall', 'Zwei Maniküre-Sessel an einer rosa Wand'] },
+    { src: 'assets/photos/studio-3.webp', w: 399, h: 501, cap: ['Boje', 'Colours', 'Farben'], alt: ['Police sa lakovima i natpis Nails', 'Polish shelves and a Nails sign', 'Lackregale und ein Nails-Schriftzug'] },
+    { src: 'assets/photos/studio-4.webp', w: 447, h: 447, cap: ['Kutak za manikuru', 'Manicure corner', 'Maniküre-Ecke'], alt: ['Roze fotelje sa zlatnim detaljima i zid sa lakovima', 'Pink chairs with gold details and a wall of polish', 'Rosa Sessel mit Gold und eine Wand voller Lacke'] },
+  ],
 
   team: [ // PRIMJER: tim
     { name: 'Amra', hair: '#3B2420', skin: 0, role: ['Gel i nadogradnja', 'Gel & extensions', 'Gel & Modellage'], shade: 'peony' },

@@ -22,7 +22,7 @@
   $$('[data-feature]').forEach(function (el) { if (F[el.getAttribute('data-feature')]) el.classList.add('feat-on'); else el.remove(); });
 
   var APP = window.APP = {
-    $: $, $$: $$, esc: esc, store: store, reduced: reduced, v: '8', features: F,
+    $: $, $$: $$, esc: esc, store: store, reduced: reduced, v: '9', features: F,
     lang: (function () {
       var q = (location.search.match(/[?&]lang=(bs|en|de)/) || [])[1], saved = store('lang');
       var nav = (navigator.language || '').slice(0, 2);
@@ -330,10 +330,12 @@
     }).join('');
   }
   function renderStudio() {
-    var T = APP.T().studio, P = S.photos || {};
-    $('.studio-grid').innerHTML = ['interior', 'team', 'work'].map(function (k, i) {
-      var src = P[k], cap = esc(T[k]);
-      return '<figure class="ph reveal' + (src ? ' has' : '') + '" style="--d:' + i + '">' + (src ? '<img src="' + esc(src) + '" alt="' + cap + '" loading="lazy" decoding="async">' : '<div class="ph-empty"><svg class="ic"><use href="#i-sparkle"/></svg><span>' + esc(T.placeholder) + '</span></div>') + '<figcaption>' + cap + '</figcaption></figure>';
+    var T = APP.T().studio, P = Array.isArray(S.photos) ? S.photos : [], g = $('.studio-grid');
+    g.classList.toggle('has-photos', P.length > 0);
+    g.innerHTML = P.length ? P.map(function (p, i) {
+      return '<figure class="ph has reveal" style="--d:' + i + '"><img src="' + esc(p.src) + '" width="' + p.w + '" height="' + p.h + '" alt="' + esc(APP.tr(p.alt)) + '" loading="lazy" decoding="async"><span class="ex-badge ph-ex">' + esc(APP.T().example) + '</span><figcaption>' + esc(APP.tr(p.cap)) + '</figcaption></figure>';
+    }).join('') : ['interior', 'team', 'work'].map(function (k, i) {
+      return '<figure class="ph reveal" style="--d:' + i + '"><div class="ph-empty"><svg class="ic"><use href="#i-sparkle"/></svg><span>' + esc(T.placeholder) + '</span></div><figcaption>' + esc(T[k]) + '</figcaption></figure>';
     }).join('');
   }
   function renderTips() {
