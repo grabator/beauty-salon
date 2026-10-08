@@ -2,7 +2,7 @@
 
 Web stranica za salon za nokte: manikura, gel lak, nadogradnja, pedikura i njega.
 
-Posjetiteljka može isprobati boju, oblik, dužinu i stil noktiju na realistično nacrtanoj ruci, pogledati lak u dnevnom, salonskom ili večernjem svjetlu, isprobati boju na svojoj ruci kroz kameru (Ogledalo), dobiti prijedlog nijanse uz svoj outfit, sačuvati omiljene kombinacije i jednim dodirom poslati upit za termin preko Vibera, WhatsAppa ili Instagrama. Stranica radi na bosanskom, engleskom i njemačkom, a na mobitelu se ponaša kao aplikacija (može se dodati na početni ekran i radi bez interneta).
+Posjetiteljka može pregledati galeriju dizajna (i po godišnjem dobu), vidjeti lokaciju na Google mapi, isprobati boju, oblik, dužinu i stil noktiju na realistično nacrtanoj ruci, dobiti prijedlog nijanse uz svoj outfit, sačuvati omiljene kombinacije i jednim dodirom poslati upit za termin preko Vibera, WhatsAppa ili Instagrama. Stranica radi na bosanskom, engleskom i njemačkom, a na mobitelu se ponaša kao aplikacija (može se dodati na početni ekran i radi bez interneta).
 
 Čisti HTML, CSS i JavaScript, bez frameworka i bez build koraka. Sva grafika je nacrtana u SVG-u.
 
@@ -36,7 +36,33 @@ Sve označeno sa "PRIMJER" je izmišljeno za demo:
 - `photos`: putanje do pravih fotografija (enterijer, tim, radovi). Dok su prazne, prikazuju se okviri sa natpisom "Ovdje ide fotografija salona".
 - `skins`: tenovi kože za ruku, svaki u 5 tonova (osnova, sjena, crvenilo, svjetlo, nabor). Mogu se mijenjati po želji.
 
-## Ogledalo (kamera)
+## Dodatni dijelovi stranice (`features` u `js/salon.js`)
+
+Neki dijelovi su napravljeni, ali su trenutno isključeni. Kad je opcija `false`, dio se ne prikazuje, nema linka u meniju, ne ostaje prazan prostor i njegov kod se ne učitava. Kad se promijeni u `true`, dio radi kao prije.
+
+```js
+features: {
+  mirror: false,
+  lights: false,
+  season: false,
+  beforeAfter: false,
+  gift: false,
+},
+```
+
+- `mirror`: dugme "Isprobaj na svojoj ruci" u sekciji Isprobaj boju (kamera, modul `js/mirror.js`)
+- `lights`: prekidač svjetla Dan / Salon / Večer u heroju i kod ruke, i dugme "Pomjeri telefon" na iPhoneu. Kad je isključeno, stranica je uvijek u svjetlu "Salon".
+- `season`: sekcija "Kolekcija sezone" (ispod galerije). Galerija i bez nje ima filter "Sezona" sa izborom Zima, Proljeće, Ljeto, Jesen.
+- `beforeAfter`: sekcija "Razlika se vidi" sa klizačem prije i poslije (ispod usluga)
+- `gift`: sekcija "Poklon bon" (prije FAQ), link u gornjem i mobilnom meniju i modul `js/gift.js`
+
+Poslije promjene je dovoljno osvježiti stranicu. Kod objave nove verzije povećaj broj verzije (`?v=` u `index.html`, `v` u `js/app.js` i `CACHE` u `sw.js`), da posjetiteljke odmah dobiju nove fajlove.
+
+## Mapa
+
+Sekcija Lokacija prikazuje pravu Google mapu (ugrađenu, bez API ključa) sa koordinatama iz `address.lat` i `address.lng` (ako ih nema, koristi se ulica i grad). Mapa se učitava tek kad se sekcija približi ekranu, a do tada se prikazuje crtež sa adresom.
+
+## Ogledalo (kamera, uključuje se sa `features.mirror`)
 
 Dugme "Isprobaj na svojoj ruci" učitava prepoznavanje ruke tek kad se dodirne:
 
