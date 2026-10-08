@@ -97,10 +97,9 @@
     if (md) md.content = APP.tr(['Studio za nokte: manikura, gel lak, nadogradnja, pedikura i njega. Isprobaj boju na ruci i zakaži termin.', 'Nail studio: manicure, gel polish, extensions, pedicure and care. Try a colour on the hand and book online.', 'Nagelstudio: Maniküre, Gel-Lack, Modellage, Pediküre und Pflege. Farbe an der Hand ausprobieren und Termin buchen.']);
     $('.fab-t').textContent = T.cart.book;
   }
+  function safe(fn) { try { fn(); } catch (e) { if (window.console) console.warn(e); } }
   function renderAll() {
-    applyText(); renderStatus(); renderLastMinute(); renderServices(); renderSeason(); renderGallery();
-    renderBA(); renderFlow(); renderHygiene(); renderStudio(); renderTeam(); renderReviews(); renderTips(); renderFaq(); renderContact(); renderFooter();
-    updateCartUI(); updateFavUI(); observeReveal();
+    [applyText, renderStatus, renderLastMinute, renderServices, renderSeason, renderGallery, renderBA, renderFlow, renderHygiene, renderStudio, renderTeam, renderReviews, renderTips, renderFaq, renderContact, renderFooter, updateCartUI, updateFavUI, observeReveal].forEach(safe);
     document.dispatchEvent(new CustomEvent('langchange'));
   }
 
@@ -438,6 +437,38 @@
     APP.load('outfit').then(function () { window.Outfit.run(f); }).catch(function () { APP.toast(APP.T().outfit.error); });
   });
 
+  // otvaranje Vibera: ako se aplikacija ne otvori, korisnica dobije poruku umjesto tišine
+  APP.openApp = function (url) {
+    if (/^viber:/.test(url)) {
+      var t = setTimeout(function () { if (!document.hidden) APP.toast(APP.T().toast.noViber); }, 1800);
+      var stop = function () { if (document.hidden) { clearTimeout(t); document.removeEventListener('visibilitychange', stop); } };
+      document.addEventListener('visibilitychange', stop);
+    }
+    window.location.href = url;
+  };
+  // meni (mobitel)
+  var MENU = [['isprobaj', 'i-brush'], ['usluge', 'i-list'], ['galerija', 'i-sparkle'], ['njega', 'i-drop'], ['poklon', 'i-gift'], ['kontakt', 'i-pin']];
+  function openMenu() {
+    var T = APP.T();
+    APP.sheet.open({
+      title: T.menu, kind: 'menu',
+      body: '<nav class="menu-list">' + MENU.map(function (m, i) { return '<a href="#' + m[0] + '" data-goto="' + m[0] + '"><span class="mi"><svg class="ic"><use href="#' + m[1] + '"/></svg></span><span>' + esc(T.nav.ma[i]) + '</span><svg class="ic go"><use href="#i-arrow"/></svg></a>'; }).join('') + '</nav>',
+      foot: '<button type="button" class="btn btn-plum btn-lg btn-block gloss" data-menu-book><svg class="ic"><use href="#i-cal"/></svg><span>' + esc(T.hero.book) + '</span></button>'
+    });
+  }
+  function goTo(id) {
+    var el = document.getElementById(id); if (!el) return;
+    var go = function () { el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); if (history.replaceState) history.replaceState(null, '', '#' + id); };
+    if (APP.sheet.isOpen && APP.sheet.isOpen()) { APP.sheet.close(); setTimeout(go, 380); } else go();
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-menu], [data-goto], [data-menu-book], a[href^="viber:"]'); if (!b) return;
+    if (b.hasAttribute('data-menu')) { openMenu(); return; }
+    if (b.hasAttribute('data-goto')) { e.preventDefault(); goTo(b.getAttribute('data-goto')); return; }
+    if (b.hasAttribute('data-menu-book')) { APP.sheet.close(); setTimeout(function () { APP.openBooking({}); }, 380); return; }
+    if (/^viber:/.test(b.getAttribute('href'))) { e.preventDefault(); APP.openApp(b.getAttribute('href')); }
+  });
+
   /* ---------- događaji ---------- */
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-lang]');
@@ -495,7 +526,7 @@
     else if (srvTop.top < vh * 0.5 && srvTop.bottom > vh * 0.3) sec = 'services';
     if (sec !== curSection) { curSection = sec; if (!APP.sheet.isOpen()) markTab(sec); }
     syncFab();
-    ['isprobaj', 'usluge', 'galerija', 'njega', 'kontakt'].forEach(function (id) { var r = document.getElementById(id).getBoundingClientRect(); if (r.top < vh * 0.45 && r.bottom > vh * 0.45) topLink = id; });
+    ['isprobaj', 'usluge', 'galerija', 'njega', 'poklon', 'kontakt'].forEach(function (id) { var el = document.getElementById(id); if (!el) return; var r = el.getBoundingClientRect(); if (r.top < vh * 0.45 && r.bottom > vh * 0.45) topLink = id; });
     $$('.top-links a').forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + topLink); });
   }
   window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });

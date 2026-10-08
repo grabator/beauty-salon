@@ -93,8 +93,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 .h3 { font-family: var(--sans); font-weight: 650; font-size: clamp(19px, 2.2vw, 22px); line-height: 1.25; letter-spacing: -0.01em; }
 em { font-style: italic; font-family: var(--serif); color: var(--accent); }
 .lead { font-size: clamp(16px, 1.9vw, 18px); color: var(--ink-soft); max-width: 34ch; }
-.kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
-.kicker::before { content: ''; width: 18px; height: 1.5px; background: currentColor; border-radius: 2px; }
+.kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
 .sub { color: var(--ink-soft); max-width: 52ch; }
 .small { font-size: 13.5px; }
 .note { color: var(--ink-soft); font-size: 14px; }
@@ -142,10 +141,15 @@ em { font-style: italic; font-family: var(--serif); color: var(--accent); }
 .lang button { min-width: 38px; min-height: 36px; padding: 0 8px; border-radius: 999px; font-size: 12px; font-weight: 750; letter-spacing: 0.06em; color: var(--ink-soft); transition: background-color var(--t-2), color var(--t-2); }
 .lang button[aria-pressed='true'] { background: var(--btn); color: var(--on-ink); }
 .top .top-book { display: none; }
+.menu-btn { display: grid; align-content: center; justify-items: center; gap: 4px; width: 44px; height: 44px; border-radius: 50%; background: rgb(var(--sf) / 0.75); box-shadow: inset 0 0 0 1px var(--line); }
+.menu-btn span { display: block; width: 18px; height: 2px; border-radius: 2px; background: var(--ink); transition: transform var(--t-2) var(--ease); }
+.menu-btn span:nth-child(2) { width: 12px; margin-left: 6px; }
+.menu-btn:active { transform: scale(0.94); }
 @media (min-width: 980px) {
   .top { padding-inline: 32px; }
   .top-links { display: flex; }
   .top .top-book { display: inline-flex; }
+  .menu-btn { display: none; }
 }
 
 /* donja navigacija (mobitel) */

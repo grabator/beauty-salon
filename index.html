@@ -84,13 +84,15 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
 <header class="top" id="top-nav">
   <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span class="brand-name" data-salon="short">Glaze</span></a>
   <nav class="top-links" data-ta="menu">
-    <a href="#isprobaj" data-t="nav.tryon">Isprobaj</a>
-    <a href="#usluge" data-t="nav.services">Usluge</a>
-    <a href="#galerija" data-t="nav.gallery">Galerija</a>
-    <a href="#njega" data-t="nav.care">Njega</a>
-    <a href="#kontakt" data-t="nav.contact">Kontakt</a>
+    <a href="#isprobaj" data-goto="isprobaj" data-t="nav.tryon">Isprobaj</a>
+    <a href="#usluge" data-goto="usluge" data-t="nav.services">Usluge</a>
+    <a href="#galerija" data-goto="galerija" data-t="nav.gallery">Galerija</a>
+    <a href="#njega" data-goto="njega" data-t="nav.care">Njega</a>
+    <a href="#poklon" data-goto="poklon" data-t="nav.gift">Poklon bon</a>
+    <a href="#kontakt" data-goto="kontakt" data-t="nav.contact">Kontakt</a>
   </nav>
   <div class="top-right">
+    <button type="button" class="menu-btn" data-menu aria-haspopup="dialog" data-ta="menu"><span></span><span></span><span></span></button>
     <div class="lang" role="group" data-ta="lang"><button type="button" data-lang="bs">BS</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="de">DE</button></div>
     <button type="button" class="btn btn-plum top-book" data-open-booking><span data-t="hero.book">Zakaži termin</span></button>
   </div>
@@ -248,33 +250,26 @@ try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(loca
       <div class="care-grid">
         <div class="card quiz" id="kviz"></div>
         <div class="card calc" id="korekcija">
+          <span class="calc-ic" aria-hidden="true"><svg class="ic"><use href="#i-cal"/></svg></span>
           <h3 class="h3" data-t="care.calc.title"></h3>
-          <label class="field"><span data-t="care.calc.label"></span><input type="date" class="calc-date"></label>
-          <div class="calc-out" aria-live="polite"></div>
+          <p class="calc-tip" data-t="care.calc.tip"></p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- 13. Vjernost i poklon bon -->
-  <section class="sec perks" id="vjernost" aria-labelledby="loy-h">
-    <div class="wrap perks-grid">
-      <div class="card loyalty">
-        <p class="kicker" data-t="loyalty.kicker"></p><h2 id="loy-h" class="h2 split" data-t="loyalty.title"></h2>
-        <div class="stamps" role="status" aria-live="polite"></div>
-        <p class="loy-reward"></p>
-        <div class="row-btns"><button type="button" class="btn btn-ghost" data-loy="add"><svg class="ic"><use href="#i-plus"/></svg><span data-t="loyalty.add"></span></button><button type="button" class="btn btn-text" data-loy="reset" data-t="loyalty.reset"></button></div>
-        <p class="note small" data-t="loyalty.note"></p>
-      </div>
-      <div class="card gift" id="poklon">
-        <p class="kicker" data-t="gift.kicker"></p><h2 class="h2 split" data-t="gift.title"></h2>
+  <section class="sec perks" id="poklon" aria-labelledby="gift-h">
+    <div class="wrap">
+      <div class="card gift">
+        <div class="gift-head"><p class="kicker" data-t="gift.kicker"></p><h2 id="gift-h" class="h2 split" data-t="gift.title"></h2><p class="sub" data-t="gift.sub"></p></div>
         <div class="gift-card" aria-live="polite"></div>
         <div class="gift-form">
           <div class="ctl"><p class="ctl-label" data-t="gift.amount"></p><div class="seg gift-amounts" role="radiogroup"></div></div>
           <label class="field"><span data-t="gift.to"></span><input type="text" class="gift-to" maxlength="28" autocomplete="off"></label>
           <label class="field"><span data-t="gift.msg"></span><input type="text" class="gift-msg" maxlength="48" autocomplete="off"></label>
           <div class="ctl"><p class="ctl-label" data-t="gift.design"></p><div class="seg gift-designs" role="radiogroup"></div></div>
-          <div class="row-btns"><button type="button" class="btn btn-plum gloss" data-gift="buy"><svg class="ic"><use href="#i-gift"/></svg><span data-t="gift.buy"></span></button><button type="button" class="btn btn-ghost" data-gift="dl"><svg class="ic"><use href="#i-down"/></svg><span data-t="gift.download"></span></button></div>
+          <button type="button" class="btn btn-plum btn-lg gloss btn-block" data-gift="buy"><svg class="ic"><use href="#i-gift"/></svg><span data-t="gift.buy"></span></button><p class="note" data-t="gift.note"></p>
         </div>
       </div>
     </div>

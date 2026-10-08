@@ -137,7 +137,7 @@
       if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, done); else done();
       return;
     }
-    window.location.href = url;
+    APP.openApp(url);
   }
   function pad(n) { return (n < 10 ? '0' : '') + n; }
   function icsEsc(s) { return String(s).replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/,/g, '\\,').replace(/;/g, '\\;'); }

@@ -32,7 +32,7 @@ Sve označeno sa "PRIMJER" je izmišljeno za demo:
 - `services`: usluge, cijene, trajanja i opisi
 - `team`: imena i specijalnosti tima
 - `reviews`: prave recenzije (sada su primjer i tako su označene)
-- `loyalty`, `giftAmounts`, `correctionWeeks`: pravila kartice vjernosti, iznosi poklon bona i preporuka za korekciju
+- `giftAmounts`: iznosi poklon bona
 - `faq`: odgovori na pitanja (plaćanje karticom, djeca, otkazivanje)
 - `photos`: putanje do pravih fotografija (enterijer, tim, radovi). Dok su prazne, prikazuju se okviri sa natpisom "Ovdje ide fotografija salona".
 - `skins`: tenovi kože za ruku, svaki u 5 tonova (osnova, sjena, crvenilo, svjetlo, nabor). Mogu se mijenjati po želji.

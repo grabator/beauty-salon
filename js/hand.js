@@ -140,14 +140,14 @@
 
   /* ---------- prsti i poze ---------- */
   var FINGERS = [ // bx, by = baza prsta; a = ugao; len = dužina; w = širina; bend = blaga zakrivljenost
-    { bx: 124, by: 388, a: -35, len: 124, w: 47, bend: 0.02, thumb: true }, // palac
-    { bx: 160, by: 283, a: -9, len: 166, w: 41, bend: 0.025 },  // kažiprst
-    { bx: 200, by: 270, a: -1.5, len: 185, w: 43, bend: 0.008 }, // srednji
-    { bx: 244, by: 279, a: 7.5, len: 168, w: 40.5, bend: -0.03 }, // prstenjak
-    { bx: 280, by: 304, a: 16, len: 127, w: 35, bend: -0.075 },  // mali, blago povijen prema prstenjaku
+    { bx: 140, by: 420, a: -36, len: 132, w: 47, bend: 0.05, thumb: true }, // palac: počinje ispod dlana, izlazi kroz kožicu
+    { bx: 163, by: 283, a: -7, len: 170, w: 38.5, bend: 0.02 },  // kažiprst
+    { bx: 201, by: 271, a: -1, len: 190, w: 40, bend: 0.006 },  // srednji
+    { bx: 239, by: 279, a: 5.5, len: 173, w: 38, bend: -0.025 }, // prstenjak
+    { bx: 273, by: 302, a: 12.5, len: 133, w: 33, bend: -0.06 },  // mali, blago povijen prema prstenjaku
   ];
   var POSES = {
-    spread: { fingers: FINGERS, g: '', shadow: [[13, 19, 0.3], [8, 12, 0.35], [4, 6, 0.4]], cast: 1 },
+    spread: { fingers: FINGERS, g: '', shadow: [[13, 19, 0.2], [8, 12, 0.25], [4, 6, 0.3]], cast: 0.8 },
     table: {
       fingers: FINGERS.map(function (f, i) { return Object.assign({}, f, { len: f.len * (i ? 0.95 : 1), bend: f.bend * 1.6 + (i ? 0.02 : 0) }); }),
       g: 'translate(200 330) rotate(-24) scale(1 .86) translate(-200 -330)', shadow: [[5, 8, 1.5], [12, 18, 0.7]], cast: 0.7, blur: 1
@@ -177,7 +177,7 @@
       }
       crl += 'M' + f2(a - ww * 0.8) + ' ' + f2(y + 6.4) + 'Q' + f2(a) + ' ' + f2(y + 3.6) + ' ' + f2(a + ww * 0.8) + ' ' + f2(y + 6.2);
     });
-    f._g = { side: side, d: side + 'Z', up: up, ax: ax, yb: yb, xb: ax(yb), th: Math.atan(2 * b * u) * 180 / Math.PI, W: w * 0.74, tip: 0.8 * w, cre: cre, crl: crl, j: j };
+    f._g = { side: side, d: side + 'Z', up: up, ax: ax, yb: yb, xb: ax(yb), th: Math.atan(2 * b * u) * 180 / Math.PI, W: w * (f.thumb ? 0.64 : 0.74), tip: 0.8 * w, cre: cre, crl: crl, j: j };
     return f._g;
   }
   function cr(P) { // Catmull-Rom kroz tačke, kao kubne krive
@@ -206,7 +206,9 @@
   }
 
   /* ---------- crtanje cijele ruke kao SVG markup ---------- */
-  var PALM = 'M152 566C150 506 122 462 106 414C96 380 104 342 126 312L142 272C160 244 290 246 297 296C303 346 297 402 291 450C285 492 279 530 277 566Z';
+  // nadlanica sa jastučićem ispod palca (tenar) i mekim prelazom prema kažiprstu
+  var PALM = 'M160 566C158 526 144 498 130 470C118 446 114 424 121 404C128 384 140 370 145 348C149 330 148 312 148 296C151 254 282 254 289 298C295 342 290 400 284 446C278 492 270 530 268 566Z';
+  var PALM_WEB = 'M130 470C118 446 114 424 121 404C128 384 140 370 145 348C149 330 148 312 148 296';
   function tA(i, attr) { return ' data-t="' + i + '" data-ta="' + attr + '"'; }
   function build(p, st, o) {
     var P = POSES[o.pose] || POSES.spread, Lg = LIGHTS[o.light] || LIGHTS.salon, T = tones(st.skin, o.light), sh = shadeOf(st.shade), F = P.fingers, h = '', tx = texture();
@@ -216,6 +218,8 @@
       '<linearGradient id="' + p + 'cy" x1="0" y1="0" x2="1" y2="0">' + stop(0, 1, 0.75) + stop(0.16, 1, 0.3) + stop(0.36, 3, 0.05) + stop(0.48, 3, 0.4) + stop(0.62, 3, 0.18) + stop(0.84, 1, 0.22) + stop(1, 1, 0.7) + '</linearGradient>' +
       '<linearGradient id="' + p + 'vf" x1="0" y1="0" x2="0" y2="1"><stop offset=".87" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>' +
       '<mask id="' + p + 'mf" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#' + p + 'vf)"/></mask>' +
+      '<linearGradient id="' + p + 'vt" x1="0" y1="0" x2="0" y2="1"><stop offset=".8" stop-color="#fff"/><stop offset=".97" stop-color="#000"/></linearGradient>' +
+      '<mask id="' + p + 'mt" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#' + p + 'vt)"/></mask>' +
       '<linearGradient id="' + p + 'vp" x1="0" y1="0" x2="0" y2="1"><stop offset=".1" stop-color="#000"/><stop offset=".3" stop-color="#fff"/></linearGradient>' +
       '<mask id="' + p + 'mp" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#' + p + 'vp)"/></mask>' +
       '<radialGradient id="' + p + 'bl">' + stop(0, 2, 0.6) + stop(1, 2, 0) + '</radialGradient>' +
@@ -235,15 +239,17 @@
     var sil = '<path d="' + PALM + '"/>' + F.map(function (f) { return '<path transform="translate(' + f.bx + ' ' + f.by + ') rotate(' + f.a + ')" d="' + geo(f).d + '"/>'; }).join('');
     if (P.blur) h = h.replace('</defs>', '<filter id="' + p + 'sb" x="-.2" y="-.2" width="1.4" height="1.4"><feGaussianBlur stdDeviation="5"/></filter></defs>');
     P.shadow.forEach(function (s, n) { body += '<g fill="#2A0F18" opacity="' + f2(Lg.sh * s[2]) + '" data-l="sh" data-k="' + s[2] + '" transform="translate(' + f2(s[0] + Lg.lx * 6) + ' ' + s[1] + ')"' + (P.blur ? ' filter="url(#' + p + 'sb)"' : '') + '>' + sil + '</g>'; });
+    // palac ide ispod nadlanice: ivica dlana postaje prirodna kožica između palca i kažiprsta
+    var nails = '', th = finger(p, 0, F[0], st, sh, T, Lg, o, P); body += th[0]; nails += th[1];
     // nadlanica
     body += '<path d="' + PALM + '" fill="url(#' + p + 'pl)"/>';
+    body += '<path d="' + PALM_WEB + '" fill="none" stroke="#2A0F18" stroke-opacity=".10" stroke-width="5" stroke-linecap="round" transform="translate(-1.5 2)"/>';
     body += '<g clip-path="url(#' + p + 'pc)">' +
-      '<ellipse cx="128" cy="356" rx="26" ry="34" fill="url(#' + p + 'ao)" opacity=".5"/>' +
-      [[160, 300], [200, 290], [243, 298], [278, 318]].map(function (k) { return '<path d="M' + k[0] + ' ' + (k[1] + 18) + 'Q' + ((k[0] + 210) / 2) + ' ' + (k[1] + 90) + ' ' + (196 + (k[0] - 210) * 0.25) + ' 470" fill="none" stroke="' + T[3] + '"' + tA(3, 'stroke') + ' stroke-width="9" stroke-linecap="round" opacity=".1"/>'; }).join('') +
+      '<ellipse cx="146" cy="352" rx="18" ry="30" fill="url(#' + p + 'ao)" opacity=".45"/>' +
+      [1, 2, 3, 4].map(function (i) { return [F[i].bx, F[i].by + 16]; }).map(function (k) { return '<path d="M' + k[0] + ' ' + (k[1] + 18) + 'Q' + ((k[0] + 210) / 2) + ' ' + (k[1] + 90) + ' ' + (196 + (k[0] - 210) * 0.25) + ' 470" fill="none" stroke="' + T[3] + '"' + tA(3, 'stroke') + ' stroke-width="9" stroke-linecap="round" opacity=".1"/>'; }).join('') +
       (tx ? '<path d="' + PALM + '" fill="url(#' + p + 'tx)" opacity=".035"/>' : '') + '</g>';
     // prsti, od onih ispod prema onima iznad
-    var nails = '';
-    [0, 4, 3, 1, 2].forEach(function (i) { var r = finger(p, i, F[i], st, sh, T, Lg, o, P); body += r[0]; nails += r[1]; });
+    [4, 3, 1, 2].forEach(function (i) { var r = finger(p, i, F[i], st, sh, T, Lg, o, P); body += r[0]; nails += r[1]; });
     // valjkasto sjenčenje nadlanice preko baza prstiju, utapa se prema zglobovima
     body += '<path d="' + PALM + '" fill="url(#' + p + 'cy)" opacity=".7" mask="url(#' + p + 'mp)"/>';
     // zglobovi na nadlanici (MCP): svjetliji vrhovi i udubljenja između
@@ -253,11 +259,11 @@
       if (i < 4) { var g2 = F[i + 1]; body += '<ellipse cx="' + f2((f.bx + g2.bx) / 2) + '" cy="' + f2((f.by + g2.by) / 2 + 12) + '" rx="8" ry="18" fill="url(#' + p + 'ao)" opacity=".45"/>'; }
     });
     // svilena manžeta sa naborima i sjenom na zglobu
-    body += '<path d="M124 506C170 488 254 488 300 506L300 494C254 476 170 476 124 494Z" fill="url(#' + p + 'cw)"/>' +
-      '<path d="M96 720L124 506C170 488 254 488 300 506L324 720Z" fill="url(#' + p + 'cf)"/>' +
-      '<path d="M146 512C158 530 156 550 150 566S140 640 136 720M196 505C204 527 204 548 199 566S200 650 198 720M250 509C258 529 258 548 253 566S262 650 266 720" fill="none" stroke="#fff" stroke-width="3.5" opacity=".75" stroke-linecap="round"/>' +
-      '<path d="M170 506C178 528 178 548 174 566S170 650 168 720M224 505C230 527 230 548 226 566S230 650 232 720M276 512C282 530 282 548 280 566S292 650 296 720" fill="none" stroke="#B9A6C9" stroke-width="5" opacity=".25" stroke-linecap="round"/>' +
-      '<path d="M124 506C170 488 254 488 300 506" fill="none" stroke="#fff" stroke-width="2.5" opacity=".8"/><path d="M124 509C170 491 254 491 300 509" fill="none" stroke="#C8879A" stroke-width="1.2" opacity=".35"/>';
+    body += '<path d="M134 508C176 492 250 492 290 508L290 496C250 480 176 480 134 496Z" fill="url(#' + p + 'cw)"/>' +
+      '<path d="M108 720L134 508C176 492 250 492 290 508L312 720Z" fill="url(#' + p + 'cf)"/>' +
+      '<path d="M154 513C165 530 163 550 157 566S148 640 145 720M200 506C207 527 207 548 202 566S203 650 201 720M248 510C255 529 255 548 250 566S258 650 262 720" fill="none" stroke="#fff" stroke-width="3.5" opacity=".75" stroke-linecap="round"/>' +
+      '<path d="M176 507C183 528 183 548 179 566S175 650 173 720M225 506C231 527 231 548 227 566S231 650 233 720M270 513C276 530 276 548 274 566S285 650 289 720" fill="none" stroke="#B9A6C9" stroke-width="5" opacity=".25" stroke-linecap="round"/>' +
+      '<path d="M134 508C176 492 250 492 290 508" fill="none" stroke="#fff" stroke-width="2.5" opacity=".8"/><path d="M134 511C176 495 250 495 290 511" fill="none" stroke="#C8879A" stroke-width="1.2" opacity=".35"/>';
     var wrap = function (x) { return P.g ? '<g transform="' + P.g + '">' + x + '</g>' : x; }, soft = function (x) { return x.replace(/url\(#__soft\)/g, 'url(#' + p + 'soft)'); };
     var br = o.brush ? '<g class="brush" opacity="0" style="pointer-events:none">' + brushSVG(sh.hex) + '</g>' : '';
     // dijelovi: defs, koža (statična) i nokti (živi)
@@ -270,7 +276,7 @@
     s += '<clipPath id="' + p + 'f' + i + '"><path d="' + g.d + '"/></clipPath>';
     // bačena sjena prsta na ono ispod njega
     s += '<path d="' + g.up + 'Z" transform="translate(' + f2(cast[0] * P.cast) + ' ' + f2(cast[1] * P.cast) + ')" fill="#2A0F18" opacity="' + f2(Lg.sh * 0.9) + '" data-l="sh" data-k=".9"/>';
-    s += '<g mask="url(#' + p + 'mf)"><path d="' + g.d + '" fill="url(#' + p + 'fl)"/>';
+    s += '<g mask="url(#' + p + (f.thumb ? 'mt' : 'mf') + ')"><path d="' + g.d + '" fill="url(#' + p + 'fl)"/>';
     s += '<g clip-path="url(#' + p + 'f' + i + ')">';
     s += '<path d="' + g.d + '" fill="url(#' + p + 'cy)"/>';
     s += '<ellipse cx="' + f2(g.ax(-L)) + '" cy="' + f2(-0.95 * L) + '" rx="' + f2(w * 0.5) + '" ry="' + f2(w * 0.5) + '" fill="url(#' + p + 'bl)"/>';

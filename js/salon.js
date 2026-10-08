@@ -161,8 +161,7 @@ window.SALON = {
     { name: 'Dženana', stars: 5, text: ['Termin potvrđen za par minuta na Viberu. Preporučujem French!', 'Appointment confirmed on Viber within minutes. Recommend the French!', 'Termin in wenigen Minuten per Viber bestätigt. Das French ist top!'] },
     { name: 'Lana', stars: 4, text: ['Divan chrome efekat, jedva čekam sljedeći termin.', 'Lovely chrome finish, can’t wait for my next visit.', 'Wunderschöner Chrome-Effekt, ich freue mich auf den nächsten Termin.'] },
   ],
-
-  loyalty: { stamps: 10, reward: ['Svaka 10. manikura uz 50 % popusta.', 'Every 10th manicure at 50 % off.', 'Jede 10. Maniküre mit 50 % Rabatt.'] }, // PRIMJER pravilo
+ // PRIMJER pravilo
   giftAmounts: [30, 50, 80, 100, 150],              // PRIMJER iznosi poklon bona
   correctionWeeks: 3,                               // preporuka za korekciju gela, u sedmicama
 
