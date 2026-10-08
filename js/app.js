@@ -460,7 +460,7 @@
     $$('.tabbar [data-tab]').forEach(function (t) { t.classList.toggle('on', t.getAttribute('data-tab') === name); });
   }
   var curSection = 'home', lastY = 0, ticking = false, heroH = 600;
-  function syncFab() { $('.fab').classList.toggle('away', APP.sheet.isOpen() || window.scrollY < heroH * 0.55); }
+  function syncFab() { $('.fab').classList.toggle('away', APP.sheet.isOpen() || window.scrollY < heroH * 0.55 || curSection === 'tryon'); }
   function onScroll() {
     ticking = false;
     var y = window.scrollY, tb = $('.tabbar');
@@ -472,6 +472,7 @@
     if (tryTop.top < vh * 0.5 && tryTop.bottom > vh * 0.3) sec = 'tryon';
     else if (srvTop.top < vh * 0.5 && srvTop.bottom > vh * 0.3) sec = 'services';
     if (sec !== curSection) { curSection = sec; if (!APP.sheet.isOpen()) markTab(sec); }
+    syncFab();
     ['isprobaj', 'usluge', 'galerija', 'njega', 'kontakt'].forEach(function (id) { var r = document.getElementById(id).getBoundingClientRect(); if (r.top < vh * 0.45 && r.bottom > vh * 0.45) topLink = id; });
     $$('.top-links a').forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + topLink); });
   }
