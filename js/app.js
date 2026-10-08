@@ -373,7 +373,8 @@
       if (o.title != null) title.textContent = o.title;
       if (o.body != null) { if (typeof o.body === 'string') body.innerHTML = o.body; else { body.innerHTML = ''; body.appendChild(o.body); } body.scrollTop = 0; }
       if (o.foot != null) foot.innerHTML = o.foot;
-      back.hidden = !o.onBack; cur = Object.assign(cur || {}, o);
+      if ('onBack' in o) back.hidden = !o.onBack;
+      cur = Object.assign(cur || {}, o);
     }
     function close() {
       if (!cur) return;
