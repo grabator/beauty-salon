@@ -6,7 +6,8 @@
 <title>Glaze Nail Studio · Manikura, gel i njega noktiju</title>
 <meta name="description" content="Studio za nokte: manikura, gel lak, nadogradnja, pedikura i njega. Isprobaj boju na ruci i zakaži termin preko Vibera ili WhatsAppa.">
 <meta name="theme-color" content="#FBF6F3">
-<script>try{var l=JSON.parse(localStorage.getItem('glaze-light'));if(l==='day'||l==='evening')document.documentElement.setAttribute('data-light',l)}catch(e){}</script>
+<script>try{var l=JSON.parse(localStorage.getItem('glaze-light'));if(l==='day'||l==='evening')document.documentElement.setAttribute('data-light',l)}catch(e){}
+try{var g=(location.search.match(/[?&]lang=(bs|en|de)/)||[])[1]||JSON.parse(localStorage.getItem('glaze-lang')||'null')||(navigator.language||'').slice(0,2);var k=document.createElement('link');k.rel='preload';k.as='script';k.href='js/i18n-'+(g==='en'||g==='de'?g:'bs')+'.js';document.head.appendChild(k)}catch(e){}</script>
 <link rel="canonical" href="https://beauty-salon.example/">
 <link rel="alternate" hreflang="bs" href="https://beauty-salon.example/?lang=bs">
 <link rel="alternate" hreflang="en" href="https://beauty-salon.example/?lang=en">
@@ -27,7 +28,6 @@
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/sections.css">
 <script src="js/salon.js" defer></script>
-<script src="js/i18n.js" defer></script>
 <script src="js/hand.js" defer></script>
 <script src="js/app.js" defer></script>
 </head>
@@ -83,7 +83,7 @@
 
 <header class="top" id="top-nav">
   <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span class="brand-name" data-salon="short">Glaze</span></a>
-  <nav class="top-links" aria-label="Meni">
+  <nav class="top-links" data-ta="menu">
     <a href="#isprobaj" data-t="nav.tryon">Isprobaj</a>
     <a href="#usluge" data-t="nav.services">Usluge</a>
     <a href="#galerija" data-t="nav.gallery">Galerija</a>
@@ -91,7 +91,7 @@
     <a href="#kontakt" data-t="nav.contact">Kontakt</a>
   </nav>
   <div class="top-right">
-    <div class="lang" role="group" aria-label="Jezik"><button type="button" data-lang="bs">BS</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="de">DE</button></div>
+    <div class="lang" role="group" data-ta="lang"><button type="button" data-lang="bs">BS</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="de">DE</button></div>
     <button type="button" class="btn btn-plum top-book" data-open-booking><span data-t="hero.book">Zakaži termin</span></button>
   </div>
 </header>
@@ -108,11 +108,11 @@
         <button type="button" class="btn btn-plum btn-lg gloss" data-open-booking><svg class="ic"><use href="#i-cal"/></svg><span data-t="hero.book"></span></button>
         <a class="btn btn-ghost btn-lg" href="#isprobaj"><svg class="ic"><use href="#i-brush"/></svg><span data-t="hero.try"></span></a>
       </div>
-      <ul class="facts" aria-label="Brze činjenice"></ul>
+      <ul class="facts" data-ta="a11y.facts"></ul>
     </div>
     <div class="hero-art">
       <div class="hero-halo" aria-hidden="true"></div>
-      <svg class="hand hero-hand" viewBox="0 0 400 566" role="img" aria-label="Ilustrovana ruka sa nalakiranim noktima"></svg>
+      <svg class="hand hero-hand" viewBox="0 0 400 566" role="img" data-ta="a11y.heroHand"></svg>
       <span class="shade-chip" aria-hidden="true"><i></i><b></b></span>
       <div class="light-sw hero-light" role="radiogroup" data-ta="light.label"><button type="button" role="radio" data-light="day" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-sun"/></svg><span data-t="light.day"></span></button><button type="button" role="radio" data-light="salon" aria-checked="true" tabindex="0"><svg class="ic"><use href="#i-lamp"/></svg><span data-t="light.salon"></span></button><button type="button" role="radio" data-light="evening" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-moon"/></svg><span data-t="light.evening"></span></button></div>
     </div>
@@ -132,7 +132,7 @@
         <div class="try-stage">
           <div class="light-sw try-light" role="radiogroup" data-ta="light.label"><button type="button" role="radio" data-light="day" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-sun"/></svg><span data-t="light.day"></span></button><button type="button" role="radio" data-light="salon" aria-checked="true" tabindex="0"><svg class="ic"><use href="#i-lamp"/></svg><span data-t="light.salon"></span></button><button type="button" role="radio" data-light="evening" aria-checked="false" tabindex="-1"><svg class="ic"><use href="#i-moon"/></svg><span data-t="light.evening"></span></button></div>
           <button type="button" class="tilt-btn" data-tilt hidden><svg class="ic"><use href="#i-tilt"/></svg><span data-t="light.tilt"></span></button>
-          <svg class="hand try-hand" viewBox="0 0 400 566" role="img" aria-label="Ruka za isprobavanje boje"></svg>
+          <svg class="hand try-hand" viewBox="0 0 400 566" role="img" data-ta="a11y.tryHand"></svg>
           <p class="try-name" aria-live="polite"><i></i><span></span></p>
           <div class="try-actions">
             <button type="button" class="icon-btn" data-try="surprise"><svg class="ic"><use href="#i-shuffle"/></svg><span data-t="tryon.surprise"></span></button>
@@ -162,7 +162,7 @@
   <section class="sec services" id="usluge" aria-labelledby="srv-h">
     <div class="wrap">
       <header class="sec-head"><p class="kicker" data-t="services.kicker"></p><h2 id="srv-h" class="h2 split" data-t="services.title"></h2><p class="sub" data-t="services.sub"></p></header>
-      <div class="tabs cat-tabs" role="tablist" aria-label="Kategorije"></div>
+      <div class="tabs cat-tabs" role="tablist" data-ta="a11y.cats"></div>
       <div class="srv-list" role="tabpanel"></div>
     </div>
   </section>
@@ -179,7 +179,7 @@
   <section class="sec gallery" id="galerija" aria-labelledby="gal-h">
     <div class="wrap">
       <header class="sec-head"><p class="kicker" data-t="gallery.kicker"></p><h2 id="gal-h" class="h2 split" data-t="gallery.title"></h2></header>
-      <div class="chips gal-filters" role="group" aria-label="Filteri"></div>
+      <div class="chips gal-filters" role="group" data-ta="a11y.filters"></div>
       <div class="gal-grid"></div>
     </div>
   </section>
@@ -310,7 +310,7 @@
 </footer>
 
 <!-- donja navigacija (mobitel) -->
-<nav class="tabbar" aria-label="Navigacija">
+<nav class="tabbar" data-ta="a11y.nav">
   <a href="#top" data-tab="home"><svg class="ic"><use href="#i-home"/></svg><span data-t="nav.home"></span></a>
   <a href="#usluge" data-tab="services"><svg class="ic"><use href="#i-list"/></svg><span data-t="nav.services"></span></a>
   <a href="#isprobaj" data-tab="tryon"><svg class="ic"><use href="#i-brush"/></svg><span data-t="nav.tryon"></span></a>
@@ -318,13 +318,13 @@
   <button type="button" data-tab="book" data-open-booking><svg class="ic"><use href="#i-cal"/></svg><span data-t="nav.book"></span></button>
   <span class="tab-ind" aria-hidden="true"></span>
 </nav>
-<button type="button" class="fab gloss" data-open-booking aria-label="Zakaži termin"><svg class="ic"><use href="#i-cal"/></svg><span class="fab-t"></span><b class="badge cart-count" hidden></b></button>
+<button type="button" class="fab gloss" data-open-booking><svg class="ic"><use href="#i-cal"/></svg><span class="fab-t"></span><b class="badge cart-count" hidden></b></button>
 
 <!-- sheet (zakazivanje, omiljeni, galerija) -->
 <div class="scrim" hidden></div>
 <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden>
   <div class="sheet-grab" aria-hidden="true"><i></i></div>
-  <div class="sheet-head"><button type="button" class="icon-round sheet-back" aria-label="Nazad" hidden><svg class="ic"><use href="#i-back"/></svg></button><h2 id="sheet-title" class="h3"></h2><button type="button" class="icon-round sheet-close" aria-label="Zatvori"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  <div class="sheet-head"><button type="button" class="icon-round sheet-back" data-ta="a11y.back" hidden><svg class="ic"><use href="#i-back"/></svg></button><h2 id="sheet-title" class="h3"></h2><button type="button" class="icon-round sheet-close" aria-label="Zatvori"><svg class="ic"><use href="#i-x"/></svg></button></div>
   <div class="sheet-body"></div>
   <div class="sheet-foot"></div>
 </div>

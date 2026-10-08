@@ -322,6 +322,7 @@
     this.svg = svg; this.id = 'h' + (++count);
     this.state = Object.assign({ shade: 'bare', shape: 'almond', len: 1, style: 'solid', skin: 0 }, opts.state || {});
     this.brushOn = opts.brush !== false; this.pose = opts.pose || 'spread'; this.light = opts.light || lightMode;
+    this.bakeOn = opts.bake !== false;
     this.tilt = [0, 0];
     this.render();
   }
@@ -335,30 +336,29 @@
   };
   // koža se jednom pretvori u sliku, pa se za vrijeme lakiranja ne crta ponovo
   Hand.prototype.bake = function (b) {
-    if (!window.Blob || !URL.createObjectURL) return;
+    if (!this.bakeOn || !window.Blob || !URL.createObjectURL) return;
     var self = this, vb = this.svg.getAttribute('viewBox') || '0 0 400 566', v = vb.split(' ').map(Number), seq = this.bakeId = (this.bakeId || 0) + 1;
     var src = URL.createObjectURL(new Blob(['<svg xmlns="' + NS + '" viewBox="' + vb + '">' + b.defs + b.skin + '</svg>'], { type: 'image/svg+xml' }));
-    var r = this.svg.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2.5), cw = Math.round(Math.max(r.width, 200) * dpr * 1.15), ch = Math.round(cw * v[3] / v[2]);
-    var pic = new Image();
-    pic.onload = function () {
-      URL.revokeObjectURL(src);
+    // 1) odmah: koža kao vektorska slika; 2) poslije: ista slika kao bitmap, pa se pri lakiranju ništa ne crta ponovo
+    var im = document.createElementNS(NS, 'image');
+    im.setAttribute('class', 'skin-img'); im.setAttribute('x', v[0]); im.setAttribute('y', v[1]); im.setAttribute('width', v[2]); im.setAttribute('height', v[3]); im.setAttribute('preserveAspectRatio', 'none');
+    im.addEventListener('load', function first() {
+      im.removeEventListener('load', first);
       if (seq !== self.bakeId) return;
-      var c = document.createElement('canvas'); c.width = cw; c.height = ch;
-      try { c.getContext('2d').drawImage(pic, 0, 0, cw, ch); } catch (e) { return; }
-      c.toBlob(function (png) {
-        if (!png || seq !== self.bakeId) return;
-        var url = URL.createObjectURL(png), im = document.createElementNS(NS, 'image');
-        im.setAttribute('class', 'skin-img'); im.setAttribute('x', v[0]); im.setAttribute('y', v[1]); im.setAttribute('width', v[2]); im.setAttribute('height', v[3]); im.setAttribute('preserveAspectRatio', 'none');
-        im.addEventListener('load', function () {
-          if (seq !== self.bakeId) return;
-          self.svg.querySelectorAll('.skin-live, .skin-img').forEach(function (e) { if (e !== im) { if (e.classList.contains('skin-img')) URL.revokeObjectURL(e.getAttribute('href')); e.remove(); } });
-        });
-        im.setAttribute('href', url);
-        var first = self.svg.querySelector('.skin-live, .skin-img');
-        self.svg.insertBefore(im, first ? first.nextSibling : self.svg.firstChild);
-      }, 'image/png');
-    };
-    pic.src = src;
+      self.svg.querySelectorAll('.skin-live, .skin-img').forEach(function (e) { if (e !== im) { if (e.classList.contains('skin-img')) URL.revokeObjectURL(e.getAttribute('href')); e.remove(); } });
+      var r = self.svg.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2.5), cw = Math.round(Math.max(r.width, 200) * dpr * 1.15), ch = Math.round(cw * v[3] / v[2]);
+      var pic = new Image();
+      pic.onload = function () {
+        if (seq !== self.bakeId) return;
+        var c = document.createElement('canvas'); c.width = cw; c.height = ch;
+        try { c.getContext('2d').drawImage(pic, 0, 0, cw, ch); } catch (e) { return; }
+        c.toBlob(function (png) { if (!png || seq !== self.bakeId) return; im.setAttribute('href', URL.createObjectURL(png)); setTimeout(function () { URL.revokeObjectURL(src); }, 1000); }, 'image/png');
+      };
+      pic.src = src;
+    });
+    im.setAttribute('href', src);
+    var first = this.svg.querySelector('.skin-live, .skin-img');
+    this.svg.insertBefore(im, first ? first.nextSibling : this.svg.firstChild);
   };
   // koža i svjetlo: mijenja samo boje, bez ponovnog crtanja
   Hand.prototype.recolor = function () {

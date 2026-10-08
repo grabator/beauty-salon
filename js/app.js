@@ -1,7 +1,7 @@
 /* Glaze Nail Studio: pokretanje, jezik, navigacija, radno vrijeme, usluge, galerija i sheet. */
 (function () {
   'use strict';
-  var S = window.SALON, I = window.I18N, root = document.documentElement;
+  var S = window.SALON, I = window.I18N = window.I18N || {}, root = document.documentElement;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var $ = function (s, el) { return (el || document).querySelector(s); };
@@ -441,7 +441,7 @@
   /* ---------- događaji ---------- */
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-lang]');
-    if (b) { APP.lang = b.getAttribute('data-lang'); store('lang', APP.lang); renderAll(); return; }
+    if (b) { var nl = b.getAttribute('data-lang'); ensureLang(nl).then(function () { APP.lang = nl; store('lang', nl); renderAll(); }); return; }
     if ((b = e.target.closest('[data-light]'))) { APP.setLight(b.getAttribute('data-light')); return; }
     if (e.target.closest('[data-tilt]')) { askTilt(); return; }
     if (e.target.closest('[data-mirror]')) { APP.load('mirror').then(function () { window.Mirror.open(); }).catch(function () { APP.toast(APP.T().mirror.noModel); }); return; }
@@ -595,7 +595,7 @@
   }
   function heroLoop() { clearTimeout(heroTimer); if (!heroVisible || document.hidden || reduced) return; heroTimer = setTimeout(function () { heroPaint(); heroLoop(); }, 4200); }
   function startHero() {
-    hero = new window.Nails.Hand($('.hero-hand'), { state: { shade: 'bare', shape: 'almond', len: 1, style: 'solid', skin: 0 } });
+    hero = new window.Nails.Hand($('.hero-hand'), { bake: false, state: { shade: 'bare', shape: 'almond', len: 1, style: 'solid', skin: 0 } });
     setTimeout(heroPaint, reduced ? 0 : 450);
     heroLoop();
     $('.hero-hand').addEventListener('click', function () { heroPaint(); heroLoop(); });
@@ -622,7 +622,11 @@
   }
 
   /* ---------- start ---------- */
+  // engleski i njemački tekstovi se učitavaju samo kad zatrebaju
+  function ensureLang(l) { return I[l] ? Promise.resolve() : APP.load('i18n-' + l); }
   APP.cart = (store('cart') || []).filter(function (id) { return APP.service(id); });
+  ensureLang(APP.lang).catch(function () { APP.lang = 'bs'; }).then(start);
+  function start() {
   renderAll();
   heroH = $('.hero').offsetHeight;
   intro(function () { startHero(); });
@@ -632,6 +636,7 @@
   if ('requestIdleCallback' in window) requestIdleCallback(function () { APP.load('booking'); }, { timeout: 4000 }); else setTimeout(function () { APP.load('booking'); }, 3000);
   setInterval(function () { renderStatus(); renderLastMinute(); }, 60000);
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(function () {});
+  }
   // JSON-LD iz salon.js (jedan izvor podataka)
   (function () {
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
