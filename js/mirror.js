@@ -135,10 +135,10 @@
     var side = Math.max(x1 - x0, y1 - y0) * 1.35, cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
     var sx = Math.max(0, cx - side / 2), sy = Math.max(0, cy - side / 2), sw = Math.min(side, canvas.width - sx), sh = Math.min(side, canvas.height - sy);
     var o = document.createElement('canvas'); o.width = 1080; o.height = 1240; var x = o.getContext('2d');
-    x.fillStyle = '#FBF6F3'; x.fillRect(0, 0, 1080, 1240);
+    x.fillStyle = '#FCF8F5'; x.fillRect(0, 0, 1080, 1240);
     x.drawImage(canvas, sx, sy, sw, sh, 0, 0, 1080, Math.round(1080 * sh / sw));
-    x.fillStyle = '#FBF6F3'; x.fillRect(0, 1080, 1080, 160);
-    x.fillStyle = '#4A1F33'; x.textAlign = 'center'; x.font = '64px "Instrument Serif", serif'; x.fillText(S.name, 540, 1160);
+    x.fillStyle = '#FCF8F5'; x.fillRect(0, 1080, 1080, 160);
+    x.fillStyle = '#5E1A36'; x.textAlign = 'center'; x.font = '64px "Instrument Serif", serif'; x.fillText(S.name, 540, 1160);
     x.font = '700 28px Manrope, sans-serif'; x.fillStyle = '#9C4F66'; x.fillText(APP.tr(N.shadeOf(look.shade).name) + ' · @' + S.contact.instagram, 540, 1210);
     o.toBlob(function (b) {
       var file = new File([b], 'glaze-ogledalo.png', { type: 'image/png' });

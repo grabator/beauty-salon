@@ -108,7 +108,7 @@
   function share() {
     var T = APP.T(), sh = N.shadeOf(state.shade), W = 1080, H = 1920;
     var c = document.createElement('canvas'); c.width = W; c.height = H; var x = c.getContext('2d');
-    var g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#FBF6F3'); g.addColorStop(0.55, '#F7E3E8'); g.addColorStop(1, '#EEDDF3');
+    var g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#FCF8F5'); g.addColorStop(0.55, '#F7E3E8'); g.addColorStop(1, '#F2E4D8');
     x.fillStyle = g; x.fillRect(0, 0, W, H);
     [[180, 360, 420, '#F4D6DC'], [930, 1220, 460, '#E9DDF4'], [540, 980, 520, '#ffffff']].forEach(function (b) { var r = x.createRadialGradient(b[0], b[1], 0, b[0], b[1], b[2]); r.addColorStop(0, b[3]); r.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = r; x.fillRect(0, 0, W, H); });
     var img = new Image();
@@ -119,11 +119,11 @@
         x.fillStyle = fade; x.fillRect(0, 1480, W, 440);
         x.textAlign = 'center'; x.fillStyle = '#9C4F66'; x.font = '800 30px Manrope, sans-serif';
         x.fillText(spaced(T.tryon.storyTitle.toUpperCase()), W / 2, 190);
-        x.fillStyle = '#4A1F33'; x.font = 'italic 110px "Instrument Serif", serif'; x.fillText(APP.tr(sh.name), W / 2, 310);
+        x.fillStyle = '#5E1A36'; x.font = 'italic 110px "Instrument Serif", serif'; x.fillText(APP.tr(sh.name), W / 2, 310);
         x.font = '600 34px Manrope, sans-serif'; x.fillStyle = '#7A4A5E';
         x.fillText(T.tryon.shapes[state.shape] + ' · ' + T.tryon.lengths[state.len] + ' · ' + T.tryon.styles[state.style], W / 2, 375);
         x.beginPath(); x.arc(W / 2, 1640, 30, 0, Math.PI * 2); x.fillStyle = sh.hex; x.fill(); x.lineWidth = 6; x.strokeStyle = '#fff'; x.stroke();
-        x.fillStyle = '#4A1F33'; x.font = '72px "Instrument Serif", serif'; x.fillText(S.name, W / 2, 1765);
+        x.fillStyle = '#5E1A36'; x.font = '72px "Instrument Serif", serif'; x.fillText(S.name, W / 2, 1765);
         x.font = '700 32px Manrope, sans-serif'; x.fillStyle = '#9C4F66'; x.fillText('@' + S.contact.instagram, W / 2, 1825);
         c.toBlob(function (blob) {
           var file = new File([blob], 'glaze-' + state.shade + '.png', { type: 'image/png' });
