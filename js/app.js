@@ -99,7 +99,7 @@
   }
   function renderAll() {
     applyText(); renderStatus(); renderLastMinute(); renderServices(); renderSeason(); renderGallery();
-    renderBA(); renderFlow(); renderHygiene(); renderTeam(); renderReviews(); renderTips(); renderFaq(); renderContact(); renderFooter();
+    renderBA(); renderFlow(); renderHygiene(); renderStudio(); renderTeam(); renderReviews(); renderTips(); renderFaq(); renderContact(); renderFooter();
     updateCartUI(); updateFavUI(); observeReveal();
     document.dispatchEvent(new CustomEvent('langchange'));
   }
@@ -157,6 +157,7 @@
     var i = APP.cart.indexOf(id), on = force != null ? force : i < 0;
     if (on && i < 0) APP.cart.push(id); if (!on && i > -1) APP.cart.splice(i, 1);
     store('cart', APP.cart); updateCartUI();
+    if (on && navigator.vibrate) try { navigator.vibrate(12); } catch (e) {}
     $$('[data-add="' + id + '"]').forEach(function (b) {
       var T = APP.T();
       b.setAttribute('aria-pressed', String(on));
@@ -307,9 +308,18 @@
   }
   function renderReviews() {
     var T = APP.T();
-    $('.rev-row').innerHTML = S.reviews.map(function (r, i) {
+    var f = S.reviews[0], fs = ''; for (var q = 0; q < 5; q++) fs += '<svg class="ic' + (q < f.stars ? '' : ' off') + '"><use href="#i-star"/></svg>';
+    $('.rev-feature').innerHTML = '<div class="stars" role="img" aria-label="' + f.stars + '/5">' + fs + '</div><blockquote>' + esc(APP.tr(f.text)) + '</blockquote><figcaption><span>' + esc(f.name) + '</span><span class="ex-badge">' + esc(T.example) + '</span></figcaption>';
+    $('.rev-row').innerHTML = S.reviews.slice(1).map(function (r, i) {
       var st = ''; for (var k = 0; k < 5; k++) st += '<svg class="ic' + (k < r.stars ? '' : ' off') + '"><use href="#i-star"/></svg>';
       return '<li class="reveal" style="--d:' + i + '"><figure class="card review"><div class="stars" role="img" aria-label="' + r.stars + '/5">' + st + '</div><blockquote>' + esc(APP.tr(r.text)) + '</blockquote><footer><span>' + esc(r.name) + '</span><span class="ex-badge">' + esc(T.example) + '</span></footer></figure></li>';
+    }).join('');
+  }
+  function renderStudio() {
+    var T = APP.T().studio, P = S.photos || {};
+    $('.studio-grid').innerHTML = ['interior', 'team', 'work'].map(function (k, i) {
+      var src = P[k], cap = esc(T[k]);
+      return '<figure class="ph reveal' + (src ? ' has' : '') + '" style="--d:' + i + '">' + (src ? '<img src="' + esc(src) + '" alt="' + cap + '" loading="lazy" decoding="async">' : '<div class="ph-empty"><svg class="ic"><use href="#i-sparkle"/></svg><span>' + esc(T.placeholder) + '</span></div>') + '<figcaption>' + cap + '</figcaption></figure>';
     }).join('');
   }
   function renderTips() {
@@ -509,6 +519,18 @@
     function loop() { x += (tx - x) * 0.22; y += (ty - y) * 0.22; c.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)'; raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.3 ? requestAnimationFrame(loop) : 0; }
     document.addEventListener('pointermove', function (e) { if (e.pointerType !== 'mouse') return; tx = e.clientX; ty = e.clientY; c.classList.add('on'); c.classList.toggle('big', !!(e.target.closest && e.target.closest('a, button, input, [role="tab"]'))); if (!raf) raf = requestAnimationFrame(loop); }, { passive: true });
     document.addEventListener('mouseleave', function () { c.classList.remove('on'); });
+  })();
+
+  /* ---------- veliki nokat koji se lakira dok se skrola do "Isprobaj boju" ---------- */
+  (function () {
+    var el = $('.scroll-nail'); if (!el) return;
+    var d = window.Nails.nailPath('almond', 92, 150);
+    el.innerHTML = '<svg viewBox="-56 -170 112 190" aria-hidden="true"><defs><clipPath id="snc"><path d="' + d + '"/></clipPath></defs><path d="' + d + '" class="sn-base"/><g clip-path="url(#snc)"><rect class="sn-fill" x="-60" y="-175" width="120" height="200"/><path class="sn-gl" d="M-20 -10Q-34 -80 -12 -132"/></g><path d="' + d + '" class="sn-edge"/></svg>';
+    var look = (store('look') || {}).shade; root.style.setProperty('--look', window.Nails.shadeOf(look || 'ballet').hex);
+    if (reduced || (window.CSS && CSS.supports && CSS.supports('animation-timeline: view()'))) return;
+    var tick = 0;
+    function upd() { tick = 0; var r = el.getBoundingClientRect(), p = (innerHeight - r.top) / (innerHeight * 0.85); el.style.setProperty('--p', Math.max(0, Math.min(1, p)).toFixed(3)); }
+    window.addEventListener('scroll', function () { if (!tick) tick = requestAnimationFrame(upd); }, { passive: true }); upd();
   })();
 
   /* ---------- svjetlo salona: Dan, Salon, Večer ---------- */

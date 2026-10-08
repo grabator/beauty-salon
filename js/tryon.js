@@ -55,6 +55,7 @@
     Object.assign(state, next);
     hand.set(next);
     APP.store('look', state); APP.look = Object.assign({}, state);
+    if (next.shade) document.documentElement.style.setProperty('--look', N.shadeOf(next.shade).hex);
     updateName(next.shade != null || next.style != null); updateFav();
     if (navigator.vibrate && next.shade) try { navigator.vibrate(10); } catch (e) {}
   }

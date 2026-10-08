@@ -3,6 +3,7 @@
 window.I18N = {
   bs: {
     lang: 'Jezik', menu: 'Meni', close: 'Zatvori', skip: 'Preskoči', example: 'Primjer',
+    studio: { kicker: 'Studio', title: 'Mjesto gdje *nastaju*', sub: 'Ovdje će biti prave fotografije salona, tima i radova.', placeholder: 'Ovdje ide fotografija salona', interior: 'Enterijer', team: 'Tim', work: 'Radovi' },
     light: { label: 'Svjetlo', day: 'Dan', salon: 'Salon', evening: 'Večer', tilt: 'Pomjeri telefon', tiltOn: 'Nagni telefon i gledaj odsjaj' },
     nav: { home: 'Početna', services: 'Usluge', tryon: 'Isprobaj', favs: 'Omiljeni', book: 'Termin', gallery: 'Galerija', care: 'Njega', contact: 'Kontakt' },
     days: ['nedjelja', 'ponedjeljak', 'utorak', 'srijeda', 'četvrtak', 'petak', 'subota'],
@@ -65,6 +66,7 @@ window.I18N = {
 
   en: {
     lang: 'Language', menu: 'Menu', close: 'Close', skip: 'Skip', example: 'Example',
+    studio: { kicker: 'Studio', title: 'Where it all *happens*', sub: 'Real photos of the salon, the team and their work will go here.', placeholder: 'Salon photo goes here', interior: 'Interior', team: 'Team', work: 'Work' },
     light: { label: 'Light', day: 'Day', salon: 'Salon', evening: 'Evening', tilt: 'Tilt your phone', tiltOn: 'Tilt your phone and watch the shine' },
     nav: { home: 'Home', services: 'Services', tryon: 'Try on', favs: 'Saved', book: 'Book', gallery: 'Gallery', care: 'Care', contact: 'Contact' },
     days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -127,6 +129,7 @@ window.I18N = {
 
   de: {
     lang: 'Sprache', menu: 'Menü', close: 'Schließen', skip: 'Überspringen', example: 'Beispiel',
+    studio: { kicker: 'Studio', title: 'Hier *entsteht* alles', sub: 'Hier kommen echte Fotos vom Studio, vom Team und von Arbeiten hin.', placeholder: 'Hier kommt ein Studiofoto hin', interior: 'Studio', team: 'Team', work: 'Arbeiten' },
     light: { label: 'Licht', day: 'Tag', salon: 'Salon', evening: 'Abend', tilt: 'Handy neigen', tiltOn: 'Neige dein Handy und sieh den Glanz' },
     nav: { home: 'Start', services: 'Leistungen', tryon: 'Probieren', favs: 'Favoriten', book: 'Termin', gallery: 'Galerie', care: 'Pflege', contact: 'Kontakt' },
     days: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
@@ -162,7 +165,7 @@ window.I18N = {
     },
     season: { kicker: 'Saison-Kollektion', title: '{s}-*Kollektion*', names: { autumn: 'Herbst', winter: 'Winter', spring: 'Frühlings', summer: 'Sommer' } },
     gallery: { kicker: 'Inspiration', title: 'Design-*Galerie*', filters: { all: 'Alle', minimal: 'Minimal', french: 'French', chrome: 'Chrome', ombre: 'Ombré', glitter: 'Glitzer', season: 'Saison' }, want: 'Dieses Design will ich', approx: 'Ca.', more: 'Ansehen', showAll: 'Alle zeigen' },
-    ba: { kicker: 'Vorher & nachher', title: 'Der Unterschied *zeigt sich*', before: 'Vorher', after: 'Nachher', label: 'Regler ziehen zum Vergleichen' },
+    ba: { kicker: 'Vorher & nachher', title: 'Man sieht den *Unterschied*', before: 'Vorher', after: 'Nachher', label: 'Regler ziehen zum Vergleichen' },
     flow: { kicker: 'Dein Besuch', title: 'So läuft *dein* Termin', steps: [['Ankommen & Kaffee', 'Setz dich, entspann dich und sag uns deinen Wunsch.'], ['Vorbereitung & Pflege', 'Wir formen die Nägel und pflegen die Nagelhaut.'], ['Lackieren', 'Dünne Schichten, präzise Kanten und Glanz.'], ['Pflegetipps', 'Du erfährst, wie es länger hält.']] },
     hygiene: { kicker: 'Hygiene', title: 'Rein wie *Porzellan*', sub: 'Deine Gesundheit steht an erster Stelle, daher gehört Hygiene zu jedem Termin.' },
     team: { kicker: 'Team', title: 'Hände, die sich um deine *kümmern*', fav: 'Lieblingsfarbe' },

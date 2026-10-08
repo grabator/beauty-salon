@@ -146,6 +146,9 @@ window.SALON = {
     summer: ['d16', 'd4', 'd20', 'd10', 'd8', 'd13'],
   },
 
+  // Prave fotografije salona: upiši putanju (npr. 'assets/photos/enterijer.jpg'). Prazno = okvir sa natpisom.
+  photos: { interior: '', team: '', work: '' },
+
   team: [ // PRIMJER: tim
     { name: 'Amra', hair: '#3B2420', skin: 0, role: ['Gel i nadogradnja', 'Gel & extensions', 'Gel & Modellage'], shade: 'peony' },
     { name: 'Lejla', hair: '#8A5A3B', skin: 1, role: ['Nail art i chrome', 'Nail art & chrome', 'Nail Art & Chrome'], shade: 'pearl' },
